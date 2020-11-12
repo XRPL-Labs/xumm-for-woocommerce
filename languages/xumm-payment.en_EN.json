@@ -1,0 +1,128 @@
+{
+    "construct": {
+        "title": "Accept XUMM payments",
+        "description": "Receive any supported currency into your XRP account using XUMM"
+    },
+    "form": {
+        "enabled": {
+            "title": "Enable/Disable",
+            "label": "Enable XUMM Gateway",
+            "description": ""
+        },
+        "title": {
+            "title": "Title",
+            "description": "This is the title which the user sees during checkout.",
+            "default": "XRP Payment"
+        },
+        "description": {
+            "title": "Description",
+            "description": "This is the text users will see in the checkout for this payment method",
+            "default": "Pay with XRP using the #1 XRPL wallet: XUMM."
+        },
+        "destination": {
+            "title": "XRP Destination address",
+            "description": "This is your XRP r Address"
+        },
+        "explorer": {
+            "title": "Transaction Explorer",
+            "description": "Choose the explorer to check the transaction"
+        },
+        "api": {
+            "title": "API Key",
+            "description": "Get the API Key from"
+        },
+        "api_secret": {
+            "title": "API Secret Key",
+            "description": "Get the API Secret Key from"
+        },
+        "currencies": {
+            "title": "Select your currency",
+            "description": "Here you can select how you want to be paid"
+        },
+        "issuers": {
+            "title": "Select your issuer",
+            "description": "Here you can select how you want to be paid"
+        }
+    },
+    "admin": {
+        "title": "XUMM Payment Gateway for WooCommerce",
+        "signin": {
+            "success": "Sign In successfull please check address & test payment"
+        },
+        "trustset": {
+            "success": "Trust Line Set successfull please check address & test payment",
+            "button": "Add Trustline"
+        },
+        "currency": {
+            "store_unsupported": "Please change store currency",
+            "gateway_unsupported": "Please change currency here"
+        },
+        "api": {
+            "ping_error": "Connection API Error to the",
+            "ping_success": "Connected to the",
+            "redirect_error": "Connection API Error to the",
+            "incorrect_webhook": "WebHook incorrect on",
+            "corrected_webhook": "should be",
+            "href": "XUMM API",
+            "keys": "Check your API keys.",
+            "no_response": "Connection Error to the",
+            "no_keys": "Please add XUMM API keys from"
+        }
+    },
+    "payment": {
+        "error": {
+            "currency": "Currency issue",
+            "currency_pair": "Currency pair not supported. Please check the store currency & settings in the XUMM payment setting in WooCommerce",
+            "wp_connection": "Connection error",
+            "xumm_api": "Got an error from XUMM"
+        },
+        "memo": {
+            "type": "https://xumm.app/",
+            "data": "paid with XUMM"
+        }
+    },
+    "callback": {
+        "error": {
+            "amount": "Payment amount error",
+            "xumm_payload": "Connection error getting payload details from the XUMM platform.",
+            "zero": "No funds received",
+            "insufficient": "Your order is not paid and is less than order total, Please contact support",
+            "currency": "The store currency is not the same as the payment, please contact support",
+            "issuer": "The issuer is not the same as the payment, please contact support",
+            "payment": "Payment failed or cancelled, feel free to try again."
+        },
+        "note": {
+            "success": {
+                "thanks": "Hi, your order is paid! Thank you!",
+                "check": "Check the transaction details",
+                "href": "information"
+            },
+            "insufficient": {
+                "message": "Your order is not paid and is less than order total, please contact support",
+                "open": "Open:",
+                "paid": "Paid:",
+                "information": "Transaction information"
+            },
+            "currency": {
+                "message": "Wrong",
+                "paid": "Paid:",
+                "information": "Transaction information"
+            },
+            "issuer": {
+                "message": "Wrong",
+                "paid": "Paid:",
+                "information": "Transaction information"
+            }
+        },
+        "status": {
+            "processing": "",
+            "pending": "",
+            "on_hold": "Order status: on hold",
+            "completed": "Order status: completed",
+            "cancelled": "Your order has been cancelled, please try again.",
+            "failed": "Failed payment. Please try again!",
+            "refunded": "Order has been refunded",
+            "default": "There is something wrong with the order, please contact us."
+        }
+    }
+}
