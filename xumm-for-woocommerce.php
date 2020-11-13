@@ -96,7 +96,7 @@ function init_xumm_gateway_class() {
             if(!empty($_GET["order_id"])) {
                 $status = $lang->callback->status;
 
-                $custom_identifier = $_GET["order_id"];
+                $custom_identifier = sanitize_text_field($_GET["order_id"]);
                 $order_id = explode("_", $custom_identifier)[0];
                 $order = wc_get_order( $order_id );
 

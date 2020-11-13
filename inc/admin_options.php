@@ -17,7 +17,7 @@
             }
 
             if(!empty($_GET['xumm-id'])) {
-                $data = getXummData($_GET['xumm-id'], $this);
+                $data = getXummData(sanitize_text_field($_GET['xumm-id']), $this);
                 //Todo:: first check if success
                 if (!empty($data['payload'])) {
                     switch ($data['payload']['tx_type']) {
@@ -55,8 +55,8 @@
 
                                 $headers = [
                                     'Content-Type' => 'application/json',
-                                    'X-API-Key' => $_POST['woocommerce_xumm_api'],
-                                    'X-API-Secret' => $_POST['woocommerce_xumm_api_secret']
+                                    'X-API-Key' => sanitize_text_field($_POST['woocommerce_xumm_api']),
+                                    'X-API-Secret' => sanitize_text_field($_POST['woocommerce_xumm_api_secret'])
                                 ];
 
                                 switch($_POST["specialAction"]) {
@@ -86,8 +86,8 @@
                                                 "Account" => $this->destination,
                                                 "Fee" => "12",
                                                 "LimitAmount" => [
-                                                  "currency" => $_POST['woocommerce_xumm_currencies'],
-                                                  "issuer" => $_POST['woocommerce_xumm_issuers'],
+                                                  "currency" => sanitize_text_field($_POST['woocommerce_xumm_currencies']),
+                                                  "issuer" => sanitize_text_field($_POST['woocommerce_xumm_issuers']),
                                                   "value" => "999999999"
                                                 ]
                                             ],
