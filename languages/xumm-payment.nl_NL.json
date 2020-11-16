@@ -5,8 +5,8 @@
     },
     "form": {
         "enabled": {
-            "title": "Enable/Disable",
-            "label": "Enable XUMM Gateway",
+            "title": "Aan/Uit",
+            "label": "XUMM Gateway inschakelen",
             "description": ""
         },
         "title": {
