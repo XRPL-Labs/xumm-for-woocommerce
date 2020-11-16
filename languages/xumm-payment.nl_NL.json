@@ -57,6 +57,9 @@
             "store_unsupported": "Verander de winkel valuta in de algemene instellingen van WooCommerce",
             "gateway_unsupported": "Verander de valuta in dit menu"
         },
+        "issuer": {
+            "Issuer_not_set": "De issuer moet worden geselecteerd en sla de wijzigingen op"
+        },
         "api": {
             "ping_error": "Verbindingsfout met de",
             "ping_success": "<b>Verbonden</b> met",

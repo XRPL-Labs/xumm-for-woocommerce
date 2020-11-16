@@ -162,8 +162,10 @@
                             echo('<div class="notice notice-error"><p>'.$admin->api->no_response.' <a href="https://apps.xumm.dev/">'.$admin->api->href.'</a></p></div>');
                        }
                     }
-                    if(!in_array($storeCurrency, $this->availableCurrencies)) echo('<div class="notice notice-error"><p>'.$admin->currency->store_unsupported.'</p></div>');
+                    if (!in_array($storeCurrency, $this->availableCurrencies)) echo('<div class="notice notice-error"><p>'.$admin->currency->store_unsupported.'</p></div>');
                     if ($storeCurrency != 'XRP' && $this->currencies != 'XRP' && $storeCurrency != $this->currencies) echo('<div class="notice notice-error"><p>'.$admin->currency->gateway_unsupported.'</p></div>');
+                    if ($this->currencies != 'XRP' && empty($this->issuers)) echo('<div class="notice notice-error"><p>'.$admin->issuer->Issuer_not_set.'</p></div>');
+
                 ?>
             </table>
 

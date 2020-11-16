@@ -174,9 +174,10 @@ if(class_exists('WooCommerce')) {
         $xumm = new WC_Gateway_XUMM_Gateway;
         $storeCurrency = get_woocommerce_currency();
         
-        if(empty($xumm->api) || empty($xumm->api_secret)) unset($available_gateways['xumm']);
-        if(!in_array($storeCurrency, $xumm->availableCurrencies)) unset($available_gateways['xumm']);
+        if (empty($xumm->api) || empty($xumm->api_secret)) unset($available_gateways['xumm']);
+        if (!in_array($storeCurrency, $xumm->availableCurrencies)) unset($available_gateways['xumm']);
         if ($storeCurrency != 'XRP' && $xumm->currencies != 'XRP' && $storeCurrency != $xumm->currencies) unset($available_gateways['xumm']);
+        if ($xumm->currencies != 'XRP' && empty($xumm->issuers)) unset($available_gateways['xumm']);
         return $available_gateways;
     }
 }

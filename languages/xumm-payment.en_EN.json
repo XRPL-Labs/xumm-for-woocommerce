@@ -57,6 +57,9 @@
             "store_unsupported": "Please change store currency",
             "gateway_unsupported": "Please change currency here"
         },
+        "issuer": {
+            "Issuer_not_set": "Please set the issuer and save changes"
+        },
         "api": {
             "ping_error": "Connection API Error to the",
             "ping_success": "Connected to the",
