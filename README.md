@@ -4,6 +4,8 @@ See: https://xumm.app
 
 This is a payment plugin for WooCommerce shop owners, so customers can pay easily using the XRP ledger and the XUMM app.
 
+Plugin url: https://wordpress.org/plugins/xumm-payments-for-woocommerce/
+
 This plugin is in Beta, get a Beta release here:
 https://github.com/XRPL-Labs/xumm-for-woocommerce/releases/
 
