@@ -5,7 +5,7 @@
  * Description: Make XRP payments using XUMM
  * Author:      xumm
  * Author URI:  https://xumm.app/
- * Version:     0.2
+ * Version:     0.3
  * License:     GPL v2 or later
  * License URI: https://xrpl-labs.com/static/documents/XRPL-Labs-Terms-of-Service-V1.pdf
  */
@@ -167,6 +167,17 @@ if(class_exists('WooCommerce')) {
             case 'ETH': $custom_currency_symbol = 'Ξ'; break;
         }
         return $custom_currency_symbol;
+    }
+
+    add_filter( 'woocommerce_available_payment_gateways', 'dissable_xumm' );
+    function dissable_xumm($available_gateways) {
+        $xumm = new WC_Gateway_XUMM_Gateway;
+        $storeCurrency = get_woocommerce_currency();
+        
+        if(empty($xumm->api) || empty($xumm->api_secret)) unset($available_gateways['xumm']);
+        if(!in_array($storeCurrency, $xumm->availableCurrencies)) unset($available_gateways['xumm']);
+        if ($storeCurrency != 'XRP' && $xumm->currencies != 'XRP' && $storeCurrency != $xumm->currencies) unset($available_gateways['xumm']);
+        return $available_gateways;
     }
 }
 

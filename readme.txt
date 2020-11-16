@@ -73,5 +73,8 @@ Also you can see if the trustline button is enabled this means you need to click
 
 == Upgrade Notice ==
 
+= 0.3 =
+[ADD] Disable payment gateway when API keys are missing or the currency is not supported.
+
 = 0.2 =
 First public release for the WooCommerce plugin.
