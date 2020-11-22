@@ -84,6 +84,8 @@
 
             $availableIssuers = [];
             foreach ($body['details'] as $exchange) {
+                if ($exchange['shortlist'] === 0) break;
+                
                 $exchangeName = $exchange['name'];
                 foreach ($exchange['currencies'] as $currency) {
                     $value = $currency['issuer'];
