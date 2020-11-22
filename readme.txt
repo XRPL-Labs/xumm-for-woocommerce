@@ -66,6 +66,11 @@ Also you can see if the trustline button is enabled this means you need to click
 4. The setup page in the admin panel on the XUMM api.
 
 == Changelog ==
+= 0.4 =
+[FIX] Javascript file path fixed.
+
+= 0.3.1 =
+[FIX] Filter hidden issuers from the XUMM API on the backend.
 
 = 0.3 =
 [ADD] Disable payment gateway when API keys are missing or the currency is not supported.
