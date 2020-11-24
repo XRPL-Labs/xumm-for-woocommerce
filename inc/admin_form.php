@@ -2,18 +2,20 @@
     require 'language.php';
 
             $form = $lang->form;
-
-            $headers = array(
-                'Content-Type' => 'application/json',
-                'X-API-Key' => $this->api,
-                'X-API-Secret' => $this->api_secret
-            );
-
-            $response = wp_remote_get('https://xumm.app/api/v1/platform/curated-assets', array(
-                'method'    => 'GET',
-                'headers'   => $headers,
-            ));
-            $body = json_decode( $response['body'], true );
+            
+            if(!empty($this->api) && !empty($this->api_secret)) {
+                $headers = array(
+                    'Content-Type' => 'application/json',
+                    'X-API-Key' => $this->api,
+                    'X-API-Secret' => $this->api_secret
+                );
+    
+                $response = wp_remote_get('https://xumm.app/api/v1/platform/curated-assets', array(
+                    'method'    => 'GET',
+                    'headers'   => $headers,
+                ));
+                $body = json_decode( $response['body'], true );
+            }
 
             $this->form_fields = array(
                 'enabled' => array(
@@ -68,42 +70,48 @@
                 )
             );
 
-            $this->availableCurrencies['XRP'] = 'XRP';
-            foreach ($body['currencies'] as $v) {
-                if(get_woocommerce_currency() == $v){
-                    $this->availableCurrencies[$v] = $v;
-                }
-            }
-
             $this->form_fields['currencies'] = array(
                 'title'       => $form->currencies->title,
                 'description' => $form->currencies->description,
                 'type'        => 'select',
-                'options'     => $this->availableCurrencies,
+                'options'     => $this->availableCurrencies
             );
 
-            $availableIssuers = [];
-            foreach ($body['details'] as $exchange) {
-                if ($exchange['shortlist'] === 0) break;
-                
-                $exchangeName = $exchange['name'];
-                foreach ($exchange['currencies'] as $currency) {
-                    $value = $currency['issuer'];
-                    $availableIssuers[$value] = $exchangeName;
+            if (!empty ($body['currencies']) ) {
+                $this->availableCurrencies['XRP'] = 'XRP';
+                foreach ($body['currencies'] as $v) {
+                    if(get_woocommerce_currency() == $v){
+                        $this->availableCurrencies[$v] = $v;
+                    }
                 }
+                $this->form_fields['currencies']['options'] = $this->availableCurrencies;
+            } else {
+                $this->form_fields['currencies']['disabled'] = true;
             }
 
             $this->form_fields['issuers'] = array(
                 'title'       => $form->issuers->title,
                 'description' => $form->issuers->description,
                 'type'        => 'select',
-                'options'     => $availableIssuers,
-                'default'     => ''
+                'options'     => []
             );
-
-             $body['account'] = $this->destination;
-             $body['store_currency'] = get_woocommerce_currency();
-
+            
+            if (!empty ($body['details']) && get_woocommerce_currency() != 'XRP') {
+                foreach ($body['details'] as $exchange) {
+                    if ($exchange['shortlist'] === 0) break;
+    
+                    $exchangeName = $exchange['name'];
+                    foreach ($exchange['currencies'] as $currency) {
+                        $value = $currency['issuer'];
+                        $this->form_fields['issuers']['options'][$value] = $exchangeName;
+                    }
+                }
+            } else {
+                $this->form_fields['issuers']['disabled'] = true;
+            }
+    
+            $body['account'] = $this->destination;
+            $body['store_currency'] = get_woocommerce_currency();
             wp_localize_script( 'xumm_js', 'xumm_object', $body);
 
 ?>

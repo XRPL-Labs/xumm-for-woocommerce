@@ -150,6 +150,7 @@
                             ));
                         if( !is_wp_error( $response ) ) {
                             $body = json_decode( $response['body'], true );
+                            if ( empty($body['pong']) ) $body['pong'] = false;
                             if(!empty($body['pong'] && $body['pong'] == true)) {
                                 echo('<div class="notice notice-success"><p>'.$admin->api->ping_success.' <a href="https://apps.xumm.dev/">'.$admin->api->href.'</a></p></div>');
                                 
@@ -173,7 +174,8 @@
             <button type="button" class="customFormActionBtn" id="set_destination" style="border-style: none; cursor:pointer; background-color: Transparent;">
                 <?php echo(file_get_contents(dirname(plugin_dir_path( __FILE__ )) .'/public/images/signin.svg')); ?>
             </button>
-            <button type="button" class="customFormActionBtn button-primary" id="set_trustline">
+
+            <button type="button" class="customFormActionBtn button-primary" id="set_trustline" disabled="disabled">
                 <?php echo ($admin->trustset->button); ?>
             </button>
 
