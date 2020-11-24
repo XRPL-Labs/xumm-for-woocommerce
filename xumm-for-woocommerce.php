@@ -3,7 +3,7 @@
  * Plugin Name: XUMM payments for WooCommerce
  * Plugin URI:  https://github.com/XRPL-Labs/xumm-for-woocommerce
  * Description: Make XRP payments using XUMM
- * Author:      xumm, wietsewind
+ * Author:      XUMM
  * Author URI:  https://xumm.app/
  * Version:     0.5
  * License:     GPL v2 or later
