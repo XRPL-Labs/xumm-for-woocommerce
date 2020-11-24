@@ -70,6 +70,7 @@ Also you can see if the trustline button is enabled this means you need to click
 [IMPROVED] Improved UI in the WooCommerce XUMM admin options
 [FIX] Admin Page options disabled if API keys are missing or wrong
 [FIX] XUMM API ping on a fail
+[FIX] Show no error when issuer is not set on a XRP store Currency
 
 = 0.4 =
 [FIX] Javascript file path fixed.
