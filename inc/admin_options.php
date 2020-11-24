@@ -165,7 +165,7 @@
                     }
                     if (!in_array($storeCurrency, $this->availableCurrencies)) echo('<div class="notice notice-error"><p>'.$admin->currency->store_unsupported.'</p></div>');
                     if ($storeCurrency != 'XRP' && $this->currencies != 'XRP' && $storeCurrency != $this->currencies) echo('<div class="notice notice-error"><p>'.$admin->currency->gateway_unsupported.'</p></div>');
-                    if ($this->currencies != 'XRP' && empty($this->issuers)) echo('<div class="notice notice-error"><p>'.$admin->issuer->Issuer_not_set.'</p></div>');
+                    if ($this->currencies != 'XRP' && empty($this->issuers) && get_woocommerce_currency() != 'XRP') echo('<div class="notice notice-error"><p>'.$admin->issuer->Issuer_not_set.'</p></div>');
 
                 ?>
             </table>
