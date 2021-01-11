@@ -73,11 +73,6 @@
         'txjson'  => array(
             'TransactionType' => 'Payment',
             'Destination' => $this->destination,
-            'Amount' => array(
-                'currency' => $this->currencies,
-                'value' => $totalSum,
-                'issuer' => $this->issuers
-                ),
             'Memos' => array(
                 0 => array(
                     'Memo' => array(
@@ -105,11 +100,23 @@
         )
     ];
 
-    if (wp_is_mobile()){
+    error_log($totalSum);
+    if ($this->currencies === 'XRP') {
+        $body['txjson']['Amount'] = number_format($totalSum * 1000000, 0, '', '');
+    } else {
+        $body['txjson']['Amount'] = array(
+            'currency' => $this->currencies,
+            'value' => $totalSum,
+            'issuer' => $this->issuers
+        );
+    }
+
+    if (wp_is_mobile()) {
         $body['options']['return_url']['app'] = $return_url;
     }
     
     $body = wp_json_encode($body);
+    error_log(print_r($body, true));
 
     $response = wp_remote_post('https://xumm.app/api/v1/platform/payload', array(
         'method'    => 'POST',
@@ -118,22 +125,17 @@
         )
     );
     
-        if( !is_wp_error( $response ) ) {
-            $body = json_decode( $response['body'], true );
-            
-            if ( $body['next']['always'] != null ) {
-            // Redirect to the XUMM processor page
+    if (!is_wp_error($response) ) {
+        $body = json_decode($response['body'], true );
+        if ($body['next']['always'] != null) {
+        // Redirect to the XUMM processor page
             return $body['next']['always'];
-    
-            } else {
-                //Todo:: Check against detailed errors from the app.xumm api
-                //Like Duplicate ID etc...
-            wc_add_notice( $payment->error->xumm_api, 'error' );
+        } else {
+            wc_add_notice($payment->error->xumm_api, 'error');
             return;
         }
-    
     } else {
-        wc_add_notice( $payment->error->wp_connection, 'error' );
+        wc_add_notice($payment->error->wp_connection, 'error');
         return;
     }
 ?>
