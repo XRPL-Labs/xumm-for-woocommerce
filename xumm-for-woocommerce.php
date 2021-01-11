@@ -5,7 +5,7 @@
  * Description: Make XRP payments using XUMM
  * Author:      XUMM
  * Author URI:  https://xumm.app/
- * Version:     0.5
+ * Version:     0.5.1
  * License:     GPL v2 or later
  * License URI: https://xrpl-labs.com/static/documents/XRPL-Labs-Terms-of-Service-V1.pdf
  */
