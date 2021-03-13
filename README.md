@@ -9,6 +9,6 @@ Plugin url: https://wordpress.org/plugins/xumm-payments-for-woocommerce/
 This plugin is in Beta, get a Beta release here:
 https://github.com/XRPL-Labs/xumm-for-woocommerce/releases/
 
-### For install & setup instructions, see [this article at the XUMM Support pages](https://support.xumm.app/en/articles/4617963-installing-the-xumm-woocommerce-plugin)
+### For install & setup instructions, see [this article at the XUMM Support pages](https://support.xumm.app/hc/en-us/articles/360018136160-Installing-the-XUMM-WooCommerce-plugin)
 
 After beta this plugin will be available in the Wordpress / WooCommerce Plugin store.
