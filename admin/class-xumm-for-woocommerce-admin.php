@@ -98,13 +98,24 @@ class Xumm_For_Woocommerce_Admin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/xumm-for-woocommerce-admin.js', array( 'jquery' ), $this->version, false );
 	}
 
+    /**
+	 * Initialize form fields for the admin area.
+	 *
+     * @param object $context
+	 * @since    1.0.0
+	 */
 	public function init_form_fields($context)
 	{
 		include_once( 'partials/xumm-for-woocommerce-admin-form-fields.php' );
 	}
 
+    /**
+	 * Display plugin options on woocommerce settings for XUMM Gateway
+	 *
+     * @param object $context
+	 * @since    1.0.0
+	 */
 	public function display_plugin_options($context) {
 		include_once( 'partials/xumm-for-woocommerce-admin-display.php' );
 	}
-
 }
