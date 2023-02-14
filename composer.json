@@ -1,0 +1,13 @@
+{
+    "name": "xrpl/xumm-for-woocomerce",
+    "description": "Accept XRP, EUR, USD, BTC & ETH, using a single plugin with the greatest XRP ledger client (wallet): XUMM!",
+    "type": "project",
+    "require": {
+        "xrpl/xumm-sdk-php": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "XummForWoocomerce\\": "src/"
+        }
+    }
+}

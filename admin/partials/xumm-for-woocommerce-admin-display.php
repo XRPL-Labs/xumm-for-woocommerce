@@ -1,7 +1,23 @@
 <?php
-    require 'language.php';
 
-            $admin = $lang->admin;
+/**
+ * Provide a admin area view for the plugin
+ *
+ * This file is used to markup the admin-facing aspects of the plugin.
+ *
+ * @link       https://instagram.com/andreirosseti
+ * @since      1.0.0
+ *
+ * @package    Xumm_For_Woocommerce
+ * @subpackage Xumm_For_Woocommerce/admin/partials
+ */
+?>
+
+<!-- This file should primarily consist of HTML with a little bit of PHP. -->
+<?php
+    
+
+    //        $lang->admin = $lang->admin;
 
             function getXummData($id, $self){
                 $response = wp_remote_get('https://xumm.app/api/v1/platform/payload/ci/'. $id, array(
@@ -17,19 +33,19 @@
             }
 
             if(!empty($_GET['xumm-id'])) {
-                $data = getXummData(sanitize_text_field($_GET['xumm-id']), $this);
+                $data = getXummData(sanitize_text_field($_GET['xumm-id']), $context);
                 //Todo:: first check if success
                 if (!empty($data['payload'])) {
                     switch ($data['payload']['tx_type']) {
                         case 'SignIn':
                             $account = $data['response']['account'];
                             if(!empty($account))
-                                $this->update_option('destination', $account );
-                                echo('<div class="notice notice-success"><p>'.$admin->signin->success.'</p></div>');
+                                $context->update_option('destination', $account );
+                                echo('<div class="notice notice-success"><p>'.$lang->admin->signin->success.'</p></div>');
                             break;
     
                         case 'TrustSet':
-                            //Todo show message when trustset is success with: $admin->trustset->success
+                            //Todo show message when trustset is success with: __('Trust Line Set successfull please check address & test payment', 'xumm-for-woocommerce')
                             break;
                         
                         default:
@@ -39,7 +55,7 @@
             }
 
             ?>
-            <h2><?php _e($admin->title,'woocommerce'); ?></h2>
+            <h2><?php __('XUMM Payment Gateway for WooCommerce','woocommerce'); ?></h2>
             <?php
                 if(!empty($_POST["specialAction"])) {
                     ?>
@@ -83,7 +99,7 @@
                                         $body = [
                                             "txjson" => [
                                                 "TransactionType" => "TrustSet",
-                                                "Account" => $this->destination,
+                                                "Account" => $context->destination,
                                                 "Fee" => "12",
                                                 "LimitAmount" => [
                                                   "currency" => sanitize_text_field($_POST['woocommerce_xumm_currencies']),
@@ -107,7 +123,7 @@
                                     $body['options']['return_url']['app'] = $return_url;
                                 }
 
-                                $body = wp_json_encode($body);
+                                $body = wp_json__ncode($body);
                             
                                 $response = wp_remote_post('https://xumm.app/api/v1/platform/payload', array(
                                     'method'    => 'POST',
@@ -123,11 +139,11 @@
                                        // Redirect to the XUMM processor page
                                         echo($redirect);
                                     } else {
-                                        echo('<div class="notice notice-error"><p>'.$admin->api->redirect_error.' <a href="https://apps.xumm.dev/">'. $admin->api->href .'</a>. '. $admin->api->keys .'Error Code:'. $body['error']['code'] .'</p></div>');
+                                        echo('<div class="notice notice-error"><p>'.$lang->admin->api->redirect__rror.' <a href="https://apps.xumm.dev/">'. __('XUMM API', 'xumm-for-woocommerce') .'</a>. '. __('Check your API keys.', 'xumm-for-woocommerce') .'Error Code:'. $body['error']['code'] .'</p></div>');
                                    }
                             
                                } else {
-                                    echo('<div class="notice notice-error"><p>'.$admin->api->no_response.' <a href="https://apps.xumm.dev/">'. $admin->api->href .'</a>.</p></div>');
+                                    echo('<div class="notice notice-error"><p>'.__('Connection Error to the', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'. __('XUMM API', 'xumm-for-woocommerce') .'</a>.</p></div>');
                                }
                             ?>
                         </div>
@@ -136,36 +152,38 @@
             ?>
             <table class="form-table">
                 <?php
-                $this->generate_settings_html();
+
+                $context->generate_settings_html();
+                
                 $storeCurrency = get_woocommerce_currency();
-                    if(empty($this->api) || empty($this->api_secret)) echo('<div class="notice notice-info"><p>'. $admin->api->no_keys .' <a href="https://apps.xumm.dev/">'. $admin->api->href .'</a></p></div>');
+                    if(empty($context->api) || empty($context->api_secret)) echo('<div class="notice notice-info"><p>'. __('Please add XUMM API keys from', 'xumm-for-woocommerce') .' <a href="https://apps.xumm.dev/">'. __('XUMM API', 'xumm-for-woocommerce') .'</a></p></div>');
                     else {
                         $response = wp_remote_get('https://xumm.app/api/v1/platform/ping', array(
                             'method'    => 'GET',
                             'headers'   => array(
                                 'Content-Type' => 'application/json',
-                                'X-API-Key' => $this->api,
-                                'X-API-Secret' => $this->api_secret
+                                'X-API-Key' => $context->api,
+                                'X-API-Secret' => $context->api_secret
                                 )
                             ));
                         if( !is_wp_error( $response ) ) {
                             $body = json_decode( $response['body'], true );
                             if ( empty($body['pong']) ) $body['pong'] = false;
                             if(!empty($body['pong'] && $body['pong'] == true)) {
-                                echo('<div class="notice notice-success"><p>'.$admin->api->ping_success.' <a href="https://apps.xumm.dev/">'.$admin->api->href.'</a></p></div>');
+                                echo('<div class="notice notice-success"><p>'.__('Connected to the', 'xumm-for-woocommerce', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a></p></div>');
                                 
                                 $webhookApi = $body['auth']['application']['webhookurl'];
-                                $webhook = get_home_url() . '/?wc-api='. $this->id;
-                                if($webhook != $webhookApi) echo('<div class="notice notice-error"><p>'.$admin->api->incorrect_webhook.' <a href="https://apps.xumm.dev/">'.$admin->api->href.'</a>, '.$admin->api->corrected_webhook.' '.$webhook.'</p></div>');
+                                $webhook = get_home_url() . '/?wc-api='. $context->id;
+                                if($webhook != $webhookApi) echo('<div class="notice notice-error"><p>'.__('WebHook incorrect on', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a>, '.__('should be', 'xumm-for-woocommerce').' '.$webhook.'</p></div>');
                             }
-                            else echo('<div class="notice notice-error"><p>'.$admin->api->ping_error.' <a href="https://apps.xumm.dev/">'.$admin->api->href.'</a>. '.$admin->api->keys .'Error Code:'. $body['error']['code'].'</p></div>');
+                            else echo('<div class="notice notice-error"><p>'.__('Connection API Error to the', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a>. '. __('Check your API keys.', 'xumm-for-woocommerce') .'Error Code:'. $body['error']['code'].'</p></div>');
                         } else {
-                            echo('<div class="notice notice-error"><p>'.$admin->api->no_response.' <a href="https://apps.xumm.dev/">'.$admin->api->href.'</a></p></div>');
+                            echo('<div class="notice notice-error"><p>'.__('Connection Error to the', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a></p></div>');
                        }
                     }
-                    if (!in_array($storeCurrency, $this->availableCurrencies)) echo('<div class="notice notice-error"><p>'.$admin->currency->store_unsupported.'</p></div>');
-                    if ($storeCurrency != 'XRP' && $this->currencies != 'XRP' && $storeCurrency != $this->currencies) echo('<div class="notice notice-error"><p>'.$admin->currency->gateway_unsupported.'</p></div>');
-                    if ($this->currencies != 'XRP' && empty($this->issuers) && get_woocommerce_currency() != 'XRP') echo('<div class="notice notice-error"><p>'.$admin->issuer->Issuer_not_set.'</p></div>');
+                    if (!in_array($storeCurrency, $context->availableCurrencies)) echo('<div class="notice notice-error"><p>'.__('Please change store currency', 'xumm-for-woocommerce').'</p></div>');
+                    if ($storeCurrency != 'XRP' && $context->currencies != 'XRP' && $storeCurrency != $context->currencies) echo('<div class="notice notice-error"><p>'.__('Please change store currency', 'xumm-for-woocommerce').'</p></div>');
+                    if ($context->currencies != 'XRP' && empty($context->issuers) && get_woocommerce_currency() != 'XRP') echo('<div class="notice notice-error"><p>'.__('Please set the issuer and save changes', 'xumm-for-woocommerce').'</p></div>');
 
                 ?>
             </table>
@@ -176,7 +194,7 @@
             </button>
 
             <button type="button" class="customFormActionBtn button-primary" id="set_trustline" disabled="disabled">
-                <?php echo ($admin->trustset->button); ?>
+                <?php echo __('Add Trustline', 'xumm-for-woocommerce'); ?>
             </button>
 
             <script>
