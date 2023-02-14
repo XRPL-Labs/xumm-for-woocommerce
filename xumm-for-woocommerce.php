@@ -1,6 +1,17 @@
 <?php
 
 /**
+ * Plugin Name: XUMM payments for WooCommerce
+ * Plugin URI:  https://github.com/XRPL-Labs/xumm-for-woocommerce
+ * Description: Make XRP payments using XUMM
+ * Author:      XUMM
+ * Author URI:  https://xumm.app/
+ * Version:     1.0.0
+ * License:     GPL v2 or later
+ * License URI: https://xrpl-labs.com/static/documents/XRPL-Labs-Terms-of-Service-V1.pdf
+ */
+
+/**
  * The plugin bootstrap file
  *
  * This file is read by WordPress to generate the plugin information in the plugin
@@ -8,19 +19,19 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              https://instagram.com/andreirosseti
+ * @link              https://xumm.app/
  * @since             1.0.0
  * @package           Xumm_For_Woocommerce
  *
  * @wordpress-plugin
- * Plugin Name:       XUMM for WooCommerce
+ * Plugin Name:       XUMM payments for WooCommerce
  * Plugin URI:        https://github.com/XRPL-Labs/xumm-for-woocommerce
- * Description:       Accept XRP, EUR, USD, BTC & ETH, using a single plugin with the greatest XRP ledger client (wallet): XUMM!
+ * Description:       Make XRP payments using XUMM
  * Version:           1.0.0
- * Author:            Andrei R
- * Author URI:        https://instagram.com/andreirosseti
- * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * Author:            XUMM
+ * Author URI:        https://xumm.app/
+ * License:           GPL v2 or later
+ * License URI:       https://xrpl-labs.com/static/documents/XRPL-Labs-Terms-of-Service-V1.pdf
  * Text Domain:       xumm-for-woocommerce
  * Domain Path:       /languages
  */

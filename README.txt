@@ -1,114 +1,94 @@
-=== Plugin Name ===
-Contributors: (this should be a list of wordpress.org userid's)
-Donate link: https://instagram.com/andreirosseti
-Tags: comments, spam
-Requires at least: 3.0.1
-Tested up to: 3.4
-Stable tag: 4.3
+=== XUMM for WooCommerce ===
+Contributors: xumm, wietsewind
+Donate link: https://xumm.dev/beta/test 
+Tags: xumm, crypto, xrp, ledger, cryptocurrency
+Requires at least: 4.7
+Tested up to: 5.5.3
+Stable tag: trunk
+Requires PHP: 8.2
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://xrpl-labs.com/static/documents/XRPL-Labs-Terms-of-Service-V1.pdf
 
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
+Accept XRP, EUR, USD, BTC & ETH, using a single plugin with the greatest XRP ledger client (wallet): XUMM!
 
 == Description ==
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
+Allow easy on ledger, non custodial XRP ledger payments, in XRP or IOU's (issued currencies).
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
-
-A few notes about the sections above:
-
-*   "Contributors" is a comma separated list of wp.org/wp-plugins.org usernames
-*   "Tags" is a comma separated list of tags that apply to the plugin
-*   "Requires at least" is the lowest version that the plugin will work on
-*   "Tested up to" is the highest version that you've *successfully used to test the plugin*. Note that it might work on
-higher versions... this is just the highest one you've verified.
-*   Stable tag should indicate the Subversion "tag" of the latest stable version, or "trunk," if you use `/trunk/` for
-stable.
-
-    Note that the `readme.txt` of the stable tag is the one that is considered the defining one for the plugin, so
-if the `/trunk/readme.txt` file says that the stable tag is `4.3`, then it is `/tags/4.3/readme.txt` that'll be used
-for displaying information about the plugin.  In this situation, the only thing considered from the trunk `readme.txt`
-is the stable tag pointer.  Thus, if you develop in trunk, you can update the trunk `readme.txt` to reflect changes in
-your in-development version, without having that information incorrectly disclosed about the current stable version
-that lacks those changes -- as long as the trunk's `readme.txt` points to the correct stable tag.
-
-    If no stable tag is provided, it is assumed that trunk is stable, but you should specify "trunk" if that's where
-you put the stable version, in order to eliminate any doubt.
-
-== Installation ==
-
-This section describes how to install the plugin and get it working.
-
-e.g.
-
-1. Upload `xumm-for-woocommerce.php` to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Place `<?php do_action('plugin_name_hook'); ?>` in your templates
+XRP transactions are usually user initiated: open your wallet, enter the destination, amount, etc. and then you submit your transaction. In retail / e-commerce (and many other) scenarios, by "reversing" this process, the payment flow will become less prone to mistakes and much more user friendly.
 
 == Frequently Asked Questions ==
 
-= A question that someone might have =
+= What currencies are supported? =
 
-An answer to that question.
+The following store currencies are supported: XRP, EUR, USD, BTC, ETH.
 
-= What about foo bar? =
+= Can I use any other store currencies? =
 
-Answer to foo bar dilemma.
+At this moment this is not possible due to the fact that we do not have a reliable exchange rate for these currencies.
+
+= How do I know if my XRP account is setup correctly? =
+
+The best way is to make a test payment, this will check all stages. However you can quickly see if you have any errors.
+Also you can see if the trustline button is enabled this means you need to click it and set a trustline.
+
+== Installation ==
+
+= Minimum Requirements =
+
+* PHP version 5.6 or greater
+* WordPress 4.7 or greater
+* WooCommerce 2.2.0 or greater
+
+= Automatic installation =
+
+1. Search for XUMM for WooCommerce plugin, at the plugin section in your admin panel.
+2. Activate the plugin.
+3. Before proceding make sure the store currency in WooCommerce -> settings -> General is set to either: XRP, Euro, US Dollar, Bitcoin, Ethereum.
+3. Go to WooCommerce -> settings -> Payments & enable the GateWay to manage the plugin settings.
+4. Get the API keys from the XUMM API console and insert the correct webhook.
+5. You can now signin with your XRP account using XUMM, to use that as the destination address.
+6. Finally you can configure the currency and issuer, this controls what you will receive inside your XRP account.
+7. If the Add trustline button is enabled please click the button and set the trustline using XUMM.
+8. All should be ok by now, please check with a test transaction.
+
+= Manual installation =
+
+1. Download the zip file
+2. Upload the zipfile inside the WordPress plugin section
+3. Continue to follow the automatic installation steps from point 2.
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+1. Setup screen for payments.
+2. This is the standard setup to receive XRP. It shows a connected message and no errors.
+3. What the user will see when submitting the payment.
+4. The setup page in the admin panel on the XUMM api.
 
 == Changelog ==
-
-= 1.0 =
-* A change since the previous version.
-* Another change.
+= 0.5.1 =
+[FIX] Use the correct Amount key in txjson for using XRP as a currency
 
 = 0.5 =
-* List versions from most recent at top to oldest at bottom.
+[IMPROVED] Improved UI in the WooCommerce XUMM admin options
+[FIX] Admin Page options disabled if API keys are missing or wrong
+[FIX] XUMM API ping on a fail
+[FIX] Show no error when issuer is not set on a XRP store Currency
+
+= 0.4 =
+[FIX] Javascript file path fixed.
+
+= 0.3.1 =
+[FIX] Filter hidden issuers from the XUMM API on the backend.
+
+= 0.3 =
+[ADD] Disable payment gateway when API keys are missing or the currency is not supported.
+
+= 0.2 =
+* Pay with XRP, EUR, USD, BTC, ETH
+* Public Beta first release
 
 == Upgrade Notice ==
 
-= 1.0 =
-Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
-
-= 0.5 =
-This version fixes a security related bug.  Upgrade immediately.
-
-== Arbitrary section ==
-
-You may provide arbitrary sections, in the same format as the ones above.  This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation."  Arbitrary sections will be shown below the built-in sections outlined above.
-
-== A brief Markdown Example ==
-
-Ordered list:
-
-1. Some feature
-1. Another feature
-1. Something else about the plugin
-
-Unordered list:
-
-* something
-* something else
-* third thing
-
-Here's a link to [WordPress](http://wordpress.org/ "Your favorite software") and one to [Markdown's Syntax Documentation][markdown syntax].
-Titles are optional, naturally.
-
-[markdown syntax]: http://daringfireball.net/projects/markdown/syntax
-            "Markdown is what the parser uses to process much of the readme file"
-
-Markdown uses email style notation for blockquotes and I've been told:
-> Asterisks for *emphasis*. Double it up  for **strong**.
-
-`<?php code(); // goes in backticks ?>`
+= 0.2 =
+First public release for the WooCommerce plugin.

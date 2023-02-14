@@ -30,7 +30,7 @@ msgid "Andrei R"
 msgstr ""
 
 #. Author URI of the plugin
-msgid "https://instagram.com/andreirosseti"
+msgid "https://xumm.app/"
 msgstr ""
 
 #: admin/partials/xumm-for-woocommerce-admin-display.php:58

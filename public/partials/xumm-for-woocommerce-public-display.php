@@ -5,7 +5,7 @@
  *
  * This file is used to markup the public-facing aspects of the plugin.
  *
- * @link       https://instagram.com/andreirosseti
+ * @link       https://xumm.app/
  * @since      1.0.0
  *
  * @package    Xumm_For_Woocommerce

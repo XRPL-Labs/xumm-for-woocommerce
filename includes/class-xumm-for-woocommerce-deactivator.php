@@ -3,7 +3,7 @@
 /**
  * Fired during plugin deactivation
  *
- * @link       https://instagram.com/andreirosseti
+ * @link       https://xumm.app/
  * @since      1.0.0
  *
  * @package    Xumm_For_Woocommerce
