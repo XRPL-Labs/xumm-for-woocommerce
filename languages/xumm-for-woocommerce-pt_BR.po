@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: XUMM for WooCommerce 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/xumm-for-"
 "woocommerce\n"
-"POT-Creation-Date: 2023-02-14T14:47:18-03:00\n"
-"PO-Revision-Date: 2023-02-14 16:45-0300\n"
+"POT-Creation-Date: 2023-02-14T17:30:48-03:00\n"
+"PO-Revision-Date: 2023-02-14 17:31-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -17,30 +17,29 @@ msgstr ""
 "X-Generator: Poedit 3.2.2\n"
 
 #. Plugin Name of the plugin
-msgid "XUMM for WooCommerce"
-msgstr ""
+#, fuzzy
+#| msgid "XUMM Payment Gateway for WooCommerce"
+msgid "XUMM payments for WooCommerce"
+msgstr "Gateway de pagamento XUMM para WooCommerce"
 
 #. Plugin URI of the plugin
 msgid "https://github.com/XRPL-Labs/xumm-for-woocommerce"
 msgstr ""
 
 #. Description of the plugin
-msgid ""
-"Accept XRP, EUR, USD, BTC & ETH, using a single plugin with the greatest XRP "
-"ledger client (wallet): XUMM!"
-msgstr ""
+#, fuzzy
+msgid "Make XRP payments using XUMM"
+msgstr "Pague com XRP usando a carteira #1: XUMM"
 
 #. Author of the plugin
-msgid "Andrei R"
-msgstr ""
+#, fuzzy
+#| msgid "XUMM API"
+msgid "XUMM"
+msgstr "Gateway de pagamento XUMM para WooCommerce"
 
 #. Author URI of the plugin
 msgid "https://xumm.app/"
 msgstr ""
-
-#: admin/partials/xumm-for-woocommerce-admin-display.php:58
-msgid "XUMM Payment Gateway for WooCommerce"
-msgstr "Gateway de pagamento XUMM para WooCommerce"
 
 #: admin/partials/xumm-for-woocommerce-admin-display.php:142
 #: admin/partials/xumm-for-woocommerce-admin-display.php:146
@@ -61,6 +60,10 @@ msgstr "Verifique suas chaves de API."
 #: admin/partials/xumm-for-woocommerce-admin-display.php:181
 msgid "Connection Error to the"
 msgstr "Erro de conexão para"
+
+#: admin/partials/xumm-for-woocommerce-admin-display.php:159
+msgid "Please add XUMM API keys from"
+msgstr ""
 
 #: admin/partials/xumm-for-woocommerce-admin-display.php:173
 msgid "Connected to the"
@@ -91,88 +94,80 @@ msgstr "Defina o emissor e salve as alterações"
 msgid "Add Trustline"
 msgstr "Adicionar Trustline"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:20
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:13
 msgid "Enable/Disable"
 msgstr "Habilitar/Desabilitar"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:21
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:14
 msgid "Enable XUMM Gateway"
 msgstr "Habilitar XUMM Gateway"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:27
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:20
 msgid "Title"
 msgstr "Título"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:29
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:22
 msgid "This is the title which the user sees during checkout"
 msgstr "Este é o título que o usuário vê durante o checkout"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:30
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:23
 msgid "XRP Payment"
 msgstr "Pagamento com XRP"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:34
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:27
 msgid "Description"
 msgstr "Descrição"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:36
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:29
 msgid "This is the text users will see in the checkout for this payment method"
 msgstr ""
 "Este é o texto que os usuários verão no checkout desta forma de pagamento"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:37
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:30
 msgid "Pay with XRP using the #1 XRPL wallet: XUMM."
 msgstr "Pague com XRP usando a carteira #1: XUMM"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:40
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:33
 msgid "XRP Destination address"
 msgstr "Endereço de Destino XRP"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:42
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:35
 msgid "This is your XRP r Address"
 msgstr "Este é seu endereço XRP r"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:46
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:39
 msgid "Transaction Explorer"
 msgstr "Explorador de transações"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:47
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:40
 msgid "Choose the explorer to check the transaction"
 msgstr "Escolha o explorador para checar as transações"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:58
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:51
 msgid "API Key"
 msgstr "Chave de API"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:60
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:53
 msgid "Get the API Key from"
 msgstr "Obter a chave de API de"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:64
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:57
 msgid "API Secret Key"
 msgstr "Chave secreta de API"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:66
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:59
 msgid "Get the API Secret Key from"
 msgstr "Obter a chave de API de"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:72
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:65
 msgid "Select your currency"
 msgstr "Escolha a sua moeda"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:73
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:92
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:66
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:85
 msgid "Here you can select how you want to be paid"
 msgstr "Aqui você pode selecionar como você deseja ser pago"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:91
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:84
 msgid "Select your issuer"
 msgstr "Selecione seu emissor (Issuer)"
-
-#: includes/class-xumm-for-woocommerce.php:194
-msgid "XRP"
-msgstr ""
-
-#: includes/class-xumm-for-woocommerce.php:195
-msgid "Ethereum"
-msgstr ""
