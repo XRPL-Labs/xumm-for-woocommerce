@@ -47,45 +47,8 @@ class Xumm_For_Woocommerce_Loader {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-
-		
-			/*
-		
-			add_filter( 'woocommerce_payment_gateways', 'add_xumm_gateway_class' );
-		
-			add_filter( 'woocommerce_currencies', 'add_xrp_currency' );
-			function add_xrp_currency( $xrp_currency ) {
-				$xrp_currency['XRP'] = __( 'XRP', 'woocommerce' );
-				$xrp_currency['ETH'] = __( 'Ethereum', 'woocommerce' );
-				return $xrp_currency;
-			}
-		
-			add_filter('woocommerce_currency_symbol', 'add_xrp_currency_symbol', 10, 2);
-			function add_xrp_currency_symbol( $custom_currency_symbol, $custom_currency ) {
-				switch( $custom_currency ) {
-					case 'XRP': $custom_currency_symbol = 'XRP '; break;
-					case 'ETH': $custom_currency_symbol = 'Ξ'; break;
-				}
-				return $custom_currency_symbol;
-			}
-		
-			add_filter( 'woocommerce_available_payment_gateways', 'dissable_xumm' );
-			function dissable_xumm($available_gateways) {
-				$xumm = new WC_Gateway_XUMM_Gateway;
-				$storeCurrency = get_woocommerce_currency();
-				
-				if (empty($xumm->api) || empty($xumm->api_secret)) unset($available_gateways['xumm']);
-				if (!in_array($storeCurrency, $xumm->availableCurrencies)) unset($available_gateways['xumm']);
-				if ($storeCurrency != 'XRP' && $xumm->currencies != 'XRP' && $storeCurrency != $xumm->currencies) unset($available_gateways['xumm']);
-				if ($xumm->currencies != 'XRP' && empty($xumm->issuers)) unset($available_gateways['xumm']);
-				return $available_gateways;
-			} 
-		}*/
-
-		
-		// $this->actions = array();
-		$this->filters = array();
-
+		$this->actions = [];
+		$this->filters = [];
 	}
 
 	/**

@@ -89,6 +89,6 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-xumm-for-woocommerce.php';
 function run_xumm_for_woocommerce() {
 	$plugin = new Xumm_For_Woocommerce();
 	$plugin->run();
-
 }
+
 run_xumm_for_woocommerce();

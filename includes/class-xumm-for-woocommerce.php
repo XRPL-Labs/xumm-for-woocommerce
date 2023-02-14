@@ -151,59 +151,24 @@ class Xumm_For_Woocommerce {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function define_admin_hooks() 
+	private function define_admin_hooks()
 	{
 		$plugin_admin = new Xumm_For_Woocommerce_Admin( $this->get_plugin_name(), $this->get_version() );
-
-		$this->loader->add_filter('xumm_init_form_fields', $plugin_admin, 'init_form_fields', 10, 1);
-		$this->loader->add_filter('xumm_display_plugin_options', $plugin_admin, 'display_plugin_options', 10, 1);
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
-		// $this->loader->add_action( 'admin_init', $plugin_admin, 'display_plugin_options' );
+        $this->loader->add_filter('xumm_init_form_fields', $plugin_admin, 'init_form_fields', 10, 1);
+		$this->loader->add_filter('xumm_display_plugin_options', $plugin_admin, 'display_plugin_options', 10, 1);
 
-		if (class_exists('WooCommerce')) 
+		if (class_exists('WooCommerce'))
 		{
 			$this->loader->add_filter('woocommerce_payment_gateways', $this, 'add_xumm_gateway_class');
-			$this->loader->add_filter('woocommerce_available_payment_gateways', $this, 'dissable_xumm');
+			$this->loader->add_filter('woocommerce_available_payment_gateways', $this, 'disable_xumm');
 			$this->loader->add_filter('woocommerce_currencies', $this, 'add_xrp_currency');
 			$this->loader->add_filter('woocommerce_currency_symbol', $this, 'add_xrp_currency_symbol', 10, 2);
 		}
 	}
-
-	public function add_xumm_gateway_class($methods) 
-	{
-		$methods[] = 'XummForWoocomerce\XummPaymentGateway'; 
-		return $methods;
-	}
-
-	public function dissable_xumm($available_gateways) 
-	{	
-		$xumm = new XummPaymentGateway;
-		$storeCurrency = get_woocommerce_currency();
-		
-		if (empty($xumm->api) || empty($xumm->api_secret)) unset($available_gateways['xumm']);
-		if (!in_array($storeCurrency, $xumm->availableCurrencies)) unset($available_gateways['xumm']);
-		if ($storeCurrency != 'XRP' && $xumm->currencies != 'XRP' && $storeCurrency != $xumm->currencies) unset($available_gateways['xumm']);
-		if ($xumm->currencies != 'XRP' && empty($xumm->issuers)) unset($available_gateways['xumm']);
-		return $available_gateways;
-	}
-
-	public function add_xrp_currency( $xrp_currency ) {
-        $xrp_currency['XRP'] = __( 'XRP', 'woocommerce' );
-        $xrp_currency['ETH'] = __( 'Ethereum', 'woocommerce' );
-        return $xrp_currency;
-    }
-
-    public function add_xrp_currency_symbol( $custom_currency_symbol, $custom_currency ) {
-        switch( $custom_currency ) {
-            case 'XRP': $custom_currency_symbol = 'XRP '; break;
-            case 'ETH': $custom_currency_symbol = 'Ξ'; break;
-        }
-        return $custom_currency_symbol;
-    }
-
 
 	/**
 	 * Register all of the hooks related to the public-facing functionality
@@ -261,4 +226,65 @@ class Xumm_For_Woocommerce {
 		return $this->version;
 	}
 
+    /**
+	 * Add XummPaymentGateway class as a method of Payment
+	 *
+	 * @since     0.5.1
+     * @param array $methods
+	 * @return      array     List of available methods
+	 */
+    public function add_xumm_gateway_class($methods)
+	{
+		$methods[] = 'XummForWoocomerce\XummPaymentGateway';
+		return $methods;
+	}
+
+    /**
+	 * Disable XUMM
+	 *
+	 * @since     0.5.1
+     * @param array $available_gateways
+	 * @return    array       List of available gateways
+	 */
+	public function disable_xumm($available_gateways)
+	{
+		$xumm = new XummPaymentGateway;
+		$storeCurrency = get_woocommerce_currency();
+
+		if (empty($xumm->api) || empty($xumm->api_secret)) unset($available_gateways['xumm']);
+		if (!in_array($storeCurrency, $xumm->availableCurrencies)) unset($available_gateways['xumm']);
+		if ($storeCurrency != 'XRP' && $xumm->currencies != 'XRP' && $storeCurrency != $xumm->currencies) unset($available_gateways['xumm']);
+		if ($xumm->currencies != 'XRP' && empty($xumm->issuers)) unset($available_gateways['xumm']);
+		return $available_gateways;
+	}
+
+    /**
+	 * ADD XRP as a currency
+	 *
+	 * @since     0.5.1
+     * @param array $xrp_currency
+	 * @return      array       List of currencies
+	 */
+	public function add_xrp_currency( $xrp_currency ) {
+        $xrp_currency['XRP'] = __( 'XRP', 'woocommerce' );
+        $xrp_currency['ETH'] = __( 'Ethereum', 'woocommerce' );
+        return $xrp_currency;
+    }
+
+    /**
+	 * ADD XRP currency symbol
+	 *
+	 * @since     0.5.1
+     * @param string $custom_currency_symbol
+     * @param string $custom_currency
+     *
+	 * @return      string       Custom currency symbol
+	 */
+    public function add_xrp_currency_symbol( $custom_currency_symbol, $custom_currency ) {
+        switch( $custom_currency ) {
+            case 'XRP': $custom_currency_symbol = 'XRP '; break;
+            case 'ETH': $custom_currency_symbol = 'Ξ'; break;
+        }
+        return $custom_currency_symbol;
+    }
 }
