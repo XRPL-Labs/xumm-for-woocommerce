@@ -184,9 +184,9 @@ use Xrpl\XummSdkPhp\XummSdk;
                 ?>
             </table>
 
-            <input type="text" id="specialAction" name="specialAction" value="">
-            <button type="button" class="customFormActionBtn" id="set_destination" style="border-style: none; cursor:pointer; background-color: Transparent;">
-                <?php echo(file_get_contents(dirname(plugin_dir_path( __FILE__ )) .'/public/images/signin.svg')); ?>
+            <input type="hidden" id="specialAction" name="specialAction" value="">
+            <button type="button" class="customFormActionBtn" id="set_destination" style="border-style: none; cursor:pointer; background-color: transparent;">
+                <img src="<?php echo plugin_dir_url( __FILE__ ) .'/../../public/images/signin.svg'; ?>" width="220" style="padding:0" />
             </button>
 
             <button type="button" class="customFormActionBtn button-primary" id="set_trustline" disabled="disabled">
