@@ -11,13 +11,13 @@
  * @package    Xumm_For_Woocommerce
  * @subpackage Xumm_For_Woocommerce/admin/partials
  */
+
+use Xrpl\XummSdkPhp\XummSdk;
+
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 <?php
-    
-
-    //        $lang->admin = $lang->admin;
 
             function getXummData($id, $self){
                 $response = wp_remote_get('https://xumm.app/api/v1/platform/payload/ci/'. $id, array(
@@ -43,11 +43,11 @@
                                 $context->update_option('destination', $account );
                                 echo('<div class="notice notice-success"><p>'.$lang->admin->signin->success.'</p></div>');
                             break;
-    
+
                         case 'TrustSet':
                             //Todo show message when trustset is success with: __('Trust Line Set successfull please check address & test payment', 'xumm-for-woocommerce')
                             break;
-                        
+
                         default:
                             break;
                     }
@@ -123,8 +123,8 @@
                                     $body['options']['return_url']['app'] = $return_url;
                                 }
 
-                                $body = wp_json__ncode($body);
-                            
+                                $body = wp_json_encode($body);
+
                                 $response = wp_remote_post('https://xumm.app/api/v1/platform/payload', array(
                                     'method'    => 'POST',
                                     'headers'   => $headers,
@@ -141,7 +141,7 @@
                                     } else {
                                         echo('<div class="notice notice-error"><p>'.$lang->admin->api->redirect__rror.' <a href="https://apps.xumm.dev/">'. __('XUMM API', 'xumm-for-woocommerce') .'</a>. '. __('Check your API keys.', 'xumm-for-woocommerce') .'Error Code:'. $body['error']['code'] .'</p></div>');
                                    }
-                            
+
                                } else {
                                     echo('<div class="notice notice-error"><p>'.__('Connection Error to the', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'. __('XUMM API', 'xumm-for-woocommerce') .'</a>.</p></div>');
                                }
@@ -154,32 +154,28 @@
                 <?php
 
                 $context->generate_settings_html();
-                
+
                 $storeCurrency = get_woocommerce_currency();
                     if(empty($context->api) || empty($context->api_secret)) echo('<div class="notice notice-info"><p>'. __('Please add XUMM API keys from', 'xumm-for-woocommerce') .' <a href="https://apps.xumm.dev/">'. __('XUMM API', 'xumm-for-woocommerce') .'</a></p></div>');
                     else {
-                        $response = wp_remote_get('https://xumm.app/api/v1/platform/ping', array(
-                            'method'    => 'GET',
-                            'headers'   => array(
-                                'Content-Type' => 'application/json',
-                                'X-API-Key' => $context->api,
-                                'X-API-Secret' => $context->api_secret
-                                )
-                            ));
-                        if( !is_wp_error( $response ) ) {
-                            $body = json_decode( $response['body'], true );
-                            if ( empty($body['pong']) ) $body['pong'] = false;
-                            if(!empty($body['pong'] && $body['pong'] == true)) {
+
+                        try {
+                            $sdk = new XummSdk($context->api, $context->api_secret);
+                            $pong = $sdk->ping();
+
+                            if(!empty($pong->call->uuidV4)) {
                                 echo('<div class="notice notice-success"><p>'.__('Connected to the', 'xumm-for-woocommerce', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a></p></div>');
-                                
-                                $webhookApi = $body['auth']['application']['webhookurl'];
+
+                                $webhookApi = $pong->application->webhookUrl;
                                 $webhook = get_home_url() . '/?wc-api='. $context->id;
                                 if($webhook != $webhookApi) echo('<div class="notice notice-error"><p>'.__('WebHook incorrect on', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a>, '.__('should be', 'xumm-for-woocommerce').' '.$webhook.'</p></div>');
                             }
                             else echo('<div class="notice notice-error"><p>'.__('Connection API Error to the', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a>. '. __('Check your API keys.', 'xumm-for-woocommerce') .'Error Code:'. $body['error']['code'].'</p></div>');
-                        } else {
-                            echo('<div class="notice notice-error"><p>'.__('Connection Error to the', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a></p></div>');
-                       }
+
+                        } catch (\Exception $e) {
+                            echo ('<div class="notice notice-error"><p>'.__('Connection Error to the', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a></p></div>');
+                        }
+
                     }
                     if (!in_array($storeCurrency, $context->availableCurrencies)) echo('<div class="notice notice-error"><p>'.__('Please change store currency', 'xumm-for-woocommerce').'</p></div>');
                     if ($storeCurrency != 'XRP' && $context->currencies != 'XRP' && $storeCurrency != $context->currencies) echo('<div class="notice notice-error"><p>'.__('Please change store currency', 'xumm-for-woocommerce').'</p></div>');
@@ -188,7 +184,7 @@
                 ?>
             </table>
 
-            <input type="hidden" id="specialAction" name="specialAction" value="">
+            <input type="text" id="specialAction" name="specialAction" value="">
             <button type="button" class="customFormActionBtn" id="set_destination" style="border-style: none; cursor:pointer; background-color: Transparent;">
                 <?php echo(file_get_contents(dirname(plugin_dir_path( __FILE__ )) .'/public/images/signin.svg')); ?>
             </button>
@@ -198,24 +194,29 @@
             </button>
 
             <script>
-                jQuery("form#mainform").submit(function (e) {
-                    if (jQuery(this).find("input#specialAction").val() !== '') {
-                        e.preventDefault()
-                        jQuery.ajax({
-                            url: document.location.href,
-                            type: 'POST',
-                            data: jQuery(this).serialize(),
-                            success: function (response) {
-                                let tlResponse = jQuery(response).find("#customFormActionResult").html().trim()
-                                window.location.href = tlResponse
-                            }
-                        });
-                        return false
-                    }
-                })
-                jQuery("button.customFormActionBtn").click(function () {
-                    jQuery("input#specialAction").val(jQuery(this).attr('id'))
-                    jQuery("form#mainform").submit()
-                })
+                jQuery(function () {
+                    jQuery("#mainform").submit(function (e) {
+                        alert(document.location.href);
+                        if (jQuery(this).find("input#specialAction").val() !== '') {
+                            e.preventDefault()
+                            alert('aqui');
+                            jQuery.ajax({
+                                url: document.location.href,
+                                type: 'POST',
+                                data: jQuery(this).serialize(),
+                                success: function (response) {
+                                    let tlResponse = jQuery(response).find("#customFormActionResult").html().trim()
+                                    window.location.href = tlResponse
+                                }
+                            });
+                            return false
+                        }
+                    })
+                    jQuery(".customFormActionBtn").click(function () {
+
+                        jQuery("#specialAction").val(jQuery(this).attr('id'))
+                        jQuery("#mainform").trigger('submit')
+                    })
+                });
             </script>
         <?php
