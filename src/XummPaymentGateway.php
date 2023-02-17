@@ -2,24 +2,20 @@
 
 namespace XummForWoocomerce;
 
-class XummPaymentGateway extends \WC_Payment_Gateway 
+class XummPaymentGateway extends \WC_Payment_Gateway
 {
     public $endpoint = 'https://xumm.app/api/v1/platform/';
 
     public $availableCurrencies = [];
 
-    public function __construct() 
+    public function __construct()
     {
-        global $lang;
-
         $this->id = 'xumm';
         $this->icon = plugin_dir_url(__FILE__).'public/images/label.svg';
         $this->has_fields = false;
-        $this->method_title = "Accept XUMM payments";
-        $this->method_description = "Receive any supported currency into your XRP account using XUMM";
-
+        $this->method_title = __("Accept XUMM payments", "xumm-for-woocommerce");
+        $this->method_description = __("Receive any supported currency into your XRP account using XUMM", "xumm-for-woocommerce");
         $this->supports = ['products'];
-
         $this->enabled = $this->get_option('enabled');
         $this->title = $this->get_option('title');
         $this->description = $this->get_option('description');
@@ -36,13 +32,13 @@ class XummPaymentGateway extends \WC_Payment_Gateway
         $this->init_settings();
     }
 
-    public function init_form_fields() 
+    public function init_form_fields()
     {
         apply_filters('xumm_init_form_fields', $this);
     }
 
-    public function admin_options() 
-    {     
+    public function admin_options()
+    {
         apply_filters('xumm_display_plugin_options', $this);
     }
 }

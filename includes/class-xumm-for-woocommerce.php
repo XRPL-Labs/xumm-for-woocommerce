@@ -30,6 +30,15 @@ use XummForWoocomerce\XummPaymentGateway;
  */
 class Xumm_For_Woocommerce {
 
+    /**
+	 * Access to the Xumm Payment Gateway
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      XummPaymentGateway    $xumm_gateway    Xumm Payment Gateway
+	 */
+    protected $xumm_gateway;
+
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
 	 * the plugin.
@@ -77,7 +86,11 @@ class Xumm_For_Woocommerce {
 
 		$this->load_dependencies();
 		$this->set_locale();
-		$this->define_admin_hooks();
+
+		if (is_admin()) {
+			$this->define_admin_hooks();
+		}
+
 		$this->define_public_hooks();
 
 	}
@@ -125,6 +138,7 @@ class Xumm_For_Woocommerce {
 
 		$this->loader = new Xumm_For_Woocommerce_Loader();
 
+        $this->xumm_gateway = new XummPaymentGateway();
 	}
 
 	/**
@@ -153,16 +167,17 @@ class Xumm_For_Woocommerce {
 	 */
 	private function define_admin_hooks()
 	{
-		$plugin_admin = new Xumm_For_Woocommerce_Admin( $this->get_plugin_name(), $this->get_version() );
+        $plugin_admin = new Xumm_For_Woocommerce_Admin( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
 
         $this->loader->add_filter('xumm_init_form_fields', $plugin_admin, 'init_form_fields', 10, 1);
 		$this->loader->add_filter('xumm_display_plugin_options', $plugin_admin, 'display_plugin_options', 10, 1);
 
 		if (class_exists('WooCommerce'))
 		{
+            $this->loader->add_action('woocommerce_update_options_payment_gateways_' . $this->xumm_gateway->id, $this->xumm_gateway, 'process_admin_options');
 			$this->loader->add_filter('woocommerce_payment_gateways', $this, 'add_xumm_gateway_class');
 			$this->loader->add_filter('woocommerce_available_payment_gateways', $this, 'disable_xumm');
 			$this->loader->add_filter('woocommerce_currencies', $this, 'add_xrp_currency');
@@ -248,13 +263,12 @@ class Xumm_For_Woocommerce {
 	 */
 	public function disable_xumm($available_gateways)
 	{
-		$xumm = new XummPaymentGateway;
 		$storeCurrency = get_woocommerce_currency();
 
-		if (empty($xumm->api) || empty($xumm->api_secret)) unset($available_gateways['xumm']);
-		if (!in_array($storeCurrency, $xumm->availableCurrencies)) unset($available_gateways['xumm']);
-		if ($storeCurrency != 'XRP' && $xumm->currencies != 'XRP' && $storeCurrency != $xumm->currencies) unset($available_gateways['xumm']);
-		if ($xumm->currencies != 'XRP' && empty($xumm->issuers)) unset($available_gateways['xumm']);
+		if (empty($this->xumm_gateway->api) || empty($this->xumm_gateway->api_secret)) unset($available_gateways['xumm']);
+		if (!in_array($storeCurrency, $this->xumm_gateway->availableCurrencies)) unset($available_gateways['xumm']);
+		if ($storeCurrency != 'XRP' && $this->xumm_gateway->currencies != 'XRP' && $storeCurrency != $this->xumm_gateway->currencies) unset($available_gateways['xumm']);
+		if ($this->xumm_gateway->currencies != 'XRP' && empty($this->xumm_gateway->issuers)) unset($available_gateways['xumm']);
 		return $available_gateways;
 	}
 

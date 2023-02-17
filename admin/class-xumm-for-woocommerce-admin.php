@@ -73,8 +73,10 @@ class Xumm_For_Woocommerce_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/xumm-for-woocommerce-admin.css', array(), $this->version, 'all' );
-
+        if ($this->is_wc_settings_page())
+        {
+		    wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/xumm-for-woocommerce-admin.css', array(), $this->version, 'all' );
+        }
 	}
 
 	/**
@@ -83,7 +85,6 @@ class Xumm_For_Woocommerce_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-
 		/**
 		 * This function is provided for demonstration purposes only.
 		 *
@@ -95,7 +96,9 @@ class Xumm_For_Woocommerce_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/xumm-for-woocommerce-admin.js', array( 'jquery' ), $this->version, false );
+        if ($this->is_wc_settings_page()) {
+		    wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/xumm-for-woocommerce-admin.js', array( 'jquery' ), $this->version, false );
+        }
 	}
 
     /**
@@ -118,4 +121,28 @@ class Xumm_For_Woocommerce_Admin {
 	public function display_plugin_options($context) {
 		include_once( 'partials/xumm-for-woocommerce-admin-display.php' );
 	}
+
+    /**
+     * Check if current page is woocommerce settings page
+	 *
+	 * @since    1.0.0
+     */
+    public function is_wc_settings_page()
+    {
+        global $current_screen;
+
+        if ($current_screen->id != 'woocommerce_page_wc-settings') {
+            return false;
+        }
+
+        if (!empty($_GET['tab']) && $_GET['tab'] != 'checkout') {
+            return false;
+        }
+
+        if (empty($_GET['section']) && $_GET['section'] != 'xumm') {
+            return false;
+        }
+
+        return true;
+    }
 }
