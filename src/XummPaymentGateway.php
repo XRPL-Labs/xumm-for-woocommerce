@@ -7,7 +7,8 @@ class XummPaymentGateway extends \WC_Payment_Gateway
     public $endpoint = 'https://xumm.app/api/v1/platform/';
 
     public $availableCurrencies = [
-        'XRP' => 'XRP'
+        'XRP' => 'XRP',
+        'USD' => 'USD'
     ];
 
     public function __construct()

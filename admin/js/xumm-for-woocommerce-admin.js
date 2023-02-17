@@ -70,34 +70,36 @@
                 },
                 options: {
                     submit: true,
-                    return_url: { 
-                        web: window.location.href 
+                    return_url: {
+                        web: window.location.href
                     }
                 }
             })
         }
         const response = await fetch(url, option)
     });
-    
+
     function setIssuer() {
         console.log('passou aqui');
         const IOU = $("#woocommerce_xumm_currencies option:selected").val()
-    
+
         const curated_assets = xumm_object.details
-    
+
         let arr = []
-    
+
         for (const issuer in curated_assets) {
-            var list = curated_assets[issuer].currencies[IOU]
+            var list = curated_assets[issuer].currencies
+            // console.log('passou aqui');
+            // console.log(list);
             if (list !== undefined) {
                 arr.push(issuer)
             }
         }
-    
+
         var i = 0
         $("#woocommerce_xumm_issuers option").each( (index, elem) => {
             var val = $(elem).text()
-            
+
             //Disable input if Currency is not available with issuer else enable
             if ( !arr.includes(val) ) {
                 $(elem).prop('disabled', 'disabled').removeAttr('selected')
@@ -107,9 +109,9 @@
             }
             i++
         })
-    
+
     }
-    
+
     function dissableIssuers() {
         const IOU = $("#woocommerce_xumm_currencies").children(":selected").attr("value")
         if(IOU == 'XRP'){
@@ -119,19 +121,24 @@
             $("#woocommerce_xumm_issuers").parent().prop( "disabled", false );
         }
         let list = []
-    
+
         for(let exchange in xumm_object.details) {
             exchange = xumm_object.details[exchange]
-            if (exchange.currencies[IOU]!== undefined) {
-                let avail = exchange.currencies[IOU].issuer
-                list.push({
-                    name: exchange.name,
-                    issuer: avail
-                })
-    
+            if (exchange.currencies !== undefined) {
+                //let avail = exchange.currencies.issuerId
+                for (const currencyId in exchange.currencies)
+                {
+                    const issuer = exchange.currencies[currencyId];
+                    list.push({
+                        name: exchange.name,
+                        issuer: issuer.issuerId
+                    })
+                }
             }
         }
-    
+
+        console.log(list);
+
         $("#woocommerce_xumm_issuers option").each( (index, elem) => {
             $(elem).attr('disabled', 'disabled').hide()
         })
@@ -143,7 +150,7 @@
                 }
             })
         })
-    
+
     }
 
     $(document).ready(function () {
@@ -178,8 +185,6 @@ function trustlineButton() {
         currency: currency
     }
 
-    console.log(obj);
-
     if (!containsObject(obj, trustlinesSet)) {
         if (issuer == undefined) {
             button.disabled = true
@@ -189,7 +194,7 @@ function trustlineButton() {
     } else {
         button.disabled = true
     }
-} 
+}
 
 function trustlineAvailable() {
     const exchanges = xumm_object.details
@@ -197,14 +202,14 @@ function trustlineAvailable() {
     for (const exchange in exchanges) {
         const currencies = exchanges[exchange].currencies
         for (const currency in currencies) {
-            const issuer = currencies[currency].issuer
+            const issuer = currencies[currency]
             issuers.push(issuer)
         }
     }
 }
 
-ws = new WebSocket('wss://xrpl.ws')
-    
+ws = new WebSocket(xumm_object.ws)
+
 let cmd = {
     "id": 1,
     "command": "account_lines",

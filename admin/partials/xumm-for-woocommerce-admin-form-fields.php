@@ -89,11 +89,11 @@ $context->form_fields['issuers'] = array(
 
 if (!empty ($curatedAssets->details) && get_woocommerce_currency() != 'XRP') {
     foreach ($curatedAssets->details as $exchange) {
-        if ($exchange['shortlist'] === 0) break;
+        if ($exchange->shortlist === 0) break;
 
-        $exchangeName = $exchange['name'];
-        foreach ($exchange['currencies'] as $currency) {
-            $value = $currency['issuer'];
+        $exchangeName = $exchange->name;
+        foreach ($exchange->currencies as $currency) {
+            $value = $currency->issuerId;
             $context->form_fields['issuers']['options'][$value] = $exchangeName;
         }
     }
@@ -101,7 +101,10 @@ if (!empty ($curatedAssets->details) && get_woocommerce_currency() != 'XRP') {
     $context->form_fields['issuers']['disabled'] = true;
 }
 
-$curatedAssets->account = $context->destination;
-$curatedAssets->store_currency = get_woocommerce_currency();
+$xummObject = $curatedAssets;
 
-wp_localize_script( 'jquery', 'xumm_object', $curatedAssets);
+$xummObject->account = $context->destination;
+$xummObject->store_currency = get_woocommerce_currency();
+$xummObject->ws = XUMM_WS_ENDPOINT;
+
+wp_localize_script( 'jquery', 'xumm_object', $xummObject);

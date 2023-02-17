@@ -14,34 +14,22 @@
 
 use Xrpl\XummSdkPhp\XummSdk;
 
-?>
-
-<!-- This file should primarily consist of HTML with a little bit of PHP. -->
-<?php
-
-            function getXummData($id, $self){
-                $response = wp_remote_get('https://xumm.app/api/v1/platform/payload/ci/'. $id, array(
-                    'method'    => 'GET',
-                    'headers'   => array(
-                        'Content-Type' => 'application/json',
-                        'X-API-Key' => $self->api,
-                        'X-API-Secret' => $self->api_secret
-                    )
-                ));
-                $body = json_decode( $response['body'], true );
-                return $body;
-            }
+$sdk = new XummSdk($context->api, $context->api_secret);
 
             if(!empty($_GET['xumm-id'])) {
-                $data = getXummData(sanitize_text_field($_GET['xumm-id']), $context);
+                $xumm_id = sanitize_text_field($_GET['xumm-id']);
+
+                $payload = $sdk->getPayloadByCustomId($xumm_id);
+
                 //Todo:: first check if success
-                if (!empty($data['payload'])) {
-                    switch ($data['payload']['tx_type']) {
+                if (!empty($payload->payload)) {
+                    switch ($payload->payload->txType)
+                    {
                         case 'SignIn':
-                            $account = $data['response']['account'];
+                            $account = $payload->response->account;
                             if(!empty($account))
                                 $context->update_option('destination', $account );
-                                echo('<div class="notice notice-success"><p>'.$lang->admin->signin->success.'</p></div>');
+                                echo('<div class="notice notice-success"><p>'.__('Sign In successfull please check address & test payment', 'xumm-for-woocommerce').'</p></div>');
                             break;
 
                         case 'TrustSet':
@@ -161,7 +149,6 @@ use Xrpl\XummSdkPhp\XummSdk;
                     else {
 
                         try {
-                            $sdk = new XummSdk($context->api, $context->api_secret);
                             $pong = $sdk->ping();
 
                             if(!empty($pong->call->uuidV4)) {
@@ -197,7 +184,7 @@ use Xrpl\XummSdkPhp\XummSdk;
             </button>
 
             <script>
-                /* jQuery(function () {
+                jQuery(function () {
                     jQuery("#mainform").submit(function (e) {
                         alert(document.location.href);
                         if (jQuery(this).find("input#specialAction").val() !== '') {
@@ -220,6 +207,6 @@ use Xrpl\XummSdkPhp\XummSdk;
                         jQuery("#specialAction").val(jQuery(this).attr('id'))
                         jQuery("#mainform").trigger('submit')
                     })
-                }); */
+                });
             </script>
         <?php
