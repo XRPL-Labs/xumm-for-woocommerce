@@ -6,7 +6,9 @@ class XummPaymentGateway extends \WC_Payment_Gateway
 {
     public $endpoint = 'https://xumm.app/api/v1/platform/';
 
-    public $availableCurrencies = [];
+    public $availableCurrencies = [
+        'XRP' => 'XRP'
+    ];
 
     public function __construct()
     {
@@ -30,6 +32,8 @@ class XummPaymentGateway extends \WC_Payment_Gateway
 
         $this->init_form_fields();
         $this->init_settings();
+
+        add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, [ $this, 'process_admin_options' ]);
     }
 
     public function init_form_fields()

@@ -2,7 +2,7 @@
 
 use Xrpl\XummSdkPhp\XummSdk;
 
-if(!empty($context->api) && !empty($context->api_secret)) 
+if(!empty($context->api) && !empty($context->api_secret))
 {
     $sdk = new XummSdk($context->api, $context->api_secret);
     $curatedAssets = $sdk->getCuratedAssets();
@@ -68,8 +68,8 @@ $context->form_fields['currencies'] = array(
     'options'     => $context->availableCurrencies
 );
 
-if (!empty ($curatedAssets->currencies) ) {
-    $context->availableCurrencies['XRP'] = 'XRP';
+if (!empty ($curatedAssets->currencies) )
+{
     foreach ($curatedAssets->currencies as $v) {
         if(get_woocommerce_currency() == $v){
             $context->availableCurrencies[$v] = $v;

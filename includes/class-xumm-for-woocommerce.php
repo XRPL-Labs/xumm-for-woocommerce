@@ -31,269 +31,268 @@ use XummForWoocomerce\XummPaymentGateway;
 class Xumm_For_Woocommerce {
 
     /**
-	 * Access to the Xumm Payment Gateway
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      XummPaymentGateway    $xumm_gateway    Xumm Payment Gateway
-	 */
+     * Access to the Xumm Payment Gateway
+     *
+     * @since    1.0.0
+     * @access   protected
+     * @var      XummPaymentGateway    $xumm_gateway    Xumm Payment Gateway
+     */
     protected $xumm_gateway;
 
-	/**
-	 * The loader that's responsible for maintaining and registering all hooks that power
-	 * the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      Xumm_For_Woocommerce_Loader    $loader    Maintains and registers all hooks for the plugin.
-	 */
-	protected $loader;
+    /**
+     * The loader that's responsible for maintaining and registering all hooks that power
+     * the plugin.
+     *
+     * @since    1.0.0
+     * @access   protected
+     * @var      Xumm_For_Woocommerce_Loader    $loader    Maintains and registers all hooks for the plugin.
+     */
+    protected $loader;
 
-	/**
-	 * The unique identifier of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
-	 */
-	protected $plugin_name;
+    /**
+     * The unique identifier of this plugin.
+     *
+     * @since    1.0.0
+     * @access   protected
+     * @var      string    $plugin_name    The string used to uniquely identify this plugin.
+     */
+    protected $plugin_name;
 
-	/**
-	 * The current version of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
-	 */
-	protected $version;
+    /**
+     * The current version of the plugin.
+     *
+     * @since    1.0.0
+     * @access   protected
+     * @var      string    $version    The current version of the plugin.
+     */
+    protected $version;
 
-	/**
-	 * Define the core functionality of the plugin.
-	 *
-	 * Set the plugin name and the plugin version that can be used throughout the plugin.
-	 * Load the dependencies, define the locale, and set the hooks for the admin area and
-	 * the public-facing side of the site.
-	 *
-	 * @since    1.0.0
-	 */
-	public function __construct() {
-		if ( defined( 'XUMM_FOR_WOOCOMMERCE_VERSION' ) ) {
-			$this->version = XUMM_FOR_WOOCOMMERCE_VERSION;
-		} else {
-			$this->version = '1.0.0';
-		}
-		$this->plugin_name = 'xumm-for-woocommerce';
+    /**
+     * Define the core functionality of the plugin.
+     *
+     * Set the plugin name and the plugin version that can be used throughout the plugin.
+     * Load the dependencies, define the locale, and set the hooks for the admin area and
+     * the public-facing side of the site.
+     *
+     * @since    1.0.0
+     */
+    public function __construct() {
+        if ( defined( 'XUMM_FOR_WOOCOMMERCE_VERSION' ) ) {
+            $this->version = XUMM_FOR_WOOCOMMERCE_VERSION;
+        } else {
+            $this->version = '1.0.0';
+        }
+        $this->plugin_name = 'xumm-for-woocommerce';
 
-		$this->load_dependencies();
-		$this->set_locale();
+        $this->load_dependencies();
+        $this->set_locale();
 
-		if (is_admin()) {
-			$this->define_admin_hooks();
-		}
+        if (is_admin()) {
+            $this->define_admin_hooks();
+        }
 
-		$this->define_public_hooks();
+        $this->define_public_hooks();
 
-	}
+    }
 
-	/**
-	 * Load the required dependencies for this plugin.
-	 *
-	 * Include the following files that make up the plugin:
-	 *
-	 * - Xumm_For_Woocommerce_Loader. Orchestrates the hooks of the plugin.
-	 * - Xumm_For_Woocommerce_i18n. Defines internationalization functionality.
-	 * - Xumm_For_Woocommerce_Admin. Defines all hooks for the admin area.
-	 * - Xumm_For_Woocommerce_Public. Defines all hooks for the public side of the site.
-	 *
-	 * Create an instance of the loader which will be used to register the hooks
-	 * with WordPress.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function load_dependencies() {
+    /**
+     * Load the required dependencies for this plugin.
+     *
+     * Include the following files that make up the plugin:
+     *
+     * - Xumm_For_Woocommerce_Loader. Orchestrates the hooks of the plugin.
+     * - Xumm_For_Woocommerce_i18n. Defines internationalization functionality.
+     * - Xumm_For_Woocommerce_Admin. Defines all hooks for the admin area.
+     * - Xumm_For_Woocommerce_Public. Defines all hooks for the public side of the site.
+     *
+     * Create an instance of the loader which will be used to register the hooks
+     * with WordPress.
+     *
+     * @since    1.0.0
+     * @access   private
+     */
+    private function load_dependencies() {
 
-		/**
-		 * The class responsible for orchestrating the actions and filters of the
-		 * core plugin.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-xumm-for-woocommerce-loader.php';
+        /**
+         * The class responsible for orchestrating the actions and filters of the
+         * core plugin.
+         */
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-xumm-for-woocommerce-loader.php';
 
-		/**
-		 * The class responsible for defining internationalization functionality
-		 * of the plugin.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-xumm-for-woocommerce-i18n.php';
+        /**
+         * The class responsible for defining internationalization functionality
+         * of the plugin.
+         */
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-xumm-for-woocommerce-i18n.php';
 
-		/**
-		 * The class responsible for defining all actions that occur in the admin area.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-xumm-for-woocommerce-admin.php';
+        /**
+         * The class responsible for defining all actions that occur in the admin area.
+         */
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-xumm-for-woocommerce-admin.php';
 
-		/**
-		 * The class responsible for defining all actions that occur in the public-facing
-		 * side of the site.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-xumm-for-woocommerce-public.php';
+        /**
+         * The class responsible for defining all actions that occur in the public-facing
+         * side of the site.
+         */
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-xumm-for-woocommerce-public.php';
 
-		$this->loader = new Xumm_For_Woocommerce_Loader();
+        $this->loader = new Xumm_For_Woocommerce_Loader();
 
         $this->xumm_gateway = new XummPaymentGateway();
-	}
+    }
 
-	/**
-	 * Define the locale for this plugin for internationalization.
-	 *
-	 * Uses the Xumm_For_Woocommerce_i18n class in order to set the domain and to register the hook
-	 * with WordPress.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function set_locale() {
+    /**
+     * Define the locale for this plugin for internationalization.
+     *
+     * Uses the Xumm_For_Woocommerce_i18n class in order to set the domain and to register the hook
+     * with WordPress.
+     *
+     * @since    1.0.0
+     * @access   private
+     */
+    private function set_locale() {
 
-		$plugin_i18n = new Xumm_For_Woocommerce_i18n();
+        $plugin_i18n = new Xumm_For_Woocommerce_i18n();
 
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+        $this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
-	}
+    }
 
-	/**
-	 * Register all of the hooks related to the admin area functionality
-	 * of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function define_admin_hooks()
-	{
+    /**
+     * Register all of the hooks related to the admin area functionality
+     * of the plugin.
+     *
+     * @since    1.0.0
+     * @access   private
+     */
+    private function define_admin_hooks()
+    {
         $plugin_admin = new Xumm_For_Woocommerce_Admin( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
+        $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
+        $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
 
         $this->loader->add_filter('xumm_init_form_fields', $plugin_admin, 'init_form_fields', 10, 1);
-		$this->loader->add_filter('xumm_display_plugin_options', $plugin_admin, 'display_plugin_options', 10, 1);
+        $this->loader->add_filter('xumm_display_plugin_options', $plugin_admin, 'display_plugin_options', 10, 1);
 
-		if (class_exists('WooCommerce'))
-		{
-            $this->loader->add_action('woocommerce_update_options_payment_gateways_' . $this->xumm_gateway->id, $this->xumm_gateway, 'process_admin_options');
-			$this->loader->add_filter('woocommerce_payment_gateways', $this, 'add_xumm_gateway_class');
-			$this->loader->add_filter('woocommerce_available_payment_gateways', $this, 'disable_xumm');
-			$this->loader->add_filter('woocommerce_currencies', $this, 'add_xrp_currency');
-			$this->loader->add_filter('woocommerce_currency_symbol', $this, 'add_xrp_currency_symbol', 10, 2);
-		}
-	}
-
-	/**
-	 * Register all of the hooks related to the public-facing functionality
-	 * of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function define_public_hooks() {
-
-		$plugin_public = new Xumm_For_Woocommerce_Public( $this->get_plugin_name(), $this->get_version() );
-
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-
-	}
-
-	/**
-	 * Run the loader to execute all of the hooks with WordPress.
-	 *
-	 * @since    1.0.0
-	 */
-	public function run() {
-		$this->loader->run();
-	}
-
-	/**
-	 * The name of the plugin used to uniquely identify it within the context of
-	 * WordPress and to define internationalization functionality.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The name of the plugin.
-	 */
-	public function get_plugin_name() {
-		return $this->plugin_name;
-	}
-
-	/**
-	 * The reference to the class that orchestrates the hooks with the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    Xumm_For_Woocommerce_Loader    Orchestrates the hooks of the plugin.
-	 */
-	public function get_loader() {
-		return $this->loader;
-	}
-
-	/**
-	 * Retrieve the version number of the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The version number of the plugin.
-	 */
-	public function get_version() {
-		return $this->version;
-	}
+        if (class_exists('WooCommerce'))
+        {
+            $this->loader->add_filter('woocommerce_payment_gateways', $this, 'add_xumm_gateway_class');
+            $this->loader->add_filter('woocommerce_available_payment_gateways', $this, 'disable_xumm');
+            $this->loader->add_filter('woocommerce_currencies', $this, 'add_xrp_currency');
+            $this->loader->add_filter('woocommerce_currency_symbol', $this, 'add_xrp_currency_symbol', 10, 2);
+        }
+    }
 
     /**
-	 * Add XummPaymentGateway class as a method of Payment
-	 *
-	 * @since     0.5.1
+     * Register all of the hooks related to the public-facing functionality
+     * of the plugin.
+     *
+     * @since    1.0.0
+     * @access   private
+     */
+    private function define_public_hooks() {
+
+        $plugin_public = new Xumm_For_Woocommerce_Public( $this->get_plugin_name(), $this->get_version() );
+
+        $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
+        $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+
+    }
+
+    /**
+     * Run the loader to execute all of the hooks with WordPress.
+     *
+     * @since    1.0.0
+     */
+    public function run() {
+        $this->loader->run();
+    }
+
+    /**
+     * The name of the plugin used to uniquely identify it within the context of
+     * WordPress and to define internationalization functionality.
+     *
+     * @since     1.0.0
+     * @return    string    The name of the plugin.
+     */
+    public function get_plugin_name() {
+        return $this->plugin_name;
+    }
+
+    /**
+     * The reference to the class that orchestrates the hooks with the plugin.
+     *
+     * @since     1.0.0
+     * @return    Xumm_For_Woocommerce_Loader    Orchestrates the hooks of the plugin.
+     */
+    public function get_loader() {
+        return $this->loader;
+    }
+
+    /**
+     * Retrieve the version number of the plugin.
+     *
+     * @since     1.0.0
+     * @return    string    The version number of the plugin.
+     */
+    public function get_version() {
+        return $this->version;
+    }
+
+    /**
+     * Add XummPaymentGateway class as a method of Payment
+     *
+     * @since     0.5.1
      * @param array $methods
-	 * @return      array     List of available methods
-	 */
+     * @return      array     List of available methods
+     */
     public function add_xumm_gateway_class($methods)
-	{
-		$methods[] = 'XummForWoocomerce\XummPaymentGateway';
-		return $methods;
-	}
+    {
+        $methods[] = 'XummForWoocomerce\XummPaymentGateway';
+        return $methods;
+    }
 
     /**
-	 * Disable XUMM
-	 *
-	 * @since     0.5.1
+     * Disable XUMM
+     *
+     * @since     0.5.1
      * @param array $available_gateways
-	 * @return    array       List of available gateways
-	 */
-	public function disable_xumm($available_gateways)
-	{
-		$storeCurrency = get_woocommerce_currency();
+     * @return    array       List of available gateways
+     */
+    public function disable_xumm($available_gateways)
+    {
+        $storeCurrency = get_woocommerce_currency();
 
-		if (empty($this->xumm_gateway->api) || empty($this->xumm_gateway->api_secret)) unset($available_gateways['xumm']);
-		if (!in_array($storeCurrency, $this->xumm_gateway->availableCurrencies)) unset($available_gateways['xumm']);
-		if ($storeCurrency != 'XRP' && $this->xumm_gateway->currencies != 'XRP' && $storeCurrency != $this->xumm_gateway->currencies) unset($available_gateways['xumm']);
-		if ($this->xumm_gateway->currencies != 'XRP' && empty($this->xumm_gateway->issuers)) unset($available_gateways['xumm']);
-		return $available_gateways;
-	}
+        if (empty($this->xumm_gateway->api) || empty($this->xumm_gateway->api_secret)) unset($available_gateways['xumm']);
+        if (!in_array($storeCurrency, $this->xumm_gateway->availableCurrencies)) unset($available_gateways['xumm']);
+        if ($storeCurrency != 'XRP' && $this->xumm_gateway->currencies != 'XRP' && $storeCurrency != $this->xumm_gateway->currencies) unset($available_gateways['xumm']);
+        if ($this->xumm_gateway->currencies != 'XRP' && empty($this->xumm_gateway->issuers)) unset($available_gateways['xumm']);
+        return $available_gateways;
+    }
 
     /**
-	 * ADD XRP as a currency
-	 *
-	 * @since     0.5.1
+     * ADD XRP as a currency
+     *
+     * @since     0.5.1
      * @param array $xrp_currency
-	 * @return      array       List of currencies
-	 */
-	public function add_xrp_currency( $xrp_currency ) {
+     * @return      array       List of currencies
+     */
+    public function add_xrp_currency( $xrp_currency ) {
         $xrp_currency['XRP'] = __( 'XRP', 'woocommerce' );
         $xrp_currency['ETH'] = __( 'Ethereum', 'woocommerce' );
         return $xrp_currency;
     }
 
     /**
-	 * ADD XRP currency symbol
-	 *
-	 * @since     0.5.1
+     * ADD XRP currency symbol
+     *
+     * @since     0.5.1
      * @param string $custom_currency_symbol
      * @param string $custom_currency
      *
-	 * @return      string       Custom currency symbol
-	 */
+     * @return      string       Custom currency symbol
+     */
     public function add_xrp_currency_symbol( $custom_currency_symbol, $custom_currency ) {
         switch( $custom_currency ) {
             case 'XRP': $custom_currency_symbol = 'XRP '; break;

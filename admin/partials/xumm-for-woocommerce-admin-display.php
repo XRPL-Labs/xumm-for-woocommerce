@@ -153,9 +153,10 @@ use Xrpl\XummSdkPhp\XummSdk;
             <table class="form-table">
                 <?php
 
-                $context->generate_settings_html();
+                    $context->generate_settings_html();
 
-                $storeCurrency = get_woocommerce_currency();
+                    $storeCurrency = get_woocommerce_currency();
+
                     if(empty($context->api) || empty($context->api_secret)) echo('<div class="notice notice-info"><p>'. __('Please add XUMM API keys from', 'xumm-for-woocommerce') .' <a href="https://apps.xumm.dev/">'. __('XUMM API', 'xumm-for-woocommerce') .'</a></p></div>');
                     else {
 
@@ -177,6 +178,8 @@ use Xrpl\XummSdkPhp\XummSdk;
                         }
 
                     }
+
+                    // exit;
                     if (!in_array($storeCurrency, $context->availableCurrencies)) echo('<div class="notice notice-error"><p>'.__('Please change store currency', 'xumm-for-woocommerce').'</p></div>');
                     if ($storeCurrency != 'XRP' && $context->currencies != 'XRP' && $storeCurrency != $context->currencies) echo('<div class="notice notice-error"><p>'.__('Please change store currency', 'xumm-for-woocommerce').'</p></div>');
                     if ($context->currencies != 'XRP' && empty($context->issuers) && get_woocommerce_currency() != 'XRP') echo('<div class="notice notice-error"><p>'.__('Please set the issuer and save changes', 'xumm-for-woocommerce').'</p></div>');
@@ -194,7 +197,7 @@ use Xrpl\XummSdkPhp\XummSdk;
             </button>
 
             <script>
-                jQuery(function () {
+                /* jQuery(function () {
                     jQuery("#mainform").submit(function (e) {
                         alert(document.location.href);
                         if (jQuery(this).find("input#specialAction").val() !== '') {
@@ -217,6 +220,6 @@ use Xrpl\XummSdkPhp\XummSdk;
                         jQuery("#specialAction").val(jQuery(this).attr('id'))
                         jQuery("#mainform").trigger('submit')
                     })
-                });
+                }); */
             </script>
         <?php

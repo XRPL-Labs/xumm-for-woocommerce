@@ -38,7 +38,7 @@
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
-	die;
+    die;
 }
 
 /**
@@ -52,8 +52,8 @@ define( 'XUMM_FOR_WOOCOMMERCE_VERSION', '1.0.0' );
  * This action is documented in includes/class-xumm-for-woocommerce-activator.php
  */
 function activate_xumm_for_woocommerce() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-xumm-for-woocommerce-activator.php';
-	Xumm_For_Woocommerce_Activator::activate();
+    require_once plugin_dir_path( __FILE__ ) . 'includes/class-xumm-for-woocommerce-activator.php';
+    Xumm_For_Woocommerce_Activator::activate();
 }
 
 /**
@@ -61,8 +61,8 @@ function activate_xumm_for_woocommerce() {
  * This action is documented in includes/class-xumm-for-woocommerce-deactivator.php
  */
 function deactivate_xumm_for_woocommerce() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-xumm-for-woocommerce-deactivator.php';
-	Xumm_For_Woocommerce_Deactivator::deactivate();
+    require_once plugin_dir_path( __FILE__ ) . 'includes/class-xumm-for-woocommerce-deactivator.php';
+    Xumm_For_Woocommerce_Deactivator::deactivate();
 }
 
 register_activation_hook( __FILE__, 'activate_xumm_for_woocommerce' );
@@ -86,8 +86,8 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-xumm-for-woocommerce.php';
  * @since    1.0.0
  */
 function run_xumm_for_woocommerce() {
-	$plugin = new Xumm_For_Woocommerce();
-	$plugin->run();
+    $plugin = new Xumm_For_Woocommerce();
+    $plugin->run();
 }
 
 run_xumm_for_woocommerce();
