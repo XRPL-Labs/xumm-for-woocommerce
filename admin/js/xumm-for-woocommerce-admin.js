@@ -28,59 +28,8 @@
      * Although scripts in the WordPress core, Plugins and Themes may be
      * practising this, we should strive to set a better example in our own work.
      */
-    var button = document.getElementById("set_trustline");
-    $("#woocommerce_xumm_issuers").closest("fieldset").append(button);
-
-    $("#woocommerce_xumm_currencies").change(function() {
-        setIssuer()
-        dissableIssuers()
-    })
-
-    $("#woocommerce_xumm_issuers").change(function() {
-        trustlineButton();
-    })
-
-    $('#set-trustline').click( async e => {
-        e.preventDefault()
-
-        let apikey = $("#woocommerce_xumm_api").attr("value")
-        let secretkey = $('#woocommerce_xumm_api_secret').attr("value")
-        const account = $("#woocommerce_xumm_destination").attr("value")
-        const issuer = $("#woocommerce_xumm_issuers").children(":selected").attr("value")
-        const currency = $("#woocommerce_xumm_currencies").children(":selected").attr("value")
-        const url = 'https://xumm.app/api/v1/platform/payload'
-
-        const option = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-API-Key': apikey,
-                'X-API-Secret':secretkey
-            },
-            body: JSON.stringify({
-                "txjson": {
-                    "TransactionType": "TrustSet",
-                    "Account": account,
-                    "Fee": "12",
-                    "LimitAmount": {
-                      "currency": currency,
-                      "issuer": issuer,
-                      "value": "100"
-                    }
-                },
-                options: {
-                    submit: true,
-                    return_url: {
-                        web: window.location.href
-                    }
-                }
-            })
-        }
-        const response = await fetch(url, option)
-    });
 
     function setIssuer() {
-        console.log('passou aqui');
         const IOU = $("#woocommerce_xumm_currencies option:selected").val()
 
         const curated_assets = xumm_object.details
@@ -89,8 +38,7 @@
 
         for (const issuer in curated_assets) {
             var list = curated_assets[issuer].currencies
-            // console.log('passou aqui');
-            // console.log(list);
+
             if (list !== undefined) {
                 arr.push(issuer)
             }
@@ -112,7 +60,7 @@
 
     }
 
-    function dissableIssuers() {
+    function disableIssuers() {
         const IOU = $("#woocommerce_xumm_currencies").children(":selected").attr("value")
         if(IOU == 'XRP'){
             $("#woocommerce_xumm_issuers").parent().prop( "disabled", true );
@@ -125,19 +73,19 @@
         for(let exchange in xumm_object.details) {
             exchange = xumm_object.details[exchange]
             if (exchange.currencies !== undefined) {
-                //let avail = exchange.currencies.issuerId
                 for (const currencyId in exchange.currencies)
                 {
                     const issuer = exchange.currencies[currencyId];
+
+                    if (issuer.currency != IOU) continue;
+
                     list.push({
                         name: exchange.name,
-                        issuer: issuer.issuerId
+                        issuer: issuer.issuer
                     })
                 }
             }
         }
-
-        console.log(list);
 
         $("#woocommerce_xumm_issuers option").each( (index, elem) => {
             $(elem).attr('disabled', 'disabled').hide()
@@ -155,7 +103,59 @@
 
     $(document).ready(function () {
         setIssuer()
-        dissableIssuers()
+        disableIssuers()
+
+        var button = document.getElementById("set_trustline");
+        $("#woocommerce_xumm_issuers").closest("fieldset").append(button);
+
+        $("#woocommerce_xumm_currencies").change(function() {
+            setIssuer()
+            disableIssuers()
+        })
+
+        $("#woocommerce_xumm_issuers").change(function() {
+            trustlineButton();
+        })
+
+        $('#set-trustline').click( async e => {
+            e.preventDefault()
+
+            let apikey = $("#woocommerce_xumm_api").attr("value")
+            let secretkey = $('#woocommerce_xumm_api_secret').attr("value")
+            const account = $("#woocommerce_xumm_destination").attr("value")
+            const issuer = $("#woocommerce_xumm_issuers").children(":selected").attr("value")
+            const currency = $("#woocommerce_xumm_currencies").children(":selected").attr("value")
+            const url = 'https://xumm.app/api/v1/platform/payload'
+
+            const option = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-API-Key': apikey,
+                    'X-API-Secret':secretkey
+                },
+                body: JSON.stringify({
+                    "txjson": {
+                        "TransactionType": "TrustSet",
+                        "Account": account,
+                        "Fee": "12",
+                        "LimitAmount": {
+                          "currency": currency,
+                          "issuer": issuer,
+                          "value": "999999999"
+                        },
+                        "Flags": 131072
+                    },
+                    options: {
+                        submit: true,
+                        return_url: {
+                            web: window.location.href
+                        }
+                    }
+                })
+            }
+            const response = await fetch(url, option)
+        });
     });
 
 })( jQuery );

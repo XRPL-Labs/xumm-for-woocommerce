@@ -88,13 +88,14 @@ $context->form_fields['issuers'] = array(
 );
 
 if (!empty ($curatedAssets->details) && get_woocommerce_currency() != 'XRP') {
+
     foreach ($curatedAssets->details as $exchange) {
         if ($exchange->shortlist === 0) break;
 
         $exchangeName = $exchange->name;
+
         foreach ($exchange->currencies as $currency) {
-            $value = $currency->issuerId;
-            $context->form_fields['issuers']['options'][$value] = $exchangeName;
+            $context->form_fields['issuers']['options'][$currency->issuer] = $exchangeName;
         }
     }
 } else {

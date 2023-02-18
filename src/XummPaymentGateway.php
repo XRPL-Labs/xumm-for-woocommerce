@@ -8,7 +8,8 @@ class XummPaymentGateway extends \WC_Payment_Gateway
 
     public $availableCurrencies = [
         'XRP' => 'XRP',
-        'USD' => 'USD'
+        'USD' => 'USD',
+        'EUR' => 'EUR'
     ];
 
     public function __construct()
@@ -35,6 +36,7 @@ class XummPaymentGateway extends \WC_Payment_Gateway
         $this->init_settings();
 
         add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, [ $this, 'process_admin_options' ]);
+        add_action( 'woocommerce_api_'. $this->id, array( $this, 'callback_handler' ));
     }
 
     public function init_form_fields()
@@ -45,5 +47,11 @@ class XummPaymentGateway extends \WC_Payment_Gateway
     public function admin_options()
     {
         apply_filters('xumm_display_plugin_options', $this);
+    }
+
+    public function callback_handler()
+    {
+        var_dump($_REQUEST);
+        exit;
     }
 }

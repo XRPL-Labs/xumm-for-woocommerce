@@ -12,35 +12,43 @@
  * @subpackage Xumm_For_Woocommerce/admin/partials
  */
 
+use Xrpl\XummSdkPhp\Payload\CustomMeta;
+use Xrpl\XummSdkPhp\Payload\Options;
+use Xrpl\XummSdkPhp\Payload\Payload;
+use Xrpl\XummSdkPhp\Payload\ReturnUrl;
 use Xrpl\XummSdkPhp\XummSdk;
 
 $sdk = new XummSdk($context->api, $context->api_secret);
 
-            if(!empty($_GET['xumm-id'])) {
-                $xumm_id = sanitize_text_field($_GET['xumm-id']);
+if(!empty($_GET['xumm-id'])) {
+    $xumm_id = sanitize_text_field($_GET['xumm-id']);
 
-                $payload = $sdk->getPayloadByCustomId($xumm_id);
+    $payload = $sdk->getPayloadByCustomId($xumm_id);
 
-                //Todo:: first check if success
-                if (!empty($payload->payload)) {
-                    switch ($payload->payload->txType)
-                    {
-                        case 'SignIn':
-                            $account = $payload->response->account;
-                            if(!empty($account))
-                                $context->update_option('destination', $account );
-                                echo('<div class="notice notice-success"><p>'.__('Sign In successfull please check address & test payment', 'xumm-for-woocommerce').'</p></div>');
-                            break;
+    //Todo:: first check if success
+    if (!empty($payload->payload)) {
+        switch ($payload->payload->txType)
+        {
+            case 'SignIn':
+                $account = $payload->response->account;
+                if(!empty($account))
+                    $context->update_option('destination', $account );
+                    echo('<div class="notice notice-success"><p>'.__('Sign In successfull please check address & test payment', 'xumm-for-woocommerce').'</p></div>');
+                break;
 
-                        case 'TrustSet':
-                            //Todo show message when trustset is success with: __('Trust Line Set successfull please check address & test payment', 'xumm-for-woocommerce')
-                            break;
-
-                        default:
-                            break;
-                    }
+            case 'TrustSet':
+                if (!empty($payload->payload->request['LimitAmount']['issuer'])) {
+                    $context->update_option('issuer', $payload->payload->request['LimitAmount']['issuer']);
+                    echo('<div class="notice notice-success"><p>'.__('Trust Line Set successfull please check address & test payment', 'xumm-for-woocommerce').'</p></div>');
                 }
-            }
+
+                break;
+
+            default:
+                break;
+        }
+    }
+}
 
             ?>
             <h2><?php __('XUMM Payment Gateway for WooCommerce','woocommerce'); ?></h2>
@@ -52,87 +60,67 @@ $sdk = new XummSdk($context->api, $context->api_secret);
                                 $query_arr = array(
                                     'page'      => 'wc-settings',
                                     'tab'       => 'checkout',
-                                    'section'   => 'xumm'
+                                    'section'   => 'xumm',
+                                    'callback'  => true
                                 );
 
                                 $return_url = get_home_url() .'/wp-admin/admin.php?' . http_build_query($query_arr);
 
-                                $headers = [
-                                    'Content-Type' => 'application/json',
-                                    'X-API-Key' => sanitize_text_field($_POST['woocommerce_xumm_api']),
-                                    'X-API-Secret' => sanitize_text_field($_POST['woocommerce_xumm_api_secret'])
-                                ];
-
                                 switch($_POST["specialAction"]) {
                                     case 'set_destination':
                                         $identifier = 'sign-in_' . strtoupper(substr(md5(microtime()), 0, 10));
+
                                         $return_url = add_query_arg( 'xumm-id', $identifier, $return_url);
-                                        $body = [
-                                            "txjson" => [
+
+                                        $payload = new Payload(
+                                            [
                                                 "TransactionType" => "SignIn"
                                             ],
-                                            "options" => [
-                                                "submit" => true,
-                                                "return_url" => [
-                                                    "web" => $return_url                                                ]
-                                            ],
-                                            'custom_meta' => array(
-                                                'identifier' => $identifier
-                                            )
-                                        ];
+                                            null,
+                                            new Options(true, null, null, null, null,
+                                            new ReturnUrl(wp_is_mobile() ? $return_url : null, $return_url)),
+                                            new CustomMeta($identifier)
+                                        );
+
                                         break;
                                     case 'set_trustline':
                                         $identifier = 'trustline_' . strtoupper(substr(md5(microtime()), 0, 10));
                                         $return_url = add_query_arg( 'xumm-id', $identifier, $return_url);
-                                        $body = [
-                                            "txjson" => [
-                                                "TransactionType" => "TrustSet",
+
+                                        $payload = new Payload(
+                                            [
+                                                'TransactionType' => 'TrustSet',
                                                 "Account" => $context->destination,
                                                 "Fee" => "12",
                                                 "LimitAmount" => [
                                                   "currency" => sanitize_text_field($_POST['woocommerce_xumm_currencies']),
                                                   "issuer" => sanitize_text_field($_POST['woocommerce_xumm_issuers']),
                                                   "value" => "999999999"
-                                                ]
+                                                ],
+                                                "Flags" => 131072
                                             ],
-                                            "options" => [
-                                                "submit" => true,
-                                                "return_url" => [
-                                                    "web" => $return_url                                                ]
-                                            ],
-                                            'custom_meta' => array(
-                                                'identifier' => $identifier
-                                            )
-                                        ];
+                                            null,
+                                            new Options(true, null, null, null, null,
+                                                new ReturnUrl(wp_is_mobile() ? $return_url : null, $return_url)),
+                                            new CustomMeta($identifier)
+                                        );
+
                                         break;
                                 }
 
-                                if (wp_is_mobile()){
-                                    $body['options']['return_url']['app'] = $return_url;
+                                $response = $sdk->createPayload($payload);
+
+                                $redirect = $response->next->always;
+                                if (!empty($redirect)) {
+                                    // Redirect to the XUMM processor page
+                                    echo($redirect);
+                                } else {
+                                    echo('<div class="notice notice-error"><p>'.$lang->admin->api->redirect__rror.' <a href="https://apps.xumm.dev/">'. __('XUMM API', 'xumm-for-woocommerce') .'</a>. '. __('Check your API keys.', 'xumm-for-woocommerce') .'Error Code:'. $body['error']['code'] .'</p></div>');
                                 }
 
-                                $body = wp_json_encode($body);
-
-                                $response = wp_remote_post('https://xumm.app/api/v1/platform/payload', array(
-                                    'method'    => 'POST',
-                                    'headers'   => $headers,
-                                    'body'      => $body
-                                    )
-                                );
-
-                                if( !is_wp_error( $response ) ) {
-                                    $body = json_decode( $response['body'], true );
-                                    $redirect = $body['next']['always'];
-                                    if ( $redirect != null ) {
-                                       // Redirect to the XUMM processor page
-                                        echo($redirect);
-                                    } else {
-                                        echo('<div class="notice notice-error"><p>'.$lang->admin->api->redirect__rror.' <a href="https://apps.xumm.dev/">'. __('XUMM API', 'xumm-for-woocommerce') .'</a>. '. __('Check your API keys.', 'xumm-for-woocommerce') .'Error Code:'. $body['error']['code'] .'</p></div>');
-                                   }
-
-                               } else {
-                                    echo('<div class="notice notice-error"><p>'.__('Connection Error to the', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'. __('XUMM API', 'xumm-for-woocommerce') .'</a>.</p></div>');
-                               }
+                            //    } else {
+                            //         echo('<div class="notice notice-error"><p>'.__('Connection Error to the', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'. __('XUMM API', 'xumm-for-woocommerce') .'</a>.</p></div>');
+                            //    }
                             ?>
                         </div>
                     <?php
@@ -186,10 +174,8 @@ $sdk = new XummSdk($context->api, $context->api_secret);
             <script>
                 jQuery(function () {
                     jQuery("#mainform").submit(function (e) {
-                        alert(document.location.href);
                         if (jQuery(this).find("input#specialAction").val() !== '') {
                             e.preventDefault()
-                            alert('aqui');
                             jQuery.ajax({
                                 url: document.location.href,
                                 type: 'POST',
