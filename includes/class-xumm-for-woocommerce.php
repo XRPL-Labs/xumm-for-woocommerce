@@ -12,7 +12,7 @@
  * @package    Xumm_For_Woocommerce
  * @subpackage Xumm_For_Woocommerce/includes
  */
-use XummForWoocomerce\XummPaymentGateway;
+use XummForWoocomerce\XUMM\Woocommerce\XummPaymentGateway;
 
 /**
  * The core plugin class.
@@ -249,7 +249,7 @@ class Xumm_For_Woocommerce {
      */
     public function add_xumm_gateway_class($methods)
     {
-        $methods[] = 'XummForWoocomerce\XummPaymentGateway';
+        $methods[] = 'XummForWoocomerce\XUMM\Woocommerce\XummPaymentGateway';
         return $methods;
     }
 

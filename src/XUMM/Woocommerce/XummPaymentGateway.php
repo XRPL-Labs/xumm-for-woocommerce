@@ -1,6 +1,6 @@
 <?php
 
-namespace XummForWoocomerce;
+namespace XummForWoocomerce\XUMM\Woocommerce;
 
 class XummPaymentGateway extends \WC_Payment_Gateway
 {
