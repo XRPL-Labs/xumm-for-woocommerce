@@ -1,60 +1,52 @@
 (function( $ ) {
     'use strict';
 
-    /**
-     * All of the code for your admin-facing JavaScript source
-     * should reside in this file.
-     *
-     * Note: It has been assumed you will write jQuery code here, so the
-     * $ function reference has been prepared for usage within the scope
-     * of this function.
-     *
-     * This enables you to define handlers, for when the DOM is ready:
-     *
-     * $(function() {
-     *
-     * });
-     *
-     * When the window is loaded:
-     *
-     * $( window ).load(function() {
-     *
-     * });
-     *
-     * ...and/or other possibilities.
-     *
-     * Ideally, it is not considered best practise to attach more than a
-     * single DOM-ready or window-load handler for a particular page.
-     * Although scripts in the WordPress core, Plugins and Themes may be
-     * practising this, we should strive to set a better example in our own work.
-     */
-
-    function setIssuer() {
+    function setIssuer()
+    {
         const IOU = $("#woocommerce_xumm_currencies option:selected").val()
 
-        const curated_assets = xumm_object.details
+        const issuersElements = jQuery('#woocommerce_xumm_issuers').closest('tr');
+        issuersElements.hide();
+
+        jQuery('#woocommerce_xumm_issuer').closest('tr').hide();
+
+        if (IOU != 'XRP') {
+            issuersElements.show();
+        }
+
+        const curatedAssets = xumm_object.details
 
         let arr = []
 
-        for (const issuer in curated_assets) {
-            var list = curated_assets[issuer].currencies
+        for (const issuer in curatedAssets) {
+            var list = curatedAssets[issuer].currencies
 
-            if (list !== undefined) {
-                arr.push(issuer)
+            for (let i in list) {
+                const item = list[i];
+                if (item.currency == IOU) {
+                    arr.push(curatedAssets[issuer].name)
+                }
             }
         }
 
-        var i = 0
+        var i = 0;
+
         $("#woocommerce_xumm_issuers option").each( (index, elem) => {
             var val = $(elem).text()
 
             //Disable input if Currency is not available with issuer else enable
             if ( !arr.includes(val) ) {
-                $(elem).prop('disabled', 'disabled').removeAttr('selected')
-                $(elem).prop("selected", false).removeAttr('selected').change()
+                $(elem).prop('disabled', 'disabled').removeAttr('selected');
+                $(elem).prop("selected", false).removeAttr('selected').trigger('change');
             } else {
-                $(elem).prop('disabled', false)
+                $(elem).prop('disabled', false);
             }
+
+            if ($(elem).val() == $('woocommerce_xumm_issuer').val()) {
+                alert($(elem).val());
+                $(elem).prop("selected", true).trigger('change');
+            }
+
             i++
         })
 
@@ -91,7 +83,7 @@
             $(elem).attr('disabled', 'disabled').hide()
         })
             $("#woocommerce_xumm_issuers option").each( (index, elem) => {
-            var val = $(elem).attr("value")
+            var val = $(elem).val()
             list.forEach(obj => {
                 if(obj.issuer == val) {
                     $(elem).removeAttr('disabled').show()
@@ -101,7 +93,7 @@
 
     }
 
-    $(document).ready(function () {
+    $(window).load(function() {
         setIssuer()
         disableIssuers()
 
@@ -115,9 +107,10 @@
 
         $("#woocommerce_xumm_issuers").change(function() {
             trustlineButton();
+            $('#woocommerce_xumm_issuer').val($(this).val());
         })
 
-        $('#set-trustline').click( async e => {
+        /* $('#set-trustline').click( async e => {
             e.preventDefault()
 
             let apikey = $("#woocommerce_xumm_api").attr("value")
@@ -155,7 +148,7 @@
                 })
             }
             const response = await fetch(url, option)
-        });
+        }); */
     });
 
 })( jQuery );

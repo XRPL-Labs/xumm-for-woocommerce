@@ -115,7 +115,7 @@ if(!empty($_GET['xumm-id'])) {
                                     // Redirect to the XUMM processor page
                                     echo($redirect);
                                 } else {
-                                    echo('<div class="notice notice-error"><p>'.$lang->admin->api->redirect__rror.' <a href="https://apps.xumm.dev/">'. __('XUMM API', 'xumm-for-woocommerce') .'</a>. '. __('Check your API keys.', 'xumm-for-woocommerce') .'Error Code:'. $body['error']['code'] .'</p></div>');
+                                    echo('<div class="notice notice-error"><p>'.__('Connection API Error to the', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'. __('XUMM API', 'xumm-for-woocommerce') .'</a>. '. __('Check your API keys.', 'xumm-for-woocommerce') .'Error Code:'. $body['error']['code'] .'</p></div>');
                                 }
 
                             //    } else {

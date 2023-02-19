@@ -5,7 +5,11 @@ use Xrpl\XummSdkPhp\XummSdk;
 if(!empty($context->api) && !empty($context->api_secret))
 {
     $sdk = new XummSdk($context->api, $context->api_secret);
-    $curatedAssets = $sdk->getCuratedAssets();
+    try {
+        $curatedAssets = $sdk->getCuratedAssets();
+    } catch (\Exception $e) {
+        // Silent is golden
+    }
 }
 
 $context->form_fields = [
@@ -87,6 +91,15 @@ $context->form_fields['issuers'] = array(
     'options'     => []
 );
 
+$context->form_fields['issuer'] = [
+    'title'       => __("Issuer", 'xumm-for-woocommerce'),
+    'type'        => 'text',
+    'description' => __("This is the issuer that you have been chosen", 'xumm-for-woocommerce'),
+    'default'     => '',
+    'desc_tip'    => true,
+    'class'       => 'hidden'
+];
+
 if (!empty ($curatedAssets->details) && get_woocommerce_currency() != 'XRP') {
 
     foreach ($curatedAssets->details as $exchange) {
@@ -102,7 +115,7 @@ if (!empty ($curatedAssets->details) && get_woocommerce_currency() != 'XRP') {
     $context->form_fields['issuers']['disabled'] = true;
 }
 
-$xummObject = $curatedAssets;
+$xummObject = !empty($curatedAssets) ? $curatedAssets : new stdClass();
 
 $xummObject->account = $context->destination;
 $xummObject->store_currency = get_woocommerce_currency();
