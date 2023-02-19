@@ -174,14 +174,6 @@ class Xumm_For_Woocommerce {
 
         $this->loader->add_filter('xumm_init_form_fields', $plugin_admin, 'init_form_fields', 10, 1);
         $this->loader->add_filter('xumm_display_plugin_options', $plugin_admin, 'display_plugin_options', 10, 1);
-
-        if (class_exists('WooCommerce'))
-        {
-            $this->loader->add_filter('woocommerce_payment_gateways', $this, 'add_xumm_gateway_class');
-            $this->loader->add_filter('woocommerce_available_payment_gateways', $this, 'disable_xumm');
-            $this->loader->add_filter('woocommerce_currencies', $this, 'add_xrp_currency');
-            $this->loader->add_filter('woocommerce_currency_symbol', $this, 'add_xrp_currency_symbol', 10, 2);
-        }
     }
 
     /**
@@ -198,6 +190,13 @@ class Xumm_For_Woocommerce {
         $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
         $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
+        if (class_exists('WooCommerce'))
+        {
+            $this->loader->add_filter('woocommerce_payment_gateways', $this, 'add_xumm_gateway_class');
+            $this->loader->add_filter('woocommerce_available_payment_gateways', $this, 'disable_xumm');
+            $this->loader->add_filter('woocommerce_currencies', $this, 'add_xrp_currency');
+            $this->loader->add_filter('woocommerce_currency_symbol', $this, 'add_xrp_currency_symbol', 10, 2);
+        }
     }
 
     /**

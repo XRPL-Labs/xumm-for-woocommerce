@@ -15,7 +15,7 @@ class XummPaymentGateway extends \WC_Payment_Gateway
     public function __construct()
     {
         $this->id = 'xumm';
-        $this->icon = plugin_dir_url(__FILE__).'public/images/label.svg';
+        $this->icon = xumm_plugin_url() . 'admin/public/images/label.svg';
         $this->has_fields = false;
         $this->method_title = __("Accept XUMM payments", "xumm-for-woocommerce");
         $this->method_description = __("Receive any supported currency into your XRP account using XUMM", "xumm-for-woocommerce");

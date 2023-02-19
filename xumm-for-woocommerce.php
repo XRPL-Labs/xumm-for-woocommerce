@@ -98,3 +98,7 @@ run_xumm_for_woocommerce();
 // Testnet:
 // define('XUMM_WS_ENDPOINT', 'wss://s.altnet.rippletest.net:51233');
 define('XUMM_WS_ENDPOINT', 'wss://testnet.xrpl-labs.com');
+
+function xumm_plugin_url() {
+    return plugin_dir_url( __FILE__ );
+}
