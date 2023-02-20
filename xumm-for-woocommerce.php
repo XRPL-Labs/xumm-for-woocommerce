@@ -92,11 +92,6 @@ function run_xumm_for_woocommerce() {
 
 run_xumm_for_woocommerce();
 
-// Production:
-// define('XUMM_WS_ENDPOINT', 'wss://xrpl.ws');
-
-// Testnet:
-// define('XUMM_WS_ENDPOINT', 'wss://s.altnet.rippletest.net:51233');
 define('XUMM_DEBUG', TRUE);
 
 if (XUMM_DEBUG) {
