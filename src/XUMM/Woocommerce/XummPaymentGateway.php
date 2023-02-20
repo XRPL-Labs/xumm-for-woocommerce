@@ -2,6 +2,9 @@
 
 namespace XummForWoocomerce\XUMM\Woocommerce;
 
+use XummForWoocomerce\XUMM\Facade\URL;
+use XummForWoocomerce\XUMM\Request\PaymentRequest;
+
 class XummPaymentGateway extends \WC_Payment_Gateway
 {
     public $endpoint = 'https://xumm.app/api/v1/platform/';
@@ -11,6 +14,23 @@ class XummPaymentGateway extends \WC_Payment_Gateway
         'USD' => 'USD',
         'EUR' => 'EUR'
     ];
+
+    public $currencies;
+    public $enabled;
+    public $id;
+    public $has_fields;
+    public $method_title;
+    public $method_description;
+    public $supports;
+    public $title;
+    public $description;
+    public $destination;
+    public $issuer;
+    public $explorer;
+    public $api;
+    public $api_secret;
+    public $issuers;
+
 
     public function __construct()
     {
@@ -49,9 +69,66 @@ class XummPaymentGateway extends \WC_Payment_Gateway
         apply_filters('xumm_display_plugin_options', $this);
     }
 
+    public function process_payment( $order_id )
+    {
+        $paymentRequest = new PaymentRequest();
+        $paymentRequest->setXummPaymentGateway($this);
+        $result = $paymentRequest->processPayment($order_id);
+
+        if (empty($result))
+        {
+            return;
+        }
+
+        return [
+            'result' => 'success',
+            'redirect' => $result
+        ];
+    }
+
     public function callback_handler()
     {
-        var_dump($_REQUEST);
-        exit;
+        if(!empty($_GET["order_id"])) {
+            $custom_identifier = sanitize_text_field($_GET["order_id"]);
+            $order_id = explode("_", $custom_identifier)[0];
+            $order = wc_get_order( $order_id );
+
+            $order_status  = $order->get_status();
+            switch ($order_status) {
+                case 'processing':
+                    wc_add_notice(__('Order Status: Processing', 'xumm-for-woocommerce'));
+                    $redirect_url = $this->get_return_url( $order );
+                    break;
+                case 'pending':
+                    wc_add_notice(__('Order Status: Pending', 'xumm-for-woocommerce'));
+                    $redirect_url = URL::getReturnURL($custom_identifier, $order, $this);
+                    break;
+                case 'on-hold':
+                    wc_add_notice('Order status: On-hold', 'xumm-for-woocommerce');
+                    $redirect_url = $order->get_checkout_payment_url(false);
+                    break;
+                case 'completed':
+                    wc_add_notice('Order status: Completed', 'xumm-for-woocommerce');
+                    $redirect_url = $this->get_return_url( $order );
+                    break;
+                case 'cancelled':
+                    wc_add_notice(__('Your order has been cancelled, please try again.', 'xumm-for-woocommerce'), 'error' );
+                    $redirect_url = $order->get_checkout_payment_url(false);
+                    break;
+                case 'failed':
+                    wc_add_notice(__('Failed payment. Please try again!', 'xumm-for-woocommerce'), 'error' );
+                    $redirect_url = $order->get_checkout_payment_url(false);
+                    break;
+                case 'refunded':
+                    wc_add_notice(__('Order has been refunded', 'xumm-for-woocommerce'), 'notice' );
+                    $redirect_url = $this->get_return_url( $order );
+                    break;
+                default:
+                    wc_add_notice(__('There is something wrong with the order, please contact us.', 'xumm-for-woocommerce'), 'error' );
+                    wp_safe_redirect($order->get_checkout_payment_url(false));
+                    break;
+            }
+            wp_safe_redirect($redirect_url);
+        }
     }
 }
