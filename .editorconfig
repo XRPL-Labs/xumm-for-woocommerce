@@ -1,4 +1,3 @@
-# Utilizar no root do projeto: .editorconfig
 root = true
 
 [*]
