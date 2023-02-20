@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: XUMM for WooCommerce 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/xumm-for-"
 "woocommerce\n"
-"POT-Creation-Date: 2023-02-19T12:45:12-03:00\n"
-"PO-Revision-Date: 2023-02-19 12:50-0300\n"
+"POT-Creation-Date: 2023-02-20T13:17:03-03:00\n"
+"PO-Revision-Date: 2023-02-20 13:17-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -20,11 +20,11 @@ msgstr ""
 #, fuzzy
 #| msgid "XUMM Payment Gateway for WooCommerce"
 msgid "XUMM payments for WooCommerce"
-msgstr "Gateway de pagamento XUMM para WooCommerce"
+msgstr "Aceitar Pagamentos com XUMM"
 
 #. Plugin URI of the plugin
 msgid "https://github.com/XRPL-Labs/xumm-for-woocommerce"
-msgstr ""
+msgstr "https://github.com/XRPL-Labs/xumm-for-woocommerce"
 
 #. Description of the plugin
 #, fuzzy
@@ -38,8 +38,9 @@ msgid "XUMM"
 msgstr "Habilitar XUMM Gateway"
 
 #. Author URI of the plugin
+#: src/XUMM/Request/PaymentRequest.php:103
 msgid "https://xumm.app/"
-msgstr ""
+msgstr "https://xumm.app/"
 
 #: admin/partials/xumm-for-woocommerce-admin-display.php:36
 msgid "Sign In successfull please check address & test payment"
@@ -190,10 +191,133 @@ msgstr "Defina o emissor e salve as alterações"
 msgid "This is the issuer that you have been chosen"
 msgstr "Este é o emissor que você escolheu"
 
-#: src/XummPaymentGateway.php:20
+#: src/XUMM/Facade/Transaction.php:28
+msgid "Connection error getting payload details from the XUMM platform."
+msgstr "Erro de conexão ao obter detalhes de carga útil da plataforma XUMM."
+
+#: src/XUMM/Facade/Transaction.php:42 src/XUMM/Facade/Transaction.php:85
+#: src/XUMM/Facade/Transaction.php:90
+msgid "Payment amount error"
+msgstr "Erro no valor do pagamento"
+
+#: src/XUMM/Facade/Transaction.php:50 src/XUMM/Facade/Transaction.php:73
+msgid "No funds received"
+msgstr "Nenhum fundo recebido"
+
+#: src/XUMM/Facade/Transaction.php:52 src/XUMM/Facade/Transaction.php:53
+#: src/XUMM/Facade/Transaction.php:75 src/XUMM/Facade/Transaction.php:76
+msgid ""
+"Your order is not paid and is less than order total, Please contact support"
+msgstr ""
+"Seu pedido não foi pago e é menor que o total do pedido, entre em contato "
+"com o suporte"
+
+#: src/XUMM/Facade/Transaction.php:53 src/XUMM/Facade/Transaction.php:62
+#: src/XUMM/Facade/Transaction.php:68 src/XUMM/Facade/Transaction.php:76
+msgid "Paid:"
+msgstr "Pago:"
+
+#: src/XUMM/Facade/Transaction.php:53 src/XUMM/Facade/Transaction.php:76
+msgid "Open:"
+msgstr "Aberto:"
+
+#: src/XUMM/Facade/Transaction.php:53 src/XUMM/Facade/Transaction.php:62
+#: src/XUMM/Facade/Transaction.php:68 src/XUMM/Facade/Transaction.php:76
+#, fuzzy
+#| msgid "Transaction Explorer"
+msgid "Transaction information"
+msgstr "Explorador de transações"
+
+#: src/XUMM/Facade/Transaction.php:61
+msgid "The issuer is not the same as the payment, please contact support"
+msgstr "O emissor não é o mesmo do pagamento, entre em contato com o suporte"
+
+#: src/XUMM/Facade/Transaction.php:62 src/XUMM/Facade/Transaction.php:68
+msgid "Wrong"
+msgstr "Incorreto"
+
+#: src/XUMM/Facade/Transaction.php:67
+msgid ""
+"The store currency is not the same as the payment, please contact support"
+msgstr ""
+"A moeda da loja não é a mesma do pagamento, entre em contato com o suporte"
+
+#: src/XUMM/Facade/URL.php:26
+msgid "Payment failed or cancelled, feel free to try again."
+msgstr ""
+"O pagamento falhou ou foi cancelado. Sinta-se à vontade para tentar "
+"novamente."
+
+#: src/XUMM/Facade/URL.php:38
+msgid "Hi, your order is paid! Thank you!"
+msgstr "Olá, seu pedido está pago! Obrigado!"
+
+#: src/XUMM/Facade/URL.php:38
+#, fuzzy
+msgid "Check the transaction details"
+msgstr "Escolha o explorador para checar as transações"
+
+#: src/XUMM/Facade/URL.php:38
+msgid "information"
+msgstr "informação"
+
+#: src/XUMM/Request/PaymentRequest.php:47
+msgid ""
+"Currency pair not supported. Please check the store currency & settings in "
+"the XUMM payment setting in WooCommerce"
+msgstr ""
+"Par de moedas não suportado. Verifique a moeda e as configurações da loja na "
+"configuração de pagamento XUMM no WooCommerce"
+
+#: src/XUMM/Request/PaymentRequest.php:50
+#, fuzzy
+msgid "Currency issue"
+msgstr "Escolha a sua moeda"
+
+#: src/XUMM/Request/PaymentRequest.php:94
+#, fuzzy
+msgid "paid with XUMM"
+msgstr "API XUMM"
+
+#: src/XUMM/Request/PaymentRequest.php:157
+#, fuzzy
+msgid "Got an error from XUMM"
+msgstr "Adicione chaves de API XUMM de"
+
+#: src/XUMM/Request/PaymentRequest.php:161
+#, fuzzy
+#| msgid "Connection Error to the"
+msgid "Connection error"
+msgstr "Erro de conexão para"
+
+#: src/XUMM/Woocommerce/XummPaymentGateway.php:40
 msgid "Accept XUMM payments"
 msgstr "Aceitar Pagamentos com XUMM"
 
-#: src/XummPaymentGateway.php:21
+#: src/XUMM/Woocommerce/XummPaymentGateway.php:41
 msgid "Receive any supported currency into your XRP account using XUMM"
 msgstr "Receba qualquer moeda suportada em sua conta XRP usando XUMM"
+
+#: src/XUMM/Woocommerce/XummPaymentGateway.php:99
+msgid "Order Status: Processing"
+msgstr "Status do pedido: Processando"
+
+#: src/XUMM/Woocommerce/XummPaymentGateway.php:103
+msgid "Order Status: Pending"
+msgstr "Status do pedido: Pendente"
+
+#: src/XUMM/Woocommerce/XummPaymentGateway.php:115
+msgid "Your order has been cancelled, please try again."
+msgstr "Seu pedido foi cancelado, tente novamente."
+
+#: src/XUMM/Woocommerce/XummPaymentGateway.php:119
+msgid "Failed payment. Please try again!"
+msgstr "Pagamento falhou. Por favor, tente novamente!"
+
+#: src/XUMM/Woocommerce/XummPaymentGateway.php:123
+msgid "Order has been refunded"
+msgstr "O pedido foi devolvido"
+
+#: src/XUMM/Woocommerce/XummPaymentGateway.php:127
+msgid "There is something wrong with the order, please contact us."
+msgstr "Há algo errado com o pedido, entre em contato conosco."

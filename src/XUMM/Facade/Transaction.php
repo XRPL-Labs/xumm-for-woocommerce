@@ -50,7 +50,7 @@ class Transaction
                         if($delivered_amount == 0) wc_add_notice(__('No funds received', 'xumm-for-woocommerce'), 'error');
                         else {
                             wc_add_notice(__('Your order is not paid and is less than order total, Please contact support', 'xumm-for-woocommerce'), 'error' );
-                            $order->add_order_note(__('Your order is not paid and is less than order total, please contact support', 'xumm-for-woocommerce') .'<br>'.__('Paid:', 'xumm-for-woocommerce') .' XRP '. number_format($delivered_amount, 6) .'<br>'. __('Open:', 'xumm-for-woocommerce') .' XRP '. number_format(($total - $delivered_amount), 6) .'<br>'. '<a href="'.$explorer.$txid.'">'. __('Transaction information', 'xumm-for-woocommerce') .'</a>',true);
+                            $order->add_order_note(__('Your order is not paid and is less than order total, Please contact support', 'xumm-for-woocommerce') .'<br>'.__('Paid:', 'xumm-for-woocommerce') .' XRP '. number_format($delivered_amount, 6) .'<br>'. __('Open:', 'xumm-for-woocommerce') .' XRP '. number_format(($total - $delivered_amount), 6) .'<br>'. '<a href="'.$explorer.$txid.'">'. __('Transaction information', 'xumm-for-woocommerce') .'</a>',true);
                         }
                         return false;
                     } else return true;
@@ -73,7 +73,7 @@ class Transaction
                         if($delivered_amount['value'] == 0) wc_add_notice(__('No funds received', 'xumm-for-woocommerce'), 'error');
                         else {
                             wc_add_notice(__('Your order is not paid and is less than order total, Please contact support', 'xumm-for-woocommerce'), 'error');
-                            $order->add_order_note(__('Your order is not paid and is less than order total, please contact support', 'xumm-for-woocommerce') .'<br>'.__('Paid:', 'xumm-for-woocommerce') .' '. $delivered_amount['currency'] .' '. $delivered_amount['value'] .'<br>'. __('Open:', 'xumm-for-woocommerce') .' '. $delivered_amount['currency'] .' '. ($total-$delivered_amount['value']) .'<br>'. '<a href="'.$explorer.$txid.'">'. __('Transaction information', 'xumm-for-woocommerce') .'</a>',true);
+                            $order->add_order_note(__('Your order is not paid and is less than order total, Please contact support', 'xumm-for-woocommerce') .'<br>'.__('Paid:', 'xumm-for-woocommerce') .' '. $delivered_amount['currency'] .' '. $delivered_amount['value'] .'<br>'. __('Open:', 'xumm-for-woocommerce') .' '. $delivered_amount['currency'] .' '. ($total-$delivered_amount['value']) .'<br>'. '<a href="'.$explorer.$txid.'">'. __('Transaction information', 'xumm-for-woocommerce') .'</a>',true);
                         }
                         return false;
                     }
