@@ -31,9 +31,16 @@ if(!empty($_GET['xumm-id'])) {
         {
             case 'SignIn':
                 $account = $payload->response->account;
+
                 if(!empty($account))
+                {
                     $context->update_option('destination', $account );
+                    $context->update_option('logged_in', true );
+                    $context->logged_in = true;
+
                     echo('<div class="notice notice-success"><p>'.__('Sign In successfull please check address & test payment', 'xumm-for-woocommerce').'</p></div>');
+                }
+
                 break;
 
             case 'TrustSet':
@@ -50,86 +57,90 @@ if(!empty($_GET['xumm-id'])) {
     }
 }
 
-            ?>
-            <h2><?php __('XUMM Payment Gateway for WooCommerce','woocommerce'); ?></h2>
+if(!empty($_POST["specialAction"])) {
+    ?>
+        <div id="customFormActionResult" style="display: none;">
             <?php
-                if(!empty($_POST["specialAction"])) {
-                    ?>
-                        <div id="customFormActionResult" style="display: none;">
-                            <?php
-                                $query_arr = array(
-                                    'page'      => 'wc-settings',
-                                    'tab'       => 'checkout',
-                                    'section'   => 'xumm',
-                                    'callback'  => true
-                                );
+                $query_arr = array(
+                    'page'      => 'wc-settings',
+                    'tab'       => 'checkout',
+                    'section'   => 'xumm',
+                    'callback'  => true
+                );
 
-                                $return_url = get_home_url() .'/wp-admin/admin.php?' . http_build_query($query_arr);
+                $return_url = get_home_url() .'/wp-admin/admin.php?' . http_build_query($query_arr);
 
-                                switch($_POST["specialAction"]) {
-                                    case 'set_destination':
-                                        $identifier = 'sign-in_' . strtoupper(substr(md5(microtime()), 0, 10));
+                switch($_POST["specialAction"]) {
+                    case 'set_destination':
+                        $identifier = 'sign-in_' . strtoupper(substr(md5(microtime()), 0, 10));
 
-                                        $return_url = add_query_arg( 'xumm-id', $identifier, $return_url);
+                        $return_url = add_query_arg( 'xumm-id', $identifier, $return_url);
 
-                                        $payload = new Payload(
-                                            [
-                                                "TransactionType" => "SignIn"
-                                            ],
-                                            null,
-                                            new Options(true, null, null, null, null,
-                                            new ReturnUrl(wp_is_mobile() ? $return_url : null, $return_url)),
-                                            new CustomMeta($identifier)
-                                        );
+                        $payload = new Payload(
+                            [
+                                "TransactionType" => "SignIn"
+                            ],
+                            null,
+                            new Options(true, null, null, null, null,
+                            new ReturnUrl(wp_is_mobile() ? $return_url : null, $return_url)),
+                            new CustomMeta($identifier)
+                        );
 
-                                        break;
-                                    case 'set_trustline':
-                                        $identifier = 'trustline_' . strtoupper(substr(md5(microtime()), 0, 10));
-                                        $return_url = add_query_arg( 'xumm-id', $identifier, $return_url);
+                        break;
+                    case 'set_trustline':
+                        $identifier = 'trustline_' . strtoupper(substr(md5(microtime()), 0, 10));
+                        $return_url = add_query_arg( 'xumm-id', $identifier, $return_url);
 
-                                        $payload = new Payload(
-                                            [
-                                                'TransactionType' => 'TrustSet',
-                                                "Account" => $context->destination,
-                                                "Fee" => "12",
-                                                "LimitAmount" => [
-                                                  "currency" => sanitize_text_field($_POST['woocommerce_xumm_currencies']),
-                                                  "issuer" => sanitize_text_field($_POST['woocommerce_xumm_issuers']),
-                                                  "value" => "999999999"
-                                                ],
-                                                "Flags" => 131072
-                                            ],
-                                            null,
-                                            new Options(true, null, null, null, null,
-                                                new ReturnUrl(wp_is_mobile() ? $return_url : null, $return_url)),
-                                            new CustomMeta($identifier)
-                                        );
+                        $payload = new Payload(
+                            [
+                                'TransactionType' => 'TrustSet',
+                                "Account" => $context->destination,
+                                "Fee" => "12",
+                                "LimitAmount" => [
+                                    "currency" => sanitize_text_field($_POST['woocommerce_xumm_currencies']),
+                                    "issuer" => sanitize_text_field($_POST['woocommerce_xumm_issuers']),
+                                    "value" => "999999999"
+                                ],
+                                "Flags" => 131072
+                            ],
+                            null,
+                            new Options(true, null, null, null, null,
+                                new ReturnUrl(wp_is_mobile() ? $return_url : null, $return_url)),
+                            new CustomMeta($identifier)
+                        );
 
-                                        break;
-                                }
-
-                                $response = $sdk->createPayload($payload);
-
-                                $redirect = $response->next->always;
-                                if (!empty($redirect)) {
-                                    // Redirect to the XUMM processor page
-                                    echo($redirect);
-                                } else {
-                                    echo('<div class="notice notice-error"><p>'.__('Connection API Error to the', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'. __('XUMM API', 'xumm-for-woocommerce') .'</a>. '. __('Check your API keys.', 'xumm-for-woocommerce') .'Error Code:'. $body['error']['code'] .'</p></div>');
-                                }
-
-                            //    } else {
-                            //         echo('<div class="notice notice-error"><p>'.__('Connection Error to the', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'. __('XUMM API', 'xumm-for-woocommerce') .'</a>.</p></div>');
-                            //    }
-                            ?>
-                        </div>
-                    <?php
+                        break;
                 }
+
+                $response = $sdk->createPayload($payload);
+
+                $redirect = $response->next->always;
+                if (!empty($redirect)) {
+                    // Redirect to the XUMM processor page
+                    echo($redirect);
+                } else {
+                    echo('<div class="notice notice-error"><p>'.__('Connection API Error to the', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'. __('XUMM API', 'xumm-for-woocommerce') .'</a>. '. __('Check your API keys.', 'xumm-for-woocommerce') .'Error Code:'. $body['error']['code'] .'</p></div>');
+                }
+
             ?>
+        </div>
+    <?php
+}
+            ?>
+            <h2><?php _e('XUMM Payment Gateway for WooCommerce','xumm-for-woocommerce'); ?></h2>
+
+            <button type="button" class="customFormActionBtn" id="set_destination" style="border-style: none; cursor:pointer; background-color: transparent;">
+                <img src="<?php echo plugin_dir_url( __FILE__ ) .'/../../public/images/signin.svg'; ?>" width="220" style="padding:0" />
+            </button>
+
             <table class="form-table">
+
                 <?php
 
-                    $context->generate_settings_html();
+                    if (!empty($context->logged_in))
+                    {
+                        $context->generate_settings_html();
+                    }
 
                     $storeCurrency = get_woocommerce_currency();
 
@@ -163,13 +174,12 @@ if(!empty($_GET['xumm-id'])) {
             </table>
 
             <input type="hidden" id="specialAction" name="specialAction" value="">
-            <button type="button" class="customFormActionBtn" id="set_destination" style="border-style: none; cursor:pointer; background-color: transparent;">
-                <img src="<?php echo plugin_dir_url( __FILE__ ) .'/../../public/images/signin.svg'; ?>" width="220" style="padding:0" />
-            </button>
 
+            <?php if (!empty($context->logged_in)): ?>
             <button type="button" class="customFormActionBtn button-primary" id="set_trustline" disabled="disabled">
                 <?php echo __('Add Trustline', 'xumm-for-woocommerce'); ?>
             </button>
+            <?php endif; ?>
 
             <script>
                 jQuery(function () {

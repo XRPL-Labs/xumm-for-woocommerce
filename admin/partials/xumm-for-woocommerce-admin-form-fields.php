@@ -38,6 +38,7 @@ $context->form_fields = [
         'type'        => 'text',
         'description' => __("This is your XRP r Address", 'xumm-for-woocommerce'),
         'desc_tip'    => true,
+        'disabled'    => true
     ),
     'explorer' => array(
         'title'       => __("Transaction Explorer", 'xumm-for-woocommerce'),

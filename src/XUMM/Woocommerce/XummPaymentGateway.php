@@ -39,11 +39,12 @@ class XummPaymentGateway extends \WC_Payment_Gateway
         $this->has_fields = false;
         $this->method_title = __("Accept XUMM payments", "xumm-for-woocommerce");
         $this->method_description = __("Receive any supported currency into your XRP account using XUMM", "xumm-for-woocommerce");
+        $this->destination = $this->get_option('destination');
         $this->supports = ['products'];
-        $this->enabled = $this->get_option('enabled');
+        $this->logged_in = $this->get_option('logged_in');
+        $this->enabled = empty($this->logged_in) ? false : $this->get_option('enabled');
         $this->title = $this->get_option('title');
         $this->description = $this->get_option('description');
-        $this->destination = $this->get_option('destination');
         $this->currency = $this->get_option('currency');
         $this->issuer = $this->get_option('issuer');
         $this->explorer = $this->get_option('explorer');
