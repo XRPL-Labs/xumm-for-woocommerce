@@ -30,6 +30,7 @@ class Xumm_For_Woocommerce_Activator {
      * @since    1.0.0
      */
     public static function activate() {
+        set_transient( 'woocommerce_xumm_activate_notice', true );
     }
 
 }

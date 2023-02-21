@@ -145,4 +145,18 @@ class Xumm_For_Woocommerce_Admin {
 
         return true;
     }
+
+    /**
+     * Give the activation notice after activate the plugin
+     *
+     * @since    1.0.0
+     */
+    public function activate_notice()
+    {
+        if (get_transient( 'woocommerce_xumm_activate_notice'))
+        {
+            include_once( 'partials/xumm-for-woocommerce-admin-activate-notice.php' );
+            delete_transient( 'woocommerce_xumm_activate_notice' );
+        }
+    }
 }

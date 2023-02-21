@@ -3,20 +3,23 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XUMM payments for WooCommerce 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/xumm-for-woocommerce\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/xumm-for-"
+"woocommerce\n"
+"POT-Creation-Date: 2023-02-21T18:22:30-03:00\n"
+"PO-Revision-Date: 2023-02-21 18:26-0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fy_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-02-21T18:22:30-03:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-Domain: xumm-for-woocommerce\n"
 
 #. Plugin Name of the plugin
 msgid "XUMM payments for WooCommerce"
-msgstr ""
+msgstr "XUMM betalingen voor WooCommerce"
 
 #. Plugin URI of the plugin
 msgid "https://github.com/XRPL-Labs/xumm-for-woocommerce"
@@ -37,11 +40,11 @@ msgstr ""
 
 #: admin/partials/xumm-for-woocommerce-admin-activate-notice.php:2
 msgid "Thank you for using XUMM For Woocommerce!"
-msgstr ""
+msgstr "Bedankt voor het gebruik van XUMM voor Woocommerce!"
 
 #: admin/partials/xumm-for-woocommerce-admin-activate-notice.php:3
 msgid "Now proceed to"
-msgstr ""
+msgstr "Ga nu verder naar"
 
 #: admin/partials/xumm-for-woocommerce-admin-activate-notice.php:5
 msgid "Xumm Dev Console"
@@ -49,7 +52,7 @@ msgstr ""
 
 #: admin/partials/xumm-for-woocommerce-admin-activate-notice.php:6
 msgid "to get your API credentials"
-msgstr ""
+msgstr "om uw API-referenties te krijgen"
 
 #: admin/partials/xumm-for-woocommerce-admin-display.php:36
 msgid "Sign In successfull please check address & test payment"
@@ -200,40 +203,32 @@ msgstr ""
 msgid "Connection error getting payload details from the XUMM platform."
 msgstr ""
 
-#: src/XUMM/Facade/Transaction.php:42
-#: src/XUMM/Facade/Transaction.php:85
+#: src/XUMM/Facade/Transaction.php:42 src/XUMM/Facade/Transaction.php:85
 #: src/XUMM/Facade/Transaction.php:90
 msgid "Payment amount error"
 msgstr ""
 
-#: src/XUMM/Facade/Transaction.php:50
-#: src/XUMM/Facade/Transaction.php:73
+#: src/XUMM/Facade/Transaction.php:50 src/XUMM/Facade/Transaction.php:73
 msgid "No funds received"
 msgstr ""
 
-#: src/XUMM/Facade/Transaction.php:52
-#: src/XUMM/Facade/Transaction.php:53
-#: src/XUMM/Facade/Transaction.php:75
-#: src/XUMM/Facade/Transaction.php:76
-msgid "Your order is not paid and is less than order total, Please contact support"
+#: src/XUMM/Facade/Transaction.php:52 src/XUMM/Facade/Transaction.php:53
+#: src/XUMM/Facade/Transaction.php:75 src/XUMM/Facade/Transaction.php:76
+msgid ""
+"Your order is not paid and is less than order total, Please contact support"
 msgstr ""
 
-#: src/XUMM/Facade/Transaction.php:53
-#: src/XUMM/Facade/Transaction.php:62
-#: src/XUMM/Facade/Transaction.php:68
-#: src/XUMM/Facade/Transaction.php:76
+#: src/XUMM/Facade/Transaction.php:53 src/XUMM/Facade/Transaction.php:62
+#: src/XUMM/Facade/Transaction.php:68 src/XUMM/Facade/Transaction.php:76
 msgid "Paid:"
 msgstr ""
 
-#: src/XUMM/Facade/Transaction.php:53
-#: src/XUMM/Facade/Transaction.php:76
+#: src/XUMM/Facade/Transaction.php:53 src/XUMM/Facade/Transaction.php:76
 msgid "Open:"
 msgstr ""
 
-#: src/XUMM/Facade/Transaction.php:53
-#: src/XUMM/Facade/Transaction.php:62
-#: src/XUMM/Facade/Transaction.php:68
-#: src/XUMM/Facade/Transaction.php:76
+#: src/XUMM/Facade/Transaction.php:53 src/XUMM/Facade/Transaction.php:62
+#: src/XUMM/Facade/Transaction.php:68 src/XUMM/Facade/Transaction.php:76
 msgid "Transaction information"
 msgstr ""
 
@@ -241,13 +236,13 @@ msgstr ""
 msgid "The issuer is not the same as the payment, please contact support"
 msgstr ""
 
-#: src/XUMM/Facade/Transaction.php:62
-#: src/XUMM/Facade/Transaction.php:68
+#: src/XUMM/Facade/Transaction.php:62 src/XUMM/Facade/Transaction.php:68
 msgid "Wrong"
 msgstr ""
 
 #: src/XUMM/Facade/Transaction.php:67
-msgid "The store currency is not the same as the payment, please contact support"
+msgid ""
+"The store currency is not the same as the payment, please contact support"
 msgstr ""
 
 #: src/XUMM/Facade/URL.php:26
@@ -267,7 +262,9 @@ msgid "information"
 msgstr ""
 
 #: src/XUMM/Request/ExchangeRateRequest.php:30
-msgid "Currency pair not supported. Please check the store currency & settings in the XUMM payment setting in WooCommerce"
+msgid ""
+"Currency pair not supported. Please check the store currency & settings in "
+"the XUMM payment setting in WooCommerce"
 msgstr ""
 
 #: src/XUMM/Request/ExchangeRateRequest.php:32
