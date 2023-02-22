@@ -136,7 +136,10 @@ class XummPaymentGateway extends \WC_Payment_Gateway
                     wp_safe_redirect($order->get_checkout_payment_url(false));
                     break;
             }
+
             wp_safe_redirect($redirect_url);
+
+            exit;
         }
     }
 }
