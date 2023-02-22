@@ -20,43 +20,6 @@ use Xrpl\XummSdkPhp\XummSdk;
 
 $sdk = new XummSdk($context->api, $context->api_secret);
 
-if(!empty($_GET['xumm-id'])) {
-    $xumm_id = sanitize_text_field($_GET['xumm-id']);
-
-    $payload = $sdk->getPayloadByCustomId($xumm_id);
-
-    //Todo:: first check if success
-    if (!empty($payload->payload)) {
-        switch ($payload->payload->txType)
-        {
-            case 'SignIn':
-                $account = $payload->response->account;
-
-                if(!empty($account))
-                {
-                    $context->update_option('destination', $account );
-                    $context->update_option('logged_in', true );
-                    $context->logged_in = true;
-
-                    echo('<div class="notice notice-success"><p>'.__('Sign In successfull please check address & test payment', 'xumm-for-woocommerce').'</p></div>');
-                }
-
-                break;
-
-            case 'TrustSet':
-                if (!empty($payload->payload->request['LimitAmount']['issuer'])) {
-                    $context->update_option('issuer', $payload->payload->request['LimitAmount']['issuer']);
-                    echo('<div class="notice notice-success"><p>'.__('Trust Line Set successfull please check address & test payment', 'xumm-for-woocommerce').'</p></div>');
-                }
-
-                break;
-
-            default:
-                break;
-        }
-    }
-}
-
 if(!empty($_POST["specialAction"])) {
     ?>
         <div id="customFormActionResult" style="display: none;">
@@ -126,83 +89,101 @@ if(!empty($_POST["specialAction"])) {
         </div>
     <?php
 }
-            ?>
-            <h2><?php _e('XUMM Payment Gateway for WooCommerce','xumm-for-woocommerce'); ?></h2>
+?>
+<h2><?php _e('XUMM Payment Gateway for WooCommerce','xumm-for-woocommerce'); ?></h2>
 
-            <button type="button" class="customFormActionBtn" id="set_destination" style="border-style: none; cursor:pointer; background-color: transparent;">
-                <img src="<?php echo plugin_dir_url( __FILE__ ) .'/../../public/images/signin.svg'; ?>" width="220" style="padding:0" />
-            </button>
+<?php if (empty($context->logged_in)): ?>
+<p><?php _e('Welcome to the XUMM Payment Gateway for Woocommerce', 'xumm-for-woocommerce') ?></p>
 
-            <table class="form-table">
+<p><?php _e('In order to continue, you need to complete these steps:', 'xumm-for-woocommerce') ?></p>
+<ol>
+    <li><?php _e('Go to the', 'xumm-for-woocommerce') ?> <a target="_blank" href="https://apps.xumm.dev/"><?php _e('Xumm Developer Console', 'xumm-for-woocommerce') ?></a></li>
+    <li><?php _e('Create your app to get your API Credentials', 'xumm-for-woocommerce') ?></li>
+    <li><?php _e('Define your WebHook URL like this: ', 'xumm-for-woocommerce') ?> <a href="<?php echo site_url() ?>?wc-api=xumm"><?php echo site_url() ?>?wc-api=xumm</a></li>
+    <li><?php _e('Back here and signin using your Xumm App', 'xumm-for-woocommerce') ?></li>
+    <li><?php _e('Place your API Credentials', 'xumm-for-woocommerce') ?></li>
+    <li><?php _e('Set your Trustlines and go ahead!', 'xumm-for-woocommerce') ?></li>
+</ol>
 
-                <?php
+<?php endif ?>
 
-                    if (!empty($context->logged_in))
-                    {
-                        $context->generate_settings_html();
+<button type="button" class="customFormActionBtn" id="set_destination" style="border-style: none; cursor:pointer; background-color: transparent;">
+    <img src="<?php echo plugin_dir_url( __FILE__ ) .'/../../public/images/signin.svg'; ?>" width="220" style="padding:0" />
+</button>
+
+<table class="form-table">
+
+    <?php
+
+        if (!empty($context->logged_in))
+        {
+            $context->generate_settings_html();
+        }
+
+        $storeCurrency = get_woocommerce_currency();
+
+        if(empty($context->api) || empty($context->api_secret)) echo('<div class="notice notice-info"><p>'. __('Please add XUMM API keys from', 'xumm-for-woocommerce') .' <a href="https://apps.xumm.dev/">'. __('XUMM API', 'xumm-for-woocommerce') .'</a></p></div>');
+        else {
+
+            try {
+                $pong = $sdk->ping();
+
+                if(!empty($pong->call->uuidV4)) {
+                    echo('<div class="notice notice-success is-dismissible"><p>'.__('Connected to the', 'xumm-for-woocommerce', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a></p></div>');
+
+                    $webhookApi = $pong->application->webhookUrl;
+                    $webhook = get_home_url() . '/?wc-api='. $context->id;
+                    if($webhook != $webhookApi) echo('<div class="notice notice-error is-dismissible"><p>'.__('WebHook incorrect on', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a>, '.__('should be', 'xumm-for-woocommerce').' '.$webhook.'</p></div>');
+                }
+                else echo('<div class="notice notice-error is-dismissible"><p>'.__('Connection API Error to the', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a>. '. __('Check your API keys.', 'xumm-for-woocommerce') .'Error Code:'. $body['error']['code'].'</p></div>');
+
+            } catch (\Exception $e) {
+                echo ('<div class="notice notice-error is-dismissible"><p>'.__('Connection Error to the', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a></p></div>');
+            }
+
+        }
+
+        // exit;
+        if (!in_array($storeCurrency, $context->availableCurrencies)) echo('<div class="notice notice-error"><p>'.__('Please change store currency', 'xumm-for-woocommerce').'</p></div>');
+        if ($storeCurrency != 'XRP' && $context->currencies != 'XRP' && $storeCurrency != $context->currencies) echo('<div class="notice notice-error"><p>'.__('Please change store currency', 'xumm-for-woocommerce').'</p></div>');
+        if ($context->currencies != 'XRP' && empty($context->issuers) && get_woocommerce_currency() != 'XRP') echo('<div class="notice notice-error"><p>'.__('Please set the issuer and save changes', 'xumm-for-woocommerce').'</p></div>');
+
+    ?>
+</table>
+
+<input type="hidden" id="specialAction" name="specialAction" value="">
+
+<?php if (!empty($context->logged_in)): ?>
+<button type="button" class="customFormActionBtn button-primary" id="set_trustline" disabled="disabled">
+    <?php echo __('Add Trustline', 'xumm-for-woocommerce'); ?>
+</button>
+<?php endif; ?>
+
+<script>
+    jQuery(function () {
+        jQuery("#mainform").submit(function (e) {
+            xrpl_loader(true);
+            if (jQuery(this).find("input#specialAction").val() !== '') {
+                e.preventDefault()
+                jQuery.ajax({
+                    url: document.location.href,
+                    type: 'POST',
+                    data: jQuery(this).serialize(),
+                    success: function (response) {
+                        let tlResponse = jQuery(response).find("#customFormActionResult").html().trim()
+                        xrpl_loader(false);
+                        window.location.href = tlResponse;
                     }
-
-                    $storeCurrency = get_woocommerce_currency();
-
-                    if(empty($context->api) || empty($context->api_secret)) echo('<div class="notice notice-info"><p>'. __('Please add XUMM API keys from', 'xumm-for-woocommerce') .' <a href="https://apps.xumm.dev/">'. __('XUMM API', 'xumm-for-woocommerce') .'</a></p></div>');
-                    else {
-
-                        try {
-                            $pong = $sdk->ping();
-
-                            if(!empty($pong->call->uuidV4)) {
-                                echo('<div class="notice notice-success"><p>'.__('Connected to the', 'xumm-for-woocommerce', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a></p></div>');
-
-                                $webhookApi = $pong->application->webhookUrl;
-                                $webhook = get_home_url() . '/?wc-api='. $context->id;
-                                if($webhook != $webhookApi) echo('<div class="notice notice-error"><p>'.__('WebHook incorrect on', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a>, '.__('should be', 'xumm-for-woocommerce').' '.$webhook.'</p></div>');
-                            }
-                            else echo('<div class="notice notice-error"><p>'.__('Connection API Error to the', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a>. '. __('Check your API keys.', 'xumm-for-woocommerce') .'Error Code:'. $body['error']['code'].'</p></div>');
-
-                        } catch (\Exception $e) {
-                            echo ('<div class="notice notice-error"><p>'.__('Connection Error to the', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a></p></div>');
-                        }
-
-                    }
-
-                    // exit;
-                    if (!in_array($storeCurrency, $context->availableCurrencies)) echo('<div class="notice notice-error"><p>'.__('Please change store currency', 'xumm-for-woocommerce').'</p></div>');
-                    if ($storeCurrency != 'XRP' && $context->currencies != 'XRP' && $storeCurrency != $context->currencies) echo('<div class="notice notice-error"><p>'.__('Please change store currency', 'xumm-for-woocommerce').'</p></div>');
-                    if ($context->currencies != 'XRP' && empty($context->issuers) && get_woocommerce_currency() != 'XRP') echo('<div class="notice notice-error"><p>'.__('Please set the issuer and save changes', 'xumm-for-woocommerce').'</p></div>');
-
-                ?>
-            </table>
-
-            <input type="hidden" id="specialAction" name="specialAction" value="">
-
-            <?php if (!empty($context->logged_in)): ?>
-            <button type="button" class="customFormActionBtn button-primary" id="set_trustline" disabled="disabled">
-                <?php echo __('Add Trustline', 'xumm-for-woocommerce'); ?>
-            </button>
-            <?php endif; ?>
-
-            <script>
-                jQuery(function () {
-                    jQuery("#mainform").submit(function (e) {
-                        if (jQuery(this).find("input#specialAction").val() !== '') {
-                            e.preventDefault()
-                            jQuery.ajax({
-                                url: document.location.href,
-                                type: 'POST',
-                                data: jQuery(this).serialize(),
-                                success: function (response) {
-                                    let tlResponse = jQuery(response).find("#customFormActionResult").html().trim()
-                                    window.location.href = tlResponse
-                                }
-                            });
-                            return false
-                        }
-                    })
-                    jQuery(".customFormActionBtn").click(function () {
-
-                        jQuery("#specialAction").val(jQuery(this).attr('id'))
-                        jQuery("#mainform").trigger('submit')
-                    })
                 });
-            </script>
-        <?php
+                return false
+            }
+        })
+        jQuery(".customFormActionBtn").click(function () {
+
+            jQuery("#specialAction").val(jQuery(this).attr('id'))
+            jQuery("#mainform").trigger('submit')
+        })
+    });
+</script>
+
+<?php include_once(dirname(__FILE__) . '/xumm-for-woocommerce-admin-loader.php'); ?>

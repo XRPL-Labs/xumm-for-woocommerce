@@ -10,6 +10,9 @@
  * @subpackage Xumm_For_Woocommerce/admin
  */
 
+use Xrpl\XummSdkPhp\XummSdk;
+use XummForWoocomerce\XUMM\Traits\XummPaymentGatewayTrait;
+
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -20,7 +23,9 @@
  * @subpackage Xumm_For_Woocommerce/admin
  * @author     Andrei R <mdxico@gmail.com>
  */
-class Xumm_For_Woocommerce_Admin {
+class Xumm_For_Woocommerce_Admin
+{
+    use XummPaymentGatewayTrait;
 
     /**
      * The ID of this plugin.
@@ -151,12 +156,78 @@ class Xumm_For_Woocommerce_Admin {
      *
      * @since    1.0.0
      */
-    public function activate_notice()
+    public function admin_notices()
     {
         if (get_transient( 'woocommerce_xumm_activate_notice'))
         {
             include_once( 'partials/xumm-for-woocommerce-admin-activate-notice.php' );
             delete_transient( 'woocommerce_xumm_activate_notice' );
         }
+
+        if (get_transient( 'woocommerce_xumm_signin_successfull'))
+        {
+            include_once( 'partials/xumm-for-woocommerce-admin-notice-signin.php' );
+            delete_transient( 'woocommerce_xumm_signin_successfull' );
+        }
+
+        if (get_transient( 'woocommerce_xumm_trustset_successfull'))
+        {
+            include_once( 'partials/xumm-for-woocommerce-admin-notice-trustset.php' );
+            delete_transient( 'woocommerce_xumm_trustset_successfull' );
+        }
+    }
+
+    public function settings_link($links)
+    {
+        $action_links = array(
+			'settings' => '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=checkout&section=xumm' ) . '" aria-label="' . esc_attr__( 'View Xumm For Woocommerce settings', 'xumm-for-woocommerce' ) . '">' . esc_html__( 'Settings', 'woocommerce' ) . '</a>',
+		);
+
+		return array_merge( $action_links, $links );
+    }
+
+    public function xumm_callback()
+    {
+        $context = $this->getXummPaymentGateway();
+
+        if(!empty($_GET['xumm-id']))
+        {
+            $xumm_id = sanitize_text_field($_GET['xumm-id']);
+
+            $sdk = new XummSdk($context->api, $context->api_secret);
+            $payload = $sdk->getPayloadByCustomId($xumm_id);
+
+            if (!empty($payload->payload)) {
+                switch ($payload->payload->txType)
+                {
+                    case 'SignIn':
+                        $account = $payload->response->account;
+
+                        if(!empty($account))
+                        {
+                            $context->update_option('destination', $account );
+                            $context->update_option('logged_in', true );
+                            $context->logged_in = true;
+
+                            set_transient( 'woocommerce_xumm_signin_successfull', true);
+                        }
+
+                        break;
+
+                    case 'TrustSet':
+                        if (!empty($payload->payload->request['LimitAmount']['issuer'])) {
+                            $context->update_option('issuer', $payload->payload->request['LimitAmount']['issuer']);
+
+                            set_transient( 'woocommerce_xumm_trustset_successfull', true);
+                        }
+
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+
     }
 }

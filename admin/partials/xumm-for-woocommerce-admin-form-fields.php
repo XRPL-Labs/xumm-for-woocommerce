@@ -20,6 +20,15 @@ $context->form_fields = [
         'description' => "",
         'default'     => 'no'
     ],
+    'destination' => array(
+        'title'       => __("XRP Destination address", 'xumm-for-woocommerce'),
+        'type'        => 'text',
+        'description' => __("This is your XRP r Address", 'xumm-for-woocommerce'),
+        'desc_tip'    => true,
+        'custom_attributes'    => [
+            'readonly' => 'readonly'
+        ]
+    ),
     'title' => array(
         'title'       => __("Title", 'xumm-for-woocommerce'),
         'type'        => 'text',
@@ -32,13 +41,6 @@ $context->form_fields = [
         'type'        => 'textarea',
         'description' => __("This is the text users will see in the checkout for this payment method", 'xumm-for-woocommerce'),
         'default'     => __("Pay with XRP using the #1 XRPL wallet: XUMM.", 'xumm-for-woocommerce'),
-    ),
-    'destination' => array(
-        'title'       => __("XRP Destination address", 'xumm-for-woocommerce'),
-        'type'        => 'text',
-        'description' => __("This is your XRP r Address", 'xumm-for-woocommerce'),
-        'desc_tip'    => true,
-        'disabled'    => true
     ),
     'explorer' => array(
         'title'       => __("Transaction Explorer", 'xumm-for-woocommerce'),
@@ -104,11 +106,14 @@ $context->form_fields['issuer'] = [
 if (!empty ($curatedAssets->details) && get_woocommerce_currency() != 'XRP') {
 
     foreach ($curatedAssets->details as $exchange) {
+
         if ($exchange->shortlist === 0) break;
 
         $exchangeName = $exchange->name;
 
+
         foreach ($exchange->currencies as $currency) {
+
             $context->form_fields['issuers']['options'][$currency->issuer] = $exchangeName;
         }
     }
@@ -121,5 +126,10 @@ $xummObject = !empty($curatedAssets) ? $curatedAssets : new stdClass();
 $xummObject->account = $context->destination;
 $xummObject->store_currency = get_woocommerce_currency();
 $xummObject->ws = XUMM_WS_ENDPOINT;
+$xummObject->logged_in = $context->logged_in;
+
+if (empty($context->logged_in)) {
+    $GLOBALS['hide_save_button'] = true;
+}
 
 wp_localize_script( 'jquery', 'xumm_object', $xummObject);

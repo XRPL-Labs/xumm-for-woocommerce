@@ -201,30 +201,46 @@ function trustlineAvailable() {
     }
 }
 
-ws = new WebSocket(xumm_object.ws)
-
-let cmd = {
-    "id": 1,
-    "command": "account_lines",
-    "account": xumm_object.account,
-    "ledger_index": "validated"
+function xrpl_loader(show = true)
+{
+    if (show) {
+        jQuery('.xrpl-preloader').css('visibility', 'visible');
+    } else {
+        jQuery('.xrpl-preloader').css('visibility', 'hidden');
+    }
 }
 
-let trustlinesSet = []
+let trustlinesSet = [];
 
-ws.onopen = () => {
-    console.log('connected to XRPL')
-    ws.send(JSON.stringify(cmd))
+if (xumm_object.logged_in)
+{
+    ws = new WebSocket(xumm_object.ws)
+
+    let cmd = {
+        "id": 1,
+        "command": "account_lines",
+        "account": xumm_object.account,
+        "ledger_index": "validated"
+    }
+
+    ws.onopen = () => {
+        console.log('connected to XRPL')
+        ws.send(JSON.stringify(cmd))
+    }
+
+    ws.onmessage = (msg) => {
+        let data = JSON.parse(msg.data);
+
+        if ('error' in data)
+            return;
+
+        let array = data.result.lines;
+
+        array.forEach(line => {
+            trustlinesSet.push({account: line.account, currency: line.currency})
+        });
+
+        trustlineAvailable()
+        trustlineButton()
+    }
 }
-
-ws.onmessage = (msg) => {
-    let data = JSON.parse(msg.data)
-    let array = data.result.lines
-
-    array.forEach(line => {
-        trustlinesSet.push({account: line.account, currency: line.currency})
-    })
-    trustlineAvailable()
-    trustlineButton()
-}
-
