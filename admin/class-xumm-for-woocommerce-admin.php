@@ -177,6 +177,11 @@ class Xumm_For_Woocommerce_Admin
         }
     }
 
+    /**
+     * Settings link after activate plugin
+     *
+     * @since    1.0.0
+     */
     public function settings_link($links)
     {
         $action_links = array(
@@ -186,6 +191,11 @@ class Xumm_For_Woocommerce_Admin
 		return array_merge( $action_links, $links );
     }
 
+    /**
+     * Xumm callback fires after receive xumm-id parameter
+     *
+     * @since    1.0.0
+     */
     public function xumm_callback()
     {
         $context = $this->getXummPaymentGateway();
