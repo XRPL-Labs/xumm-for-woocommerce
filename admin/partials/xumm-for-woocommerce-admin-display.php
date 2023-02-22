@@ -18,7 +18,10 @@ use Xrpl\XummSdkPhp\Payload\Payload;
 use Xrpl\XummSdkPhp\Payload\ReturnUrl;
 use Xrpl\XummSdkPhp\XummSdk;
 
-$sdk = new XummSdk($context->api, $context->api_secret);
+if ($context->logged_in && !empty($context->api) && !empty($context->api_secret))
+{
+    $sdk = new XummSdk($context->api, $context->api_secret);
+}
 
 if(!empty($_POST["specialAction"])) {
     ?>
@@ -115,38 +118,37 @@ if(!empty($_POST["specialAction"])) {
 
     <?php
 
+        $storeCurrency = get_woocommerce_currency();
+
         if (!empty($context->logged_in))
         {
             $context->generate_settings_html();
-        }
 
-        $storeCurrency = get_woocommerce_currency();
+            if(empty($context->api) || empty($context->api_secret)) echo('<div class="notice notice-info"><p>'. __('Please add XUMM API keys from', 'xumm-for-woocommerce') .' <a href="https://apps.xumm.dev/">'. __('XUMM API', 'xumm-for-woocommerce') .'</a></p></div>');
+            else {
 
-        if(empty($context->api) || empty($context->api_secret)) echo('<div class="notice notice-info"><p>'. __('Please add XUMM API keys from', 'xumm-for-woocommerce') .' <a href="https://apps.xumm.dev/">'. __('XUMM API', 'xumm-for-woocommerce') .'</a></p></div>');
-        else {
+                try {
+                    $pong = $sdk->ping();
 
-            try {
-                $pong = $sdk->ping();
+                    if(!empty($pong->call->uuidV4)) {
+                        echo('<div class="notice notice-success is-dismissible"><p>'.__('Connected to the', 'xumm-for-woocommerce', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a></p></div>');
 
-                if(!empty($pong->call->uuidV4)) {
-                    echo('<div class="notice notice-success is-dismissible"><p>'.__('Connected to the', 'xumm-for-woocommerce', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a></p></div>');
+                        $webhookApi = $pong->application->webhookUrl;
+                        $webhook = get_home_url() . '/?wc-api='. $context->id;
+                        if($webhook != $webhookApi) echo('<div class="notice notice-error is-dismissible"><p>'.__('WebHook incorrect on', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a>, '.__('should be', 'xumm-for-woocommerce').' '.$webhook.'</p></div>');
+                    }
+                    else echo('<div class="notice notice-error is-dismissible"><p>'.__('Connection API Error to the', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a>. '. __('Check your API keys.', 'xumm-for-woocommerce') .'Error Code:'. $body['error']['code'].'</p></div>');
 
-                    $webhookApi = $pong->application->webhookUrl;
-                    $webhook = get_home_url() . '/?wc-api='. $context->id;
-                    if($webhook != $webhookApi) echo('<div class="notice notice-error is-dismissible"><p>'.__('WebHook incorrect on', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a>, '.__('should be', 'xumm-for-woocommerce').' '.$webhook.'</p></div>');
+                } catch (\Exception $e) {
+                    echo ('<div class="notice notice-error is-dismissible"><p>'.__('Connection Error to the', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a></p></div>');
                 }
-                else echo('<div class="notice notice-error is-dismissible"><p>'.__('Connection API Error to the', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a>. '. __('Check your API keys.', 'xumm-for-woocommerce') .'Error Code:'. $body['error']['code'].'</p></div>');
 
-            } catch (\Exception $e) {
-                echo ('<div class="notice notice-error is-dismissible"><p>'.__('Connection Error to the', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'.__('XUMM API', 'xumm-for-woocommerce').'</a></p></div>');
             }
 
+            if (!in_array($storeCurrency, $context->availableCurrencies)) echo('<div class="notice notice-error"><p>'.__('Please change store currency', 'xumm-for-woocommerce').'</p></div>');
+            if ($storeCurrency != 'XRP' && $context->currencies != 'XRP' && $storeCurrency != $context->currencies) echo('<div class="notice notice-error"><p>'.__('Please change store currency', 'xumm-for-woocommerce').'</p></div>');
+            if ($context->currencies != 'XRP' && empty($context->issuers) && get_woocommerce_currency() != 'XRP') echo('<div class="notice notice-error"><p>'.__('Please set the issuer and save changes', 'xumm-for-woocommerce').'</p></div>');
         }
-
-        // exit;
-        if (!in_array($storeCurrency, $context->availableCurrencies)) echo('<div class="notice notice-error"><p>'.__('Please change store currency', 'xumm-for-woocommerce').'</p></div>');
-        if ($storeCurrency != 'XRP' && $context->currencies != 'XRP' && $storeCurrency != $context->currencies) echo('<div class="notice notice-error"><p>'.__('Please change store currency', 'xumm-for-woocommerce').'</p></div>');
-        if ($context->currencies != 'XRP' && empty($context->issuers) && get_woocommerce_currency() != 'XRP') echo('<div class="notice notice-error"><p>'.__('Please set the issuer and save changes', 'xumm-for-woocommerce').'</p></div>');
 
     ?>
 </table>

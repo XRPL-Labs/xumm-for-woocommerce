@@ -30,7 +30,7 @@ class Xumm_For_Woocommerce_Deactivator {
      * @since    1.0.0
      */
     public static function deactivate() {
-
+        apply_filters('woocommerce_xumm_deactivate', null);
     }
 
 }

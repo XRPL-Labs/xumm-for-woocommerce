@@ -138,7 +138,10 @@ class Xumm_For_Woocommerce {
 
         $this->loader = new Xumm_For_Woocommerce_Loader();
 
-        $this->xumm_gateway = new XummPaymentGateway();
+        if (class_exists('WooCommerce'))
+        {
+            $this->xumm_gateway = new XummPaymentGateway();
+        }
     }
 
     /**
@@ -168,11 +171,14 @@ class Xumm_For_Woocommerce {
     private function define_admin_hooks()
     {
         $plugin_admin = new Xumm_For_Woocommerce_Admin( $this->get_plugin_name(), $this->get_version() );
-        $plugin_admin->setXummPaymentGateway($this->xumm_gateway);
+        if (!empty($this->xumm_gateway))
+        {
+            $plugin_admin->setXummPaymentGateway($this->xumm_gateway);
+            $this->loader->add_filter('init', $plugin_admin, 'xumm_callback', 10, 1);
+        }
 
         $this->loader->add_action( 'admin_notices', $plugin_admin, 'admin_notices', 12, 1);
 
-        $this->loader->add_filter('init', $plugin_admin, 'xumm_callback', 10, 1);
         $this->loader->add_filter( 'plugin_action_links_xumm-for-woocommerce/xumm-for-woocommerce.php', $plugin_admin, 'settings_link', 10, 1);
 
         $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');

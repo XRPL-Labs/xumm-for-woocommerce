@@ -5,6 +5,7 @@ namespace XummForWoocomerce\XUMM\Woocommerce;
 use XummForWoocomerce\XUMM\Facade\URL;
 use XummForWoocomerce\XUMM\Request\PaymentRequest;
 
+
 class XummPaymentGateway extends \WC_Payment_Gateway
 {
     public $endpoint = 'https://xumm.app/api/v1/platform/';
@@ -58,7 +59,12 @@ class XummPaymentGateway extends \WC_Payment_Gateway
 
         add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, [ $this, 'process_admin_options' ]);
         add_action( 'woocommerce_api_'. $this->id, array( $this, 'callback_handler' ));
+        add_action( 'woocommerce_xumm_deactivate', [$this, 'deactivate']);
+    }
 
+    public function deactivate()
+    {
+        delete_option('woocommerce_xumm_settings');
     }
 
     public function init_form_fields()
