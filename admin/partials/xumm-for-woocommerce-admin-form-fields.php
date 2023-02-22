@@ -20,15 +20,6 @@ $context->form_fields = [
         'description' => "",
         'default'     => 'no'
     ],
-    'destination' => array(
-        'title'       => __("XRP Destination address", 'xumm-for-woocommerce'),
-        'type'        => 'text',
-        'description' => __("This is your XRP r Address", 'xumm-for-woocommerce'),
-        'desc_tip'    => true,
-        'custom_attributes'    => [
-            'readonly' => 'readonly'
-        ]
-    ),
     'title' => array(
         'title'       => __("Title", 'xumm-for-woocommerce'),
         'type'        => 'text',
@@ -41,18 +32,6 @@ $context->form_fields = [
         'type'        => 'textarea',
         'description' => __("This is the text users will see in the checkout for this payment method", 'xumm-for-woocommerce'),
         'default'     => __("Pay with XRP using the #1 XRPL wallet: XUMM.", 'xumm-for-woocommerce'),
-    ),
-    'explorer' => array(
-        'title'       => __("Transaction Explorer", 'xumm-for-woocommerce'),
-        'description' => __("Choose the explorer to check the transaction", 'xumm-for-woocommerce'),
-        'type'        => 'select',
-        'options'     => array(
-            'https://bithomp.com/explorer/' => 'Bithomp',
-            'https://xrpscan.com/tx/' => 'XRPScan',
-            'https://livenet.xrpl.org/transactions/' => 'XRPL.org'
-        ),
-        'default'     => 'https://bithomp.com/explorer/',
-        'desc_tip'    => true
     ),
     'api' => array(
         'title'       => __("API Key", 'xumm-for-woocommerce'),
@@ -68,57 +47,83 @@ $context->form_fields = [
     )
 ];
 
-$context->form_fields['currencies'] = array(
-    'title'       => __("Select your currency", 'xumm-for-woocommerce'),
-    'description' => __("Here you can select how you want to be paid", 'xumm-for-woocommerce'),
-    'type'        => 'select',
-    'options'     => $context->availableCurrencies
-);
-
-if (!empty ($curatedAssets->currencies) )
+if (!empty($context->logged_in))
 {
-    foreach ($curatedAssets->currencies as $v) {
-        if(get_woocommerce_currency() == $v){
-            $context->availableCurrencies[$v] = $v;
+    $context->form_fields['destination'] = [
+        'title'       => __("XRP Destination address", 'xumm-for-woocommerce'),
+        'type'        => 'text',
+        'description' => __("This is your XRP r Address", 'xumm-for-woocommerce'),
+        'desc_tip'    => true,
+        'custom_attributes'    => [
+            'readonly' => 'readonly'
+        ]
+    ];
+
+    $context->form_fields['explorer'] = [
+        'title'       => __("Transaction Explorer", 'xumm-for-woocommerce'),
+        'description' => __("Choose the explorer to check the transaction", 'xumm-for-woocommerce'),
+        'type'        => 'select',
+        'options'     => array(
+            'https://bithomp.com/explorer/' => 'Bithomp',
+            'https://xrpscan.com/tx/' => 'XRPScan',
+            'https://livenet.xrpl.org/transactions/' => 'XRPL.org'
+        ),
+        'default'     => 'https://bithomp.com/explorer/',
+        'desc_tip'    => true
+    ];
+
+    $context->form_fields['currencies'] = [
+        'title'       => __("Select your currency", 'xumm-for-woocommerce'),
+        'description' => __("Here you can select how you want to be paid", 'xumm-for-woocommerce'),
+        'type'        => 'select',
+        'options'     => $context->availableCurrencies
+    ];
+
+    if (!empty ($curatedAssets->currencies) )
+    {
+        foreach ($curatedAssets->currencies as $v) {
+            if(get_woocommerce_currency() == $v){
+                $context->availableCurrencies[$v] = $v;
+            }
         }
+        $context->form_fields['currencies']['options'] = $context->availableCurrencies;
+    } else {
+        $context->form_fields['currencies']['disabled'] = true;
     }
-    $context->form_fields['currencies']['options'] = $context->availableCurrencies;
-} else {
-    $context->form_fields['currencies']['disabled'] = true;
-}
 
-$context->form_fields['issuers'] = array(
-    'title'       => __("Select your issuer", 'xumm-for-woocommerce'),
-    'description' => __("Here you can select how you want to be paid", 'xumm-for-woocommerce'),
-    'type'        => 'select',
-    'options'     => []
-);
+    $context->form_fields['issuers'] = array(
+        'title'       => __("Select your issuer", 'xumm-for-woocommerce'),
+        'description' => __("Here you can select how you want to be paid", 'xumm-for-woocommerce'),
+        'type'        => 'select',
+        'options'     => []
+    );
 
-$context->form_fields['issuer'] = [
-    'title'       => __("Issuer", 'xumm-for-woocommerce'),
-    'type'        => 'text',
-    'description' => __("This is the issuer that you have been chosen", 'xumm-for-woocommerce'),
-    'default'     => '',
-    'desc_tip'    => true,
-    'class'       => 'hidden'
-];
+    $context->form_fields['issuer'] = [
+        'title'       => __("Issuer", 'xumm-for-woocommerce'),
+        'type'        => 'text',
+        'description' => __("This is the issuer that you have been chosen", 'xumm-for-woocommerce'),
+        'default'     => '',
+        'desc_tip'    => true,
+        'class'       => 'hidden'
+    ];
 
-if (!empty ($curatedAssets->details) && get_woocommerce_currency() != 'XRP') {
+    if (!empty ($curatedAssets->details) && get_woocommerce_currency() != 'XRP') {
 
-    foreach ($curatedAssets->details as $exchange) {
+        foreach ($curatedAssets->details as $exchange) {
 
-        if ($exchange->shortlist === 0) break;
+            if ($exchange->shortlist === 0) break;
 
-        $exchangeName = $exchange->name;
+            $exchangeName = $exchange->name;
 
 
-        foreach ($exchange->currencies as $currency) {
+            foreach ($exchange->currencies as $currency) {
 
-            $context->form_fields['issuers']['options'][$currency->issuer] = $exchangeName;
+                $context->form_fields['issuers']['options'][$currency->issuer] = $exchangeName;
+            }
         }
+    } else {
+        $context->form_fields['issuers']['disabled'] = true;
     }
-} else {
-    $context->form_fields['issuers']['disabled'] = true;
 }
 
 $xummObject = !empty($curatedAssets) ? $curatedAssets : new stdClass();
@@ -127,9 +132,5 @@ $xummObject->account = $context->destination;
 $xummObject->store_currency = get_woocommerce_currency();
 $xummObject->ws = XUMM_WS_ENDPOINT;
 $xummObject->logged_in = $context->logged_in;
-
-if (empty($context->logged_in)) {
-    $GLOBALS['hide_save_button'] = true;
-}
 
 wp_localize_script( 'jquery', 'xumm_object', $xummObject);
