@@ -11,6 +11,7 @@
  */
 
 use Xrpl\XummSdkPhp\XummSdk;
+use XummForWoocomerce\XUMM\Facade\Notice;
 use XummForWoocomerce\XUMM\Traits\XummPaymentGatewayTrait;
 
 /**
@@ -152,28 +153,26 @@ class Xumm_For_Woocommerce_Admin
     }
 
     /**
-     * Give the activation notice after activate the plugin
+     * Give the notifications on the admin area
      *
      * @since    1.0.0
      */
     public function admin_notices()
     {
-        if (get_transient( 'woocommerce_xumm_activate_notice'))
-        {
-            include_once( 'partials/xumm-for-woocommerce-admin-activate-notice.php' );
-            delete_transient( 'woocommerce_xumm_activate_notice' );
-        }
+        $notices = get_transient( "woocommerce_xumm_admin_notices");
 
-        if (get_transient( 'woocommerce_xumm_signin_successfull'))
+        if (!empty($notices))
         {
-            include_once( 'partials/xumm-for-woocommerce-admin-notice-signin.php' );
-            delete_transient( 'woocommerce_xumm_signin_successfull' );
-        }
+            foreach ($notices as $notice)
+            {
+                printf('<div class="notice notice-%1$s %2$s"><p>%3$s</p></div>',
+                    $notice['type'],
+                    $notice['dismissible'],
+                    $notice['notice']
+                );
+            }
 
-        if (get_transient( 'woocommerce_xumm_trustset_successfull'))
-        {
-            include_once( 'partials/xumm-for-woocommerce-admin-notice-trustset.php' );
-            delete_transient( 'woocommerce_xumm_trustset_successfull' );
+            \delete_transient("woocommerce_xumm_admin_notices");
         }
     }
 
@@ -219,16 +218,18 @@ class Xumm_For_Woocommerce_Admin
                             $context->update_option('logged_in', true );
                             $context->logged_in = true;
 
-                            set_transient( 'woocommerce_xumm_signin_successfull', true);
+                            Notice::add_flash_notice(__('Sign In successfull please check address & test payment', 'xumm-for-woocommerce'));
                         }
 
                         break;
 
                     case 'TrustSet':
-                        if (!empty($payload->payload->request['LimitAmount']['issuer'])) {
+
+                        if (!empty($payload->payload->request['LimitAmount']['issuer']))
+                        {
                             $context->update_option('issuer', $payload->payload->request['LimitAmount']['issuer']);
 
-                            set_transient( 'woocommerce_xumm_trustset_successfull', true);
+                            Notice::add_flash_notice(__('Trust Line Set successfull please check address & test payment', 'xumm-for-woocommerce'));
                         }
 
                         break;
@@ -237,6 +238,12 @@ class Xumm_For_Woocommerce_Admin
                         break;
                 }
             }
+
+            $location = admin_url('admin.php?page=wc-settings&tab=checkout&section=xumm');
+
+            wp_redirect($location);
+
+            exit;
         }
 
     }

@@ -10,6 +10,8 @@
  * @subpackage Xumm_For_Woocommerce/includes
  */
 
+use XummForWoocomerce\XUMM\Facade\Notice;
+
 /**
  * Fired during plugin activation.
  *
@@ -29,8 +31,17 @@ class Xumm_For_Woocommerce_Activator {
      *
      * @since    1.0.0
      */
-    public static function activate() {
-        set_transient( 'woocommerce_xumm_activate_notice', true );
+    public static function activate()
+    {
+        $notice = '&#127881; ' .
+        __('Thank you for using XUMM For Woocommerce!', 'xumm-for-woocommerce') .
+        ' ' .
+        __('Now proceed to', 'xumm-for-woocommerce') .
+        ' <a target="_blank" href="https://apps.xumm.dev/">' .
+        __('Xumm Dev Console', 'xumm-for-woocommerce')  . '</a> ' .
+        __('to get your API credentials', 'xumm-for-woocommerce') . '.';
+
+        Notice::add_flash_notice($notice);
     }
 
 }
