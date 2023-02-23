@@ -23,76 +23,8 @@ if (!empty($context->api) && !empty($context->api_secret))
     $sdk = new XummSdk($context->api, $context->api_secret);
 }
 
-if(!empty($_POST["specialAction"])) {
-    ?>
-        <div id="customFormActionResult" style="display: none;">
-            <?php
-                $query_arr = array(
-                    'page'      => 'wc-settings',
-                    'tab'       => 'checkout',
-                    'section'   => 'xumm',
-                    'callback'  => true
-                );
-
-                $return_url = get_home_url() .'/wp-admin/admin.php?' . http_build_query($query_arr);
-
-                switch($_POST["specialAction"]) {
-                    case 'set_destination':
-                        $identifier = 'sign-in_' . strtoupper(substr(md5(microtime()), 0, 10));
-
-                        $return_url = add_query_arg( 'xumm-id', $identifier, $return_url);
-
-                        $payload = new Payload(
-                            [
-                                "TransactionType" => "SignIn"
-                            ],
-                            null,
-                            new Options(true, null, null, null, null,
-                            new ReturnUrl(wp_is_mobile() ? $return_url : null, $return_url)),
-                            new CustomMeta($identifier)
-                        );
-
-                        break;
-                    case 'set_trustline':
-                        $identifier = 'trustline_' . strtoupper(substr(md5(microtime()), 0, 10));
-                        $return_url = add_query_arg( 'xumm-id', $identifier, $return_url);
-
-                        $payload = new Payload(
-                            [
-                                'TransactionType' => 'TrustSet',
-                                "Account" => $context->destination,
-                                "Fee" => "12",
-                                "LimitAmount" => [
-                                    "currency" => sanitize_text_field($_POST['woocommerce_xumm_currencies']),
-                                    "issuer" => sanitize_text_field($_POST['woocommerce_xumm_issuers']),
-                                    "value" => "999999999"
-                                ],
-                                "Flags" => 131072
-                            ],
-                            null,
-                            new Options(true, null, null, null, null,
-                                new ReturnUrl(wp_is_mobile() ? $return_url : null, $return_url)),
-                            new CustomMeta($identifier)
-                        );
-
-                        break;
-                }
-
-                $response = $sdk->createPayload($payload);
-
-                $redirect = $response->next->always;
-                if (!empty($redirect)) {
-                    // Redirect to the XUMM processor page
-                    echo($redirect);
-                } else {
-                    echo('<div class="notice notice-error"><p>'.__('Connection API Error to the', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'. __('XUMM API', 'xumm-for-woocommerce') .'</a>. '. __('Check your API keys.', 'xumm-for-woocommerce') .'Error Code:'. $body['error']['code'] .'</p></div>');
-                }
-
-            ?>
-        </div>
-    <?php
-}
 ?>
+
 <h2><?php _e('XUMM Payment Gateway for WooCommerce','xumm-for-woocommerce'); ?></h2>
 
 <?php if (empty($context->logged_in)): ?>
@@ -149,43 +81,56 @@ if(!empty($_POST["specialAction"])) {
 </table>
 
 <?php if (!empty($context->api) && !empty($context->api_secret)): ?>
-<button type="button" class="customFormActionBtn" id="set_destination" style="border-style: none; cursor:pointer; background-color: transparent;">
+<button type="button" class="create-payload" data-action="set_destination" id="set_destination" style="border-style: none; cursor:pointer; background-color: transparent;">
     <img src="<?php echo plugin_dir_url( __FILE__ ) .'/../../public/images/signin.svg'; ?>" width="220" style="padding:0" />
 </button>
 <?php endif; ?>
 
-<input type="hidden" id="specialAction" name="specialAction" value="">
-
 <?php if (!empty($context->logged_in)): ?>
-<button type="button" class="customFormActionBtn button-primary" id="set_trustline" disabled="disabled">
+<button type="button" class="button-primary create-payload" data-action="set_trustline" id="set_trustline" disabled="disabled">
     <?php echo __('Add Trustline', 'xumm-for-woocommerce'); ?>
 </button>
 <?php endif; ?>
 
 <script>
-    jQuery(function () {
-        jQuery("#mainform").submit(function (e) {
-            xrpl_loader(true);
-            if (jQuery(this).find("input#specialAction").val() !== '') {
-                e.preventDefault()
-                jQuery.ajax({
-                    url: document.location.href,
-                    type: 'POST',
-                    data: jQuery(this).serialize(),
-                    success: function (response) {
-                        let tlResponse = jQuery(response).find("#customFormActionResult").html().trim()
-                        xrpl_loader(false);
-                        window.location.href = tlResponse;
-                    }
-                });
-                return false
-            }
-        })
-        jQuery(".customFormActionBtn").click(function () {
+    jQuery(function () 
+    {
+        jQuery(".create-payload").click(function (e) 
+        {
+            e.preventDefault();
 
-            jQuery("#specialAction").val(jQuery(this).attr('id'))
-            jQuery("#mainform").trigger('submit')
-        })
+            const action = jQuery(this).data('action');
+            xrpl_loader(true);
+
+            let data = {
+                'action': 'create_payload',
+                'value': action
+            };
+
+            if (action == 'set_trustline') 
+            {             
+                data.woocommerce_xumm_currencies = jQuery('select[name="woocommerce_xumm_currencies"]').val();
+                data.woocommerce_xumm_issuers = jQuery('select[name="woocommerce_xumm_issuers"]').val();
+            }           
+
+            jQuery.ajax({
+                url: '<?php echo admin_url( 'admin-ajax.php' ) ?>',
+                type: 'POST',
+                data: data,
+                success: function (response)
+                {
+                    xrpl_loader(false);
+
+                    if (response.status == 'ok') {
+                        window.location.href = response.redirect_url;
+                    } else {
+                        const message = `<div class="notice notice-error is-dismissible"><p>${response.message}</p></div>`;
+                        jQuery('h1.screen-reader-text').after(message);
+                        window.scrollTo(0, 0);
+                    }
+                }
+            });
+        });
     });
 </script>
 

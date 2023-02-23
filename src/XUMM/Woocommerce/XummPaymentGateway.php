@@ -2,10 +2,10 @@
 
 namespace XummForWoocomerce\XUMM\Woocommerce;
 
+use Xrpl\XummSdkPhp\XummSdk;
+use XummForWoocomerce\Constants\Config;
 use XummForWoocomerce\XUMM\Facade\URL;
 use XummForWoocomerce\XUMM\Request\PaymentRequest;
-
-
 class XummPaymentGateway extends \WC_Payment_Gateway
 {
     public $endpoint = 'https://xumm.app/api/v1/platform/';
@@ -32,6 +32,7 @@ class XummPaymentGateway extends \WC_Payment_Gateway
     public $api_secret;
     public $issuers;
     public $logged_in;
+    public $currency;
 
 
     public function __construct()
@@ -43,7 +44,14 @@ class XummPaymentGateway extends \WC_Payment_Gateway
         $this->method_description = __("Receive any supported currency into your XRP account using XUMM", "xumm-for-woocommerce");
         $this->destination = $this->get_option('destination');
         $this->supports = ['products'];
+
         $this->logged_in = $this->get_option('logged_in');
+
+        if (empty($this->destination) && $this->logged_in) {
+            $this->logged_in = false;
+            $this->update_option('logged_in', false);
+        }
+
         $this->enabled = empty($this->logged_in) ? false : $this->get_option('enabled');
         $this->title = $this->get_option('title');
         $this->description = $this->get_option('description');
@@ -56,7 +64,7 @@ class XummPaymentGateway extends \WC_Payment_Gateway
         $this->issuers = $this->get_option('issuers');
 
         $this->init_form_fields();
-        $this->init_settings();
+		$this->init_settings();
 
         add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, [ $this, 'process_admin_options' ]);
         add_action( 'woocommerce_api_'. $this->id, array( $this, 'callback_handler' ));

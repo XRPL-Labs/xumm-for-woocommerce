@@ -1,6 +1,7 @@
 <?php
 
 use Xrpl\XummSdkPhp\XummSdk;
+use XummForWoocomerce\Constants\Config;
 
 if(!empty($context->api) && !empty($context->api_secret))
 {
@@ -13,26 +14,6 @@ if(!empty($context->api) && !empty($context->api_secret))
 }
 
 $context->form_fields = [
-    'enabled' => [
-        'title'       => __("Enable/Disable", 'xumm-for-woocommerce'),
-        'label'       => __("Enable XUMM Gateway", 'xumm-for-woocommerce'),
-        'type'        => 'checkbox',
-        'description' => "",
-        'default'     => 'no'
-    ],
-    'title' => array(
-        'title'       => __("Title", 'xumm-for-woocommerce'),
-        'type'        => 'text',
-        'description' => __("This is the title which the user sees during checkout", 'xumm-for-woocommerce'),
-        'default'     => __("XRP Payment", 'xumm-for-woocommerce'),
-        'desc_tip'    => true,
-    ),
-    'description' => array(
-        'title'       => __("Description", 'xumm-for-woocommerce'),
-        'type'        => 'textarea',
-        'description' => __("This is the text users will see in the checkout for this payment method", 'xumm-for-woocommerce'),
-        'default'     => __("Pay with XRP using the #1 XRPL wallet: XUMM.", 'xumm-for-woocommerce'),
-    ),
     'api' => array(
         'title'       => __("API Key", 'xumm-for-woocommerce'),
         'type'        => 'text',
@@ -58,6 +39,30 @@ if (!empty($context->logged_in))
             'readonly' => 'readonly'
         ]
     ];
+
+    $context->form_fields['enabled'] = [
+        'title'       => __("Enable/Disable", 'xumm-for-woocommerce'),
+        'label'       => __("Enable XUMM Gateway", 'xumm-for-woocommerce'),
+        'type'        => 'checkbox',
+        'description' => "",
+        'default'     => 'no'
+    ];
+
+    $context->form_fields['title'] = [
+        'title'       => __("Title", 'xumm-for-woocommerce'),
+        'type'        => 'text',
+        'description' => __("This is the title which the user sees during checkout", 'xumm-for-woocommerce'),
+        'default'     => __("XRP Payment", 'xumm-for-woocommerce'),
+        'desc_tip'    => true,
+    ];
+
+    $context->form_fields['description'] = [
+        'title'       => __("Description", 'xumm-for-woocommerce'),
+        'type'        => 'textarea',
+        'description' => __("This is the text users will see in the checkout for this payment method", 'xumm-for-woocommerce'),
+        'default'     => __("Pay with XRP using the #1 XRPL wallet: XUMM.", 'xumm-for-woocommerce'),
+    ];
+
 
     $context->form_fields['explorer'] = [
         'title'       => __("Transaction Explorer", 'xumm-for-woocommerce'),
@@ -130,7 +135,7 @@ $xummObject = !empty($curatedAssets) ? $curatedAssets : new stdClass();
 
 $xummObject->account = $context->destination;
 $xummObject->store_currency = get_woocommerce_currency();
-$xummObject->ws = XUMM_WS_ENDPOINT;
+$xummObject->ws = Config::XUMM_WS_ENDPOINT;
 $xummObject->logged_in = $context->logged_in;
 
 wp_localize_script( 'jquery', 'xumm_object', $xummObject);

@@ -10,6 +10,10 @@
  * @subpackage Xumm_For_Woocommerce/admin
  */
 
+use Xrpl\XummSdkPhp\Payload\CustomMeta;
+use Xrpl\XummSdkPhp\Payload\Options;
+use Xrpl\XummSdkPhp\Payload\Payload;
+use Xrpl\XummSdkPhp\Payload\ReturnUrl;
 use Xrpl\XummSdkPhp\XummSdk;
 
 use XummForWoocomerce\XUMM\Callback\SignInHandler;
@@ -117,7 +121,7 @@ class Xumm_For_Woocommerce_Admin
      */
     public function init_form_fields($context)
     {
-        include_once( 'partials/xumm-for-woocommerce-admin-form-fields.php' );
+        include('partials/xumm-for-woocommerce-admin-form-fields.php');
     }
 
     /**
@@ -127,7 +131,7 @@ class Xumm_For_Woocommerce_Admin
      * @since    1.0.0
      */
     public function display_plugin_options($context) {
-        include_once( 'partials/xumm-for-woocommerce-admin-display.php' );
+        include_once('partials/xumm-for-woocommerce-admin-display.php');
     }
 
     /**
@@ -232,6 +236,92 @@ class Xumm_For_Woocommerce_Admin
 
             exit;
         }
+    }
 
+    public function ajax_create_payload()
+    {
+        $context = $this->getXummPaymentGateway();
+        $sdk = new XummSdk($context->api, $context->api_secret);
+
+        $query_arr = array(
+            'page'      => 'wc-settings',
+            'tab'       => 'checkout',
+            'section'   => 'xumm',
+            'callback'  => true
+        );
+
+        $return_url = get_home_url() .'/wp-admin/admin.php?' . http_build_query($query_arr);
+
+        switch ($_POST["value"])
+        {
+            case 'set_destination':
+                $identifier = 'sign-in_' . strtoupper(substr(md5(microtime()), 0, 10));
+
+                $return_url = add_query_arg( 'xumm-id', $identifier, $return_url);
+
+                $payload = new Payload(
+                    [
+                        "TransactionType" => "SignIn"
+                    ],
+                    null,
+                    new Options(true, null, null, null, null,
+                    new ReturnUrl(wp_is_mobile() ? $return_url : null, $return_url)),
+                    new CustomMeta($identifier)
+                );
+
+                break;
+                
+            case 'set_trustline':
+                $identifier = 'trustline_' . strtoupper(substr(md5(microtime()), 0, 10));
+                $return_url = add_query_arg( 'xumm-id', $identifier, $return_url);
+
+                $payload = new Payload(
+                    [
+                        'TransactionType' => 'TrustSet',
+                        "Account" => $context->destination,
+                        "Fee" => "12",
+                        "LimitAmount" => [
+                            "currency" => sanitize_text_field($_POST['woocommerce_xumm_currencies']),
+                            "issuer" => sanitize_text_field($_POST['woocommerce_xumm_issuers']),
+                            "value" => "999999999"
+                        ],
+                        "Flags" => 131072
+                    ],
+                    null,
+                    new Options(true, null, null, null, null,
+                        new ReturnUrl(wp_is_mobile() ? $return_url : null, $return_url)),
+                    new CustomMeta($identifier)
+                );
+
+                break;
+        }
+
+        try
+        {
+            $response = $sdk->createPayload($payload);
+
+            $redirect = $response->next->always;
+
+            if (empty($redirect))
+            {
+                throw new \Exception(__('Connection API Error to the', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'. __('XUMM API', 'xumm-for-woocommerce') .'</a>. '. __('Check your API keys.', 'xumm-for-woocommerce'));
+            }
+
+            return wp_send_json([
+                'status' => 'ok',
+                'message' => '',
+                'redirect_url' => $redirect
+            ], 200);
+
+        } catch (\Exception $e)
+        {
+            return wp_send_json([
+                'status' => 'error',
+                'message' => $e->getMessage(),
+                'redirect_url' => ''
+            ], 200);
+        }
+
+        wp_die();
     }
 }

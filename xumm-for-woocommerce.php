@@ -92,17 +92,10 @@ function run_xumm_for_woocommerce() {
 
 run_xumm_for_woocommerce();
 
-define('XUMM_DEBUG', TRUE);
-
-if (XUMM_DEBUG) {
-    define('XRPL_HTTP_ADDR', 'https://s.altnet.rippletest.net:51234');
-    define('XUMM_WS_ENDPOINT', 'wss://s.altnet.rippletest.net:51233');
-} else {
-    define('XRPL_HTTP_ADDR', 'https://s1.ripple.com:51234/');
-    define('XUMM_WS_ENDPOINT', 'wss://xrpl.ws');
-}
-
-
 function xumm_plugin_url() {
     return plugin_dir_url( __FILE__ );
+}
+
+function xumm_plugin_path() {
+    return plugin_dir_path( __FILE__ );
 }

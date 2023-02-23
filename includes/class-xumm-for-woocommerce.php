@@ -137,11 +137,6 @@ class Xumm_For_Woocommerce {
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-xumm-for-woocommerce-public.php';
 
         $this->loader = new Xumm_For_Woocommerce_Loader();
-
-        if (class_exists('WooCommerce'))
-        {
-            $this->xumm_gateway = new XummPaymentGateway();
-        }
     }
 
     /**
@@ -170,7 +165,13 @@ class Xumm_For_Woocommerce {
      */
     private function define_admin_hooks()
     {
+        if (class_exists('WooCommerce'))
+        {
+            $this->xumm_gateway = new XummPaymentGateway();
+        }
+
         $plugin_admin = new Xumm_For_Woocommerce_Admin( $this->get_plugin_name(), $this->get_version() );
+
         if (!empty($this->xumm_gateway))
         {
             $plugin_admin->setXummPaymentGateway($this->xumm_gateway);
@@ -184,8 +185,11 @@ class Xumm_For_Woocommerce {
         $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
 
-        $this->loader->add_filter('xumm_init_form_fields', $plugin_admin, 'init_form_fields', 10, 1);
-        $this->loader->add_filter('xumm_display_plugin_options', $plugin_admin, 'display_plugin_options', 10, 1);
+        $this->loader->add_filter('xumm_init_form_fields', $plugin_admin, 'init_form_fields', 1, 1);
+
+        $this->loader->add_filter('xumm_display_plugin_options', $plugin_admin, 'display_plugin_options', 10, 2);
+
+        $this->loader->add_action( 'wp_ajax_create_payload', $plugin_admin, 'ajax_create_payload', 12, 1);
     }
 
     /**

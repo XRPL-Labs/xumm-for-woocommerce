@@ -2,6 +2,8 @@
 
 namespace XummForWoocomerce\XUMM\Facade;
 
+use XummForWoocomerce\Constants\Config;
+
 class Transaction
 {
     public static function getTransactionDetails($txid)
@@ -16,7 +18,7 @@ class Transaction
             ]
         ]);
 
-        $tx = wp_remote_post(XRPL_HTTP_ADDR, array(
+        $tx = wp_remote_post(Config::XRPL_HTTP_ADDR, array(
             'method'    => 'POST',
             'headers'   => array(
                 'Content-Type' => 'application/json',
