@@ -133,7 +133,7 @@ class XummPaymentGateway extends \WC_Payment_Gateway
                     break;
                 default:
                     wc_add_notice(__('There is something wrong with the order, please contact us.', 'xumm-for-woocommerce'), 'error' );
-                    wp_safe_redirect($order->get_checkout_payment_url(false));
+                    $redirect_url = $order->get_checkout_payment_url(false);
                     break;
             }
 
