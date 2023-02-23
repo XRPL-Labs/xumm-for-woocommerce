@@ -18,18 +18,11 @@ class PaymentRequest
         $context = $this->getXummPaymentGateway();
 
         $order = wc_get_order( $orderId );
-        $storeCurrency = get_woocommerce_currency();
-
-        $exchangeRateRequest = new ExchangeRateRequest();
-        $exchangeRateRequest->setXummPaymentGateway($context);
-        $exchangeRates = $exchangeRateRequest->getExchangeRates($storeCurrency, $order->get_total());
-
-        $totalSum = round($exchangeRates['totalSum'], 6);
-        $xr = $exchangeRates['xr'];
 
         $identifier = $orderId . '_' . strtoupper(substr(md5(microtime()), 0, 10));
 
-        $totalSum = round($totalSum, 6);
+        $totalSum = round($order->get_total(), 6);
+
         $query = [
             'wc-api' => 'XUMM',
             'order_id' => $identifier
@@ -62,15 +55,12 @@ class PaymentRequest
             ], null,
                 new Options(
                 true, null, 15, null, null,
-                    new ReturnUrl(\wp_is_mobile() ? $return_url : null, $return_url)
+                    new ReturnUrl(\wp_is_mobile() ? $return_url : null, $return_url),
+                    null,
+                    $context->currencies != 'XRP' ? true : false
                 ),
-            new CustomMeta($identifier, null, [
-                'xr' => $xr,
-                'base' => $storeCurrency
-            ]),
+            new CustomMeta($identifier, null)
         );
-
-        error_log($totalSum);
 
         $sdk = new XummSdk($context->api, $context->api_secret);
 
