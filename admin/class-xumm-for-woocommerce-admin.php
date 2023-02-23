@@ -11,7 +11,9 @@
  */
 
 use Xrpl\XummSdkPhp\XummSdk;
-use XummForWoocomerce\XUMM\Facade\Notice;
+
+use XummForWoocomerce\XUMM\Callback\SignInHandler;
+use XummForWoocomerce\XUMM\Callback\TrustSetHandler;
 use XummForWoocomerce\XUMM\Traits\XummPaymentGatewayTrait;
 
 /**
@@ -210,28 +212,13 @@ class Xumm_For_Woocommerce_Admin
                 switch ($payload->payload->txType)
                 {
                     case 'SignIn':
-                        $account = $payload->response->account;
-
-                        if(!empty($account))
-                        {
-                            $context->update_option('destination', $account );
-                            $context->update_option('logged_in', true );
-                            $context->logged_in = true;
-
-                            Notice::add_flash_notice(__('Sign In successfull please check address & test payment', 'xumm-for-woocommerce'));
-                        }
-
+                        $handler = new SignInHandler($context, $payload);
+                        $handler->handle();
                         break;
 
                     case 'TrustSet':
-
-                        if (!empty($payload->payload->request['LimitAmount']['issuer']))
-                        {
-                            $context->update_option('issuer', $payload->payload->request['LimitAmount']['issuer']);
-
-                            Notice::add_flash_notice(__('Trust Line Set successfull please check address & test payment', 'xumm-for-woocommerce'));
-                        }
-
+                        $handler = new TrustSetHandler($context, $payload);
+                        $handler->handle();
                         break;
 
                     default:

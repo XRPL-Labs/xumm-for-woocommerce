@@ -73,19 +73,13 @@ class PaymentRequest
         error_log($totalSum);
 
         $sdk = new XummSdk($context->api, $context->api_secret);
-        try {
-            $response = $sdk->createPayload($payload);
 
-            if ($response->next->always != null) {
-            // Redirect to the XUMM processor page
-                return $response->next->always;
-            } else {
-                \wc_add_notice(__('Got an error from XUMM', 'xumm-for-woocommerce'), 'error');
-                return;
-            }
-        } catch (\Exception $e) {
-            \wc_add_notice(__('Connection error', 'xumm-for-woocommerce'), 'error');
-            return;
+        $response = $sdk->createPayload($payload);
+
+        if (!empty($response->next->always)) {
+            return $response->next->always;
+        } else {
+            throw new \Exception(__('Got an error from XUMM', 'xumm-for-woocommerce'));
         }
     }
 }

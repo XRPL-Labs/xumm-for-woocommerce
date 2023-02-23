@@ -31,6 +31,7 @@ class XummPaymentGateway extends \WC_Payment_Gateway
     public $api;
     public $api_secret;
     public $issuers;
+    public $logged_in;
 
 
     public function __construct()
@@ -77,32 +78,43 @@ class XummPaymentGateway extends \WC_Payment_Gateway
         apply_filters('xumm_display_plugin_options', $this);
     }
 
-    public function process_payment( $order_id )
+    public function process_payment($order_id)
     {
         $paymentRequest = new PaymentRequest();
         $paymentRequest->setXummPaymentGateway($this);
-        $result = $paymentRequest->processPayment($order_id);
 
-        if (empty($result))
+        try
         {
+            $result = $paymentRequest->processPayment($order_id);
+
+            if (empty($result))
+            {
+                throw new \Exception(__('Got an error from XUMM', 'xumm-for-woocommerce'));
+            }
+
+            return [
+                'result' => 'success',
+                'redirect' => $result
+            ];
+        } catch (\Exception $e)
+        {
+            \wc_add_notice($e->getMessage(), 'error');
             return;
         }
-
-        return [
-            'result' => 'success',
-            'redirect' => $result
-        ];
     }
 
     public function callback_handler()
     {
-        if(!empty($_GET["order_id"])) {
+        if (!empty($_GET["order_id"]))
+        {
             $custom_identifier = sanitize_text_field($_GET["order_id"]);
             $order_id = explode("_", $custom_identifier)[0];
             $order = wc_get_order( $order_id );
 
             $order_status  = $order->get_status();
-            switch ($order_status) {
+
+            switch ($order_status)
+            {
                 case 'processing':
                     wc_add_notice(__('Order Status: Processing', 'xumm-for-woocommerce'));
                     $redirect_url = $this->get_return_url( $order );
