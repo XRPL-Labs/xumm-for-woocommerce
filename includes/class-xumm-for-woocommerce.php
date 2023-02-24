@@ -137,6 +137,11 @@ class Xumm_For_Woocommerce {
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-xumm-for-woocommerce-public.php';
 
         $this->loader = new Xumm_For_Woocommerce_Loader();
+
+        if (class_exists('WooCommerce'))
+        {
+            $this->xumm_gateway = new XummPaymentGateway();
+        }
     }
 
     /**
@@ -165,11 +170,6 @@ class Xumm_For_Woocommerce {
      */
     private function define_admin_hooks()
     {
-        if (class_exists('WooCommerce'))
-        {
-            $this->xumm_gateway = new XummPaymentGateway();
-        }
-
         $plugin_admin = new Xumm_For_Woocommerce_Admin( $this->get_plugin_name(), $this->get_version() );
 
         if (!empty($this->xumm_gateway))
