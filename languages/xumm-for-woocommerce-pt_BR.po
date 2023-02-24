@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: XUMM for WooCommerce 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/xumm-for-"
 "woocommerce\n"
-"POT-Creation-Date: 2023-02-24T06:35:24-03:00\n"
-"PO-Revision-Date: 2023-02-24 06:45-0300\n"
+"POT-Creation-Date: 2023-02-24T06:50:10-03:00\n"
+"PO-Revision-Date: 2023-02-24 06:51-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #. Plugin Name of the plugin
 msgid "XUMM payments for WooCommerce"
-msgstr "Pagamentos XUMM para WooCommerce"
+msgstr "XUMM payments for WooCommerce"
 
 #. Plugin URI of the plugin
 msgid "https://github.com/XRPL-Labs/xumm-for-woocommerce"
@@ -74,7 +74,7 @@ msgstr "Para continuar, você precisa concluir estas etapas:"
 
 #: admin/partials/xumm-for-woocommerce-admin-display.php:35
 msgid "Go to the"
-msgstr "Vá ao "
+msgstr "Vá ao"
 
 #: admin/partials/xumm-for-woocommerce-admin-display.php:35
 msgid "Xumm Developer Console"
@@ -86,7 +86,7 @@ msgstr "Crie seu aplicativo para obter suas credenciais de API"
 
 #: admin/partials/xumm-for-woocommerce-admin-display.php:37
 msgid "Define your WebHook URL like this: "
-msgstr "Defina sua URL do WebHook assim:"
+msgstr "Defina sua URL do WebHook assim: "
 
 #: admin/partials/xumm-for-woocommerce-admin-display.php:38
 msgid "Place your API Credentials"
@@ -221,19 +221,19 @@ msgstr "Este é o emissor que você escolheu"
 
 #: includes/class-xumm-for-woocommerce-activator.php:37
 msgid "Thank you for using XUMM For Woocommerce!"
-msgstr "Obrigado por usar o XUMM For Woocommerce!"
+msgstr "Obrigado por usar o XUMM para Woocommerce!"
 
 #: includes/class-xumm-for-woocommerce-activator.php:39
 msgid "Now proceed to"
 msgstr "Agora prossiga para"
 
 #: includes/class-xumm-for-woocommerce-activator.php:41
-msgid "Settings"
-msgstr "Configurações"
+msgid "settings"
+msgstr "configurações"
 
 #: includes/class-xumm-for-woocommerce-activator.php:42
 msgid "to complete the plugin setup"
-msgstr "para completer as definições e começar a usar o plugin"
+msgstr "para completar as definições e começar a usar o plugin"
 
 #: src/Woocommerce/XummPaymentGateway.php:42
 msgid "Accept XUMM payments"

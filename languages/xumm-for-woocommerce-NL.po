@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: XUMM payments for WooCommerce 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/xumm-for-"
 "woocommerce\n"
-"POT-Creation-Date: 2023-02-24T06:35:24-03:00\n"
-"PO-Revision-Date: 2023-02-24 06:42-0300\n"
+"POT-Creation-Date: 2023-02-24T06:50:10-03:00\n"
+"PO-Revision-Date: 2023-02-24 06:53-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fy_NL\n"
@@ -228,7 +228,7 @@ msgid "Now proceed to"
 msgstr "Ga nu verder naar"
 
 #: includes/class-xumm-for-woocommerce-activator.php:41
-msgid "Settings"
+msgid "settings"
 msgstr ""
 
 #: includes/class-xumm-for-woocommerce-activator.php:42

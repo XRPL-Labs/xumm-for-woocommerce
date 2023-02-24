@@ -37,8 +37,8 @@ class Xumm_For_Woocommerce_Activator {
         __('Thank you for using XUMM For Woocommerce!', 'xumm-for-woocommerce') .
         ' ' .
         __('Now proceed to', 'xumm-for-woocommerce') .
-        ' <a target="_blank" href="' . admin_url( 'admin.php?page=wc-settings&tab=checkout&section=xumm' ) . '">' .
-        __('Settings', 'xumm-for-woocommerce')  . '</a> ' .
+        ' <a href="' . admin_url( 'admin.php?page=wc-settings&tab=checkout&section=xumm' ) . '">' .
+        __('settings', 'xumm-for-woocommerce')  . '</a> ' .
         __('to complete the plugin setup', 'xumm-for-woocommerce') . '.';
 
         Notice::add_flash_notice($notice);
