@@ -1,6 +1,6 @@
 === XUMM for WooCommerce ===
 Contributors: xumm, wietsewind
-Donate link: https://xumm.dev/beta/test 
+Donate link: https://xumm.dev/beta/test
 Tags: xumm, crypto, xrp, ledger, cryptocurrency
 Requires at least: 4.7
 Tested up to: 5.5.3
@@ -36,7 +36,7 @@ Also you can see if the trustline button is enabled this means you need to click
 
 = Minimum Requirements =
 
-* PHP version 5.6 or greater
+* PHP version 8.2 or greater
 * WordPress 4.7 or greater
 * WooCommerce 2.2.0 or greater
 
@@ -66,6 +66,24 @@ Also you can see if the trustline button is enabled this means you need to click
 4. The setup page in the admin panel on the XUMM api.
 
 == Changelog ==
+= 1.0.0 =
+[IMPROVED] New organization proposal for the plugin
+[ADDED] Language files
+[ADDED] .editorconfig
+[ADDED] Composer for version management
+[ADDED] XUMM-SDK-PHP as composer requirements
+[IMPROVED] Admin actions like SignIn & SetTrustline
+[IMPROVED] Admin UI after submitting SignIn & SetTrustline
+[FIX] Currency and Issuers is now working
+[IMPROVED] Admin user flow
+[ADDED] Notice after plugin activation
+[ADDED] PHPUnit
+[ADDED] Pathfinding feature
+[IMPROVED] SignIn & Trustline page speedup
+[IMPROVED] JQuery / Ajax using less resources
+[FIX] Rendering form_fields after save on admin settings page
+[IMPROVED] Now we are using uniqid() instead of md5+microtime+substr
+
 = 0.5.1 =
 [FIX] Use the correct Amount key in txjson for using XRP as a currency
 
