@@ -178,7 +178,7 @@ class Xumm_For_Woocommerce_Admin
                 );
             }
 
-            \delete_transient("woocommerce_xumm_admin_notices");
+            delete_transient("woocommerce_xumm_admin_notices");
         }
     }
 
