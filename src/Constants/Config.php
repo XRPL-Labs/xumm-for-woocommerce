@@ -4,11 +4,9 @@ namespace XummForWoocomerce\Constants;
 
 abstract class Config
 {
-    public const XUMM_DEBUG = TRUE;
+    // public const XRPL_HTTP_ADDR = 'https://s1.ripple.com:51234/' // mainnet
+    public const XRPL_HTTP_ADDR = 'https://s.altnet.rippletest.net:51234'; // testnet
 
-    // production = 'https://s1.ripple.com:51234/'
-    public const XRPL_HTTP_ADDR = 'https://s.altnet.rippletest.net:51234';
-
-    // production = 'wss://xrpl.ws'
-    public const XUMM_WS_ENDPOINT = 'wss://s.altnet.rippletest.net:51233';
+    // public const XUMM_WS_ENDPOINT = 'wss://xrpl.ws' // mainnet
+    public const XUMM_WS_ENDPOINT = 'wss://s.altnet.rippletest.net:51233'; // testnet
 }
