@@ -112,11 +112,21 @@ class XummPaymentGateway extends \WC_Payment_Gateway
 
     public function callback_handler()
     {
+        global $wp_query;
+
         if (!empty($_GET["order_id"]))
         {
             $custom_identifier = sanitize_text_field($_GET["order_id"]);
-            $order_id = explode("_", $custom_identifier)[0];
+            $order_id = explode("-", $custom_identifier)[0];
             $order = wc_get_order( $order_id );
+
+            if (empty($order))
+            {
+                $wp_query->set_404();
+                status_header( 404 );
+                get_template_part( 404 );
+                exit();
+            }
 
             $order_status  = $order->get_status();
 

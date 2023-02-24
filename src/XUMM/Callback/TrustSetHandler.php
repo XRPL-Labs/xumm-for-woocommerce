@@ -30,6 +30,8 @@ class TrustSetHandler extends AbstractHandler
             &&
             $this->payload->response->dispatchedResult == 'tesSUCCESS')
         {
+            $gateway->update_option('currencies', $request['LimitAmount']['currency']);
+            $gateway->update_option('currency', $request['LimitAmount']['currency']);
             $gateway->update_option('issuer', $request['LimitAmount']['issuer']);
 
             Notice::add_flash_notice(__('Trust Line Set successfull please check address & test payment', 'xumm-for-woocommerce'));

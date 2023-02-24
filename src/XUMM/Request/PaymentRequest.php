@@ -20,7 +20,8 @@ class PaymentRequest
         $order = wc_get_order( $orderId );
         $storeCurrency = get_woocommerce_currency();
 
-        $identifier = $orderId . '_' . strtoupper(substr(md5(microtime()), 0, 10));
+        // $identifier = $orderId . '-' . strtoupper(substr(md5(microtime()), 0, 10));
+        $identifier = strtoupper(uniqid($orderId . '-'));
 
         $exchangeRateRequest = new ExchangeRateRequest();
         $exchangeRateRequest->setXummPaymentGateway($context);

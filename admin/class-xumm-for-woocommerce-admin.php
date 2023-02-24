@@ -260,7 +260,7 @@ class Xumm_For_Woocommerce_Admin
         switch ($_POST["value"])
         {
             case 'set_destination':
-                $identifier = 'sign-in_' . strtoupper(substr(md5(microtime()), 0, 10));
+                $identifier = strtoupper(uniqid('signin-'));
 
                 $return_url = add_query_arg( 'xumm-id', $identifier, $return_url);
 
@@ -277,7 +277,7 @@ class Xumm_For_Woocommerce_Admin
                 break;
 
             case 'set_trustline':
-                $identifier = 'trustline_' . strtoupper(substr(md5(microtime()), 0, 10));
+                $identifier = strtoupper(uniqid('trustline-'));
                 $return_url = add_query_arg( 'xumm-id', $identifier, $return_url);
 
                 $payload = new Payload(
