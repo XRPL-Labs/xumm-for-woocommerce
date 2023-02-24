@@ -68,8 +68,6 @@ class Transaction
                             throw new \Exception(__('Your order is not paid and is less than order total, Please contact support', 'xumm-for-woocommerce'));
                         }
                     }
-
-                    return true;
                 break;
 
                 case 'array':
@@ -85,6 +83,7 @@ class Transaction
                     }
 
                     $amount_paid = (double) $delivered_amount['value'];
+
                     if ($amount_paid < $total)
                     {
                         if ($amount_paid == 0)
@@ -96,8 +95,6 @@ class Transaction
                             throw new \Exception(__('Your order is not paid and is less than order total, Please contact support', 'xumm-for-woocommerce') .'<br>'.__('Paid:', 'xumm-for-woocommerce') .' '. $delivered_amount['currency'] .' '. $amount_paid .'<br>'. __('Open:', 'xumm-for-woocommerce') .' '. $delivered_amount['currency'] .' '. ($total-$amount_paid) .'<br>'. '<a href="'.$explorer.$txid.'">'. __('Transaction information', 'xumm-for-woocommerce') .'</a>');
                         }
                     }
-
-                    return true;
 
                 break;
 
