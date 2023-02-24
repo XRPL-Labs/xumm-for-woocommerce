@@ -18,7 +18,7 @@ class Transaction
             ]
         ]);
 
-        $tx = wp_remote_post(Config::XRPL_HTTP_ADDR, array(
+        $tx = \wp_remote_post(Config::XRPL_HTTP_ADDR, array(
             'method'    => 'POST',
             'headers'   => array(
                 'Content-Type' => 'application/json',
@@ -26,7 +26,7 @@ class Transaction
             'body' => $json
         ));
 
-        if(is_wp_error( $tx )) {
+        if(\is_wp_error( $tx )) {
             throw new \Exception(__('Connection error getting payload details from the XUMM platform.', 'xumm-for-woocommerce'));
         }
 
@@ -35,7 +35,7 @@ class Transaction
 
     public static function checkDeliveredAmount($delivered_amount, $order, $issuers, $txid, $explorer)
     {
-        $total = $order->get_total();
+        $total = (double) $order->get_total();
 
         if ($delivered_amount != null)
         {
@@ -50,10 +50,10 @@ class Transaction
                         throw new \Exception(__('Payment amount error', 'xumm-for-woocommerce'));
                     }
 
-                    // break;
                     $delivered_amount = (float) $delivered_amount;
 
                 case 'float':
+                case 'double':
                 case 'integer':
                     $delivered_amount = $delivered_amount/1000000;
 
@@ -68,6 +68,8 @@ class Transaction
                             throw new \Exception(__('Your order is not paid and is less than order total, Please contact support', 'xumm-for-woocommerce'));
                         }
                     }
+
+                    return true;
                 break;
 
                 case 'array':
@@ -82,17 +84,21 @@ class Transaction
                         throw new \Exception(__('The store currency is not the same as the payment, please contact support', 'xumm-for-woocommerce'));
                     }
 
-                    if ($delivered_amount['value'] <= ($total * 0.99))
+                    $amount_paid = (double) $delivered_amount['value'];
+                    if ($amount_paid < $total)
                     {
-                        if ($delivered_amount['value'] == 0)
+                        if ($amount_paid == 0)
                         {
                             throw new \Exception(__('No funds received', 'xumm-for-woocommerce'));
                         } else
                         {
-                            $order->add_order_note(__('Your order is not paid and is less than order total, Please contact support', 'xumm-for-woocommerce') .'<br>'.__('Paid:', 'xumm-for-woocommerce') .' '. $delivered_amount['currency'] .' '. $delivered_amount['value'] .'<br>'. __('Open:', 'xumm-for-woocommerce') .' '. $delivered_amount['currency'] .' '. ($total-$delivered_amount['value']) .'<br>'. '<a href="'.$explorer.$txid.'">'. __('Transaction information', 'xumm-for-woocommerce') .'</a>',true);
-                            throw new \Exception(__('Your order is not paid and is less than order total, Please contact support', 'xumm-for-woocommerce') .'<br>'.__('Paid:', 'xumm-for-woocommerce') .' '. $delivered_amount['currency'] .' '. $delivered_amount['value'] .'<br>'. __('Open:', 'xumm-for-woocommerce') .' '. $delivered_amount['currency'] .' '. ($total-$delivered_amount['value']) .'<br>'. '<a href="'.$explorer.$txid.'">'. __('Transaction information', 'xumm-for-woocommerce') .'</a>');
+                            $order->add_order_note(__('Your order is not paid and is less than order total, Please contact support', 'xumm-for-woocommerce') .'<br>'.__('Paid:', 'xumm-for-woocommerce') .' '. $delivered_amount['currency'] .' '. $amount_paid .'<br>'. __('Open:', 'xumm-for-woocommerce') .' '. $delivered_amount['currency'] .' '. (double) ($total-$amount_paid) .'<br>'. '<a href="'.$explorer.$txid.'">'. __('Transaction information', 'xumm-for-woocommerce') .'</a>',true);
+                            throw new \Exception(__('Your order is not paid and is less than order total, Please contact support', 'xumm-for-woocommerce') .'<br>'.__('Paid:', 'xumm-for-woocommerce') .' '. $delivered_amount['currency'] .' '. $amount_paid .'<br>'. __('Open:', 'xumm-for-woocommerce') .' '. $delivered_amount['currency'] .' '. ($total-$amount_paid) .'<br>'. '<a href="'.$explorer.$txid.'">'. __('Transaction information', 'xumm-for-woocommerce') .'</a>');
                         }
                     }
+
+                    return true;
+
                 break;
 
                 default:
