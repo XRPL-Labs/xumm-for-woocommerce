@@ -12,7 +12,6 @@ class Notice
      * @param boolean $dismissible set this to TRUE to add is-dismissible functionality to your notice
      * @return void
      */
-
     public static function add_flash_notice($notice = "", $type = "success", $dismissible = true )
     {
         $notices = \get_transient( "woocommerce_xumm_admin_notices");

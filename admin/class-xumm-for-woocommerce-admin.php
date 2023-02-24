@@ -18,6 +18,7 @@ use Xrpl\XummSdkPhp\XummSdk;
 
 use XummForWoocomerce\XUMM\Callback\SignInHandler;
 use XummForWoocomerce\XUMM\Callback\TrustSetHandler;
+use XummForWoocomerce\XUMM\Facade\Notice;
 use XummForWoocomerce\XUMM\Traits\XummPaymentGatewayTrait;
 
 /**
