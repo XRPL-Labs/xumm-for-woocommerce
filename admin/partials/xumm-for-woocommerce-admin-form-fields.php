@@ -84,10 +84,12 @@ if (!empty($context->logged_in))
         'options'     => $context->availableCurrencies
     ];
 
-    if (!empty ($curatedAssets->currencies) )
+    if (!empty($curatedAssets->currencies))
     {
-        foreach ($curatedAssets->currencies as $v) {
-            if(get_woocommerce_currency() == $v){
+        foreach ($curatedAssets->currencies as $v)
+        {
+            if (get_woocommerce_currency() == $v)
+            {
                 $context->availableCurrencies[$v] = $v;
             }
         }
@@ -112,21 +114,22 @@ if (!empty($context->logged_in))
         'class'       => 'hidden'
     ];
 
-    if (!empty ($curatedAssets->details) && get_woocommerce_currency() != 'XRP') {
-
-        foreach ($curatedAssets->details as $exchange) {
-
+    if (!empty ($curatedAssets->details))
+    {
+        foreach ($curatedAssets->details as $exchange)
+        {
             if ($exchange->shortlist === 0) break;
 
             $exchangeName = $exchange->name;
 
 
-            foreach ($exchange->currencies as $currency) {
-
+            foreach ($exchange->currencies as $currency)
+            {
                 $context->form_fields['issuers']['options'][$currency->issuer] = $exchangeName;
             }
         }
-    } else {
+    } else
+    {
         $context->form_fields['issuers']['disabled'] = true;
     }
 }
