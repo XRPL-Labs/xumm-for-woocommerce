@@ -3,7 +3,7 @@
 namespace XummForWoocomerce\XUMM\Callback;
 
 use Xrpl\XummSdkPhp\Response\GetPayload\XummPayload;
-use XummForWoocomerce\XUMM\Woocommerce\XummPaymentGateway;
+use XummForWoocomerce\Woocommerce\XummPaymentGateway;
 
 /**
  * Handler Class

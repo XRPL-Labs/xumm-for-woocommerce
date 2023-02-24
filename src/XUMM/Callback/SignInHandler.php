@@ -24,6 +24,7 @@ class SignInHandler extends AbstractHandler
     public function handle() : void
     {
         $gateway = $this->getXummPaymentGateway();
+
         $account = $this->payload->response->account;
 
         if(!empty($account))
@@ -33,6 +34,9 @@ class SignInHandler extends AbstractHandler
             $gateway->logged_in = true;
 
             Notice::add_flash_notice(__('Sign In successfull please check address & test payment', 'xumm-for-woocommerce'));
+        } else
+        {
+            Notice::add_flash_notice(__('Signing cannot be completed, please try again later', 'xumm-for-woocommerce'), 'error');
         }
     }
 }

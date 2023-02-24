@@ -12,7 +12,9 @@
  * @package    Xumm_For_Woocommerce
  * @subpackage Xumm_For_Woocommerce/includes
  */
-use XummForWoocomerce\XUMM\Woocommerce\XummPaymentGateway;
+
+use XummForWoocomerce\XUMM\Traits\XummPaymentGatewayTrait;
+use XummForWoocomerce\Woocommerce\XummPaymentGateway;
 
 /**
  * The core plugin class.
@@ -30,14 +32,7 @@ use XummForWoocomerce\XUMM\Woocommerce\XummPaymentGateway;
  */
 class Xumm_For_Woocommerce {
 
-    /**
-     * Access to the Xumm Payment Gateway
-     *
-     * @since    1.0.0
-     * @access   protected
-     * @var      XummPaymentGateway    $xumm_gateway    Xumm Payment Gateway
-     */
-    protected $xumm_gateway;
+    use XummPaymentGatewayTrait;
 
     /**
      * The loader that's responsible for maintaining and registering all hooks that power
@@ -140,7 +135,7 @@ class Xumm_For_Woocommerce {
 
         if (class_exists('WooCommerce'))
         {
-            $this->xumm_gateway = new XummPaymentGateway();
+            $this->setXummPaymentGateway(new XummPaymentGateway());
         }
     }
 
@@ -172,9 +167,9 @@ class Xumm_For_Woocommerce {
     {
         $plugin_admin = new Xumm_For_Woocommerce_Admin( $this->get_plugin_name(), $this->get_version() );
 
-        if (!empty($this->xumm_gateway))
+        if ($this->getXummPaymentGateway())
         {
-            $plugin_admin->setXummPaymentGateway($this->xumm_gateway);
+            $plugin_admin->setXummPaymentGateway($this->getXummPaymentGateway());
             $this->loader->add_filter('init', $plugin_admin, 'xumm_callback', 10, 1);
         }
 
@@ -264,7 +259,7 @@ class Xumm_For_Woocommerce {
      */
     public function add_xumm_gateway_class($methods)
     {
-        $methods[] = 'XummForWoocomerce\XUMM\Woocommerce\XummPaymentGateway';
+        $methods[] = 'XummForWoocomerce\Woocommerce\XummPaymentGateway';
         return $methods;
     }
 
@@ -277,12 +272,14 @@ class Xumm_For_Woocommerce {
      */
     public function disable_xumm($available_gateways)
     {
+        $context = $this->getXummPaymentGateway();
         $storeCurrency = get_woocommerce_currency();
 
-        if (empty($this->xumm_gateway->api) || empty($this->xumm_gateway->api_secret)) unset($available_gateways['xumm']);
-        if (!in_array($storeCurrency, $this->xumm_gateway->availableCurrencies)) unset($available_gateways['xumm']);
-        if ($storeCurrency != 'XRP' && $this->xumm_gateway->currencies != 'XRP' && $storeCurrency != $this->xumm_gateway->currencies) unset($available_gateways['xumm']);
-        if ($this->xumm_gateway->currencies != 'XRP' && empty($this->xumm_gateway->issuers)) unset($available_gateways['xumm']);
+        if (empty($context->api) || empty($context->api_secret)) unset($available_gateways['xumm']);
+        if (!in_array($storeCurrency, $context->availableCurrencies)) unset($available_gateways['xumm']);
+        if ($storeCurrency != 'XRP' && $context->currencies != 'XRP' && $storeCurrency != $context->currencies) unset($available_gateways['xumm']);
+        if ($context->currencies != 'XRP' && empty($context->issuers)) unset($available_gateways['xumm']);
+
         return $available_gateways;
     }
 

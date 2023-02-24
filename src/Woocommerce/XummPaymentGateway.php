@@ -1,11 +1,10 @@
 <?php
 
-namespace XummForWoocomerce\XUMM\Woocommerce;
+namespace XummForWoocomerce\Woocommerce;
 
-use Xrpl\XummSdkPhp\XummSdk;
-use XummForWoocomerce\Constants\Config;
 use XummForWoocomerce\XUMM\Facade\URL;
 use XummForWoocomerce\XUMM\Request\PaymentRequest;
+
 class XummPaymentGateway extends \WC_Payment_Gateway
 {
     public $endpoint = 'https://xumm.app/api/v1/platform/';

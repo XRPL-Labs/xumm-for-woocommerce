@@ -2,7 +2,7 @@
 
 namespace XummForWoocomerce\XUMM\Traits;
 
-use XummForWoocomerce\XUMM\Woocommerce\XummPaymentGateway;
+use XummForWoocomerce\Woocommerce\XummPaymentGateway;
 
 trait XummPaymentGatewayTrait
 {
@@ -13,7 +13,7 @@ trait XummPaymentGatewayTrait
      * @access   protected
      * @var      XummPaymentGateway    $xummGateway    Xumm Payment Gateway
      */
-    protected $xummGateway;
+    protected $xummGateway = null;
 
     public function setXummPaymentGateway(XummPaymentGateway $xummGateway) {
         $this->xummGateway = $xummGateway;

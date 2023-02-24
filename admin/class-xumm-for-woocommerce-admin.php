@@ -238,6 +238,11 @@ class Xumm_For_Woocommerce_Admin
         }
     }
 
+    /**
+     * Create SignIn and TrustSet payload via Ajax Request
+     *
+     * @since    1.0.0
+     */
     public function ajax_create_payload()
     {
         $context = $this->getXummPaymentGateway();
@@ -270,7 +275,7 @@ class Xumm_For_Woocommerce_Admin
                 );
 
                 break;
-                
+
             case 'set_trustline':
                 $identifier = 'trustline_' . strtoupper(substr(md5(microtime()), 0, 10));
                 $return_url = add_query_arg( 'xumm-id', $identifier, $return_url);

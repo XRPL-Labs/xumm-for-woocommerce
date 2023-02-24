@@ -26,11 +26,16 @@ class TrustSetHandler extends AbstractHandler
         $gateway = $this->getXummPaymentGateway();
         $request = $this->payload->payload->request;
 
-        if (!empty($request['LimitAmount']['issuer']))
+        if (!empty($this->payload->response->dispatchedResult)
+            &&
+            $this->payload->response->dispatchedResult == 'tesSUCCESS')
         {
             $gateway->update_option('issuer', $request['LimitAmount']['issuer']);
 
             Notice::add_flash_notice(__('Trust Line Set successfull please check address & test payment', 'xumm-for-woocommerce'));
+        } else
+        {
+            Notice::add_flash_notice(__('Trust line cannot be set, please try again later', 'xumm-for-woocommerce'), 'error');
         }
     }
 }
