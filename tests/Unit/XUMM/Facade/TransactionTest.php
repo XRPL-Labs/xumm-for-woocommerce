@@ -55,6 +55,10 @@ class TransactionTest extends \PHPUnit\Framework\TestCase
             ->with()
             ->andReturn('0.000001');
 
+        $order->shouldReceive('get_id')
+            ->with()
+            ->andReturn('100');
+
         $order->shouldReceive('add_order_note');
         $order->shouldReceive('get_currency')
             ->andReturn('USD');
@@ -90,6 +94,10 @@ class TransactionTest extends \PHPUnit\Framework\TestCase
 	    $order->shouldReceive('get_total')
             ->with()
             ->andReturn(1610.547979);
+
+        $order->shouldReceive('get_id')
+            ->with()
+            ->andReturn('100');
 
         $order->shouldReceive('add_order_note');
         $order->shouldReceive('get_currency')

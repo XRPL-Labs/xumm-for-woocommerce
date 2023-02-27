@@ -44,17 +44,15 @@ class Transaction
             switch ($type)
             {
                 case 'string':
-
-                    if(!is_numeric($delivered_amount))
-                    {
-                        throw new \Exception(__('Payment amount error', 'xumm-for-woocommerce'));
-                    }
-
-                    $delivered_amount = (float) $delivered_amount;
-
                 case 'float':
                 case 'double':
                 case 'integer':
+
+                    if (!is_numeric($delivered_amount))
+                    {
+                        throw new \Exception(__('Payment amount error, the delivered amount is not a number', 'xumm-for-woocommerce'));
+                    }
+
                     $delivered_amount = $delivered_amount/1000000;
 
                     if ($delivered_amount < ($total-0.000001)) {
@@ -77,7 +75,8 @@ class Transaction
                         throw new \Exception(__('The issuer is not the same as the payment, please contact support', 'xumm-for-woocommerce'));
                     }
 
-                    if ($delivered_amount['currency'] != $order->get_currency()) {
+                    if ($delivered_amount['currency'] != $order->get_currency())
+                    {
                         $order->add_order_note(__('Wrong', 'xumm-for-woocommerce') .'<br>' . __('Paid:', 'xumm-for-woocommerce') .' '. $delivered_amount['currency'] .' '. $delivered_amount['value'] .'<br> <a href="'.$explorer.$txid.'">'. __('Transaction information', 'xumm-for-woocommerce') .'</a>',true);
                         throw new \Exception(__('The store currency is not the same as the payment, please contact support', 'xumm-for-woocommerce'));
                     }
