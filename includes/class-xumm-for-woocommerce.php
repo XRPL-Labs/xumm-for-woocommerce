@@ -174,6 +174,7 @@ class Xumm_For_Woocommerce {
         }
 
         $this->loader->add_action( 'admin_notices', $plugin_admin, 'admin_notices', 12, 1);
+        $this->loader->add_action( 'admin_bar_menu', $plugin_admin, 'show_indicator_toolbar', 500, 1);
 
         $this->loader->add_filter( 'plugin_action_links_xumm-for-woocommerce/xumm-for-woocommerce.php', $plugin_admin, 'settings_link', 10, 1);
 

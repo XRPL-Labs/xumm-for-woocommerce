@@ -2,6 +2,7 @@
 
 namespace XummForWoocomerce\Woocommerce;
 
+use XummForWoocomerce\XUMM\Facade\Notice;
 use XummForWoocomerce\XUMM\Facade\URL;
 use XummForWoocomerce\XUMM\Request\PaymentRequest;
 
@@ -48,7 +49,8 @@ class XummPaymentGateway extends \WC_Payment_Gateway
 
         $this->logged_in = $this->get_option('logged_in');
 
-        if (empty($this->destination) && $this->logged_in) {
+        if (empty($this->destination) && $this->logged_in)
+        {
             $this->logged_in = false;
             $this->update_option('logged_in', false);
         }
@@ -183,5 +185,19 @@ class XummPaymentGateway extends \WC_Payment_Gateway
         }
 
         return self::$instance;
+    }
+
+    public function process_admin_options()
+    {
+        $saved = parent::process_admin_options();
+
+        if ($saved)
+        {
+            Notice::add_flash_notice(__('Your settings have been saved.', 'woocommerce'));
+            wp_safe_redirect(admin_url('admin.php?page=wc-settings&tab=checkout&section=xumm'));
+            exit;
+        }
+
+        return $saved;
     }
 }

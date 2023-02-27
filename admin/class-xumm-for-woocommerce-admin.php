@@ -330,4 +330,35 @@ class Xumm_For_Woocommerce_Admin
 
         wp_die();
     }
+
+    /**
+	 * Toolbar indicator of XRPL Network
+	 * @param WP_Admin_Bar $admin_bar
+	 */
+	public function show_indicator_toolbar($admin_bar)
+    {
+        $context = $this->getXummPaymentGateway();
+
+        if (!empty($context->api) && !empty($context->api_secret))
+        {
+            if (current_user_can('activate_plugins') && current_user_can('manage_options'))
+            {
+                $xrpl_network = $context->get_option('xrpl_network');
+                $network = $xrpl_network == 'mainnet' ? 'Main net' : 'Test net';
+                $styles = $xrpl_network == 'testnet' ? 'opacity: .20' : '';
+
+                $iconhtml = sprintf( '<span class="ab-icon"><img src="%s" style="height: 16px; %s" /></span> %s', xumm_plugin_url() . 'admin/public/images/xrp-symbol-white.svg', $styles, $network );
+
+                $admin_bar->add_node([
+                    'id'		=> 'xumm-for-woocommerce-indicator',
+                    'title'     => $iconhtml,
+                    'href'		=> admin_url('admin.php?page=wc-settings&tab=checkout&section=xumm'),
+                    'menu_icon' => 'data:image/svg+xml;base64,' . base64_encode($iconSVG),
+                    'meta'		=> [
+                        'title' => $network
+                    ],
+                ]);
+            }
+        }
+	}
 }
