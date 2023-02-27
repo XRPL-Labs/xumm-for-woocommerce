@@ -18,7 +18,7 @@ class Transaction
             ]
         ]);
 
-        $tx = \wp_remote_post(Config::XRPL_HTTP_ADDR, array(
+        $tx = \wp_remote_post(Config::get_xrpl_http_addr(), array(
             'method'    => 'POST',
             'headers'   => array(
                 'Content-Type' => 'application/json',

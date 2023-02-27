@@ -7,6 +7,8 @@ use XummForWoocomerce\XUMM\Request\PaymentRequest;
 
 class XummPaymentGateway extends \WC_Payment_Gateway
 {
+    private static $instance = null;
+
     public $endpoint = 'https://xumm.app/api/v1/platform/';
 
     public $availableCurrencies = [
@@ -32,12 +34,12 @@ class XummPaymentGateway extends \WC_Payment_Gateway
     public $issuers;
     public $logged_in;
     public $currency;
-
+    public $xrpl_network;
 
     public function __construct()
     {
         $this->id = 'xumm';
-        $this->icon = xumm_plugin_url() . 'admin/public/images/label.svg';
+        $this->icon = \xumm_plugin_url() . 'admin/public/images/label.svg';
         $this->has_fields = false;
         $this->method_title = __("Accept XUMM payments", "xumm-for-woocommerce");
         $this->method_description = __("Receive any supported currency into your XRP account using XUMM", "xumm-for-woocommerce");
@@ -61,6 +63,7 @@ class XummPaymentGateway extends \WC_Payment_Gateway
         $this->api_secret = $this->get_option('api_secret');
         $this->currencies = $this->get_option('currencies');
         $this->issuers = $this->get_option('issuers');
+        $this->xrpl_network = $this->get_option('xrpl_network', 'testnet');
 
         $this->init_form_fields();
 		$this->init_settings();
@@ -170,5 +173,15 @@ class XummPaymentGateway extends \WC_Payment_Gateway
 
             exit;
         }
+    }
+
+    public static function getInstance()
+    {
+        if (self::$instance == null)
+        {
+            self::$instance = new XummPaymentGateway();
+        }
+
+        return self::$instance;
     }
 }

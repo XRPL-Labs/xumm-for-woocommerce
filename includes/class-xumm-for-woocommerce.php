@@ -135,7 +135,7 @@ class Xumm_For_Woocommerce {
 
         if (class_exists('WooCommerce'))
         {
-            $this->setXummPaymentGateway(new XummPaymentGateway());
+            $this->setXummPaymentGateway(XummPaymentGateway::getInstance());
         }
     }
 

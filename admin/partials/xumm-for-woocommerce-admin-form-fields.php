@@ -14,6 +14,17 @@ if(!empty($context->api) && !empty($context->api_secret))
 }
 
 $context->form_fields = [
+    'xrpl_network' => [
+        'title'       => __("XRPL Network", 'xumm-for-woocommerce'),
+        'description' => __("Choose the XRPL Network", 'xumm-for-woocommerce'),
+        'type'        => 'select',
+        'options'     => array(
+            'mainnet' => 'Main net',
+            'testnet' => 'Test net',
+        ),
+        'default'     => 'testnet',
+        'desc_tip'    => true
+    ],
     'api' => array(
         'title'       => __("API Key", 'xumm-for-woocommerce'),
         'type'        => 'text',
@@ -138,7 +149,7 @@ $xummObject = !empty($curatedAssets) ? $curatedAssets : new stdClass();
 
 $xummObject->account = $context->destination;
 $xummObject->store_currency = get_woocommerce_currency();
-$xummObject->ws = Config::XUMM_WS_ENDPOINT;
+$xummObject->ws = Config::get_xrpl_ws_endpoint();
 $xummObject->logged_in = $context->logged_in;
 
 wp_localize_script( 'jquery', 'xumm_object', $xummObject);
