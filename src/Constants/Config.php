@@ -15,7 +15,7 @@ abstract class Config
     private static function is_mainnet()
     {
         if (class_exists('Woocommerce')) {
-            return XummPaymentGateway::getInstance()->xrpl_network == 'mainnet';
+            return XummPaymentGateway::get_instance()->xrpl_network == 'mainnet';
         }
 
         return false;
