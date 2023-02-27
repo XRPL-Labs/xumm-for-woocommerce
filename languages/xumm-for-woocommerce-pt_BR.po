@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: XUMM for WooCommerce 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/xumm-for-"
 "woocommerce\n"
-"POT-Creation-Date: 2023-02-24T06:50:10-03:00\n"
-"PO-Revision-Date: 2023-02-24 06:51-0300\n"
+"POT-Creation-Date: 2023-02-27T14:16:26-03:00\n"
+"PO-Revision-Date: 2023-02-27 14:18-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -37,185 +37,193 @@ msgstr "XUMM"
 msgid "https://xumm.app/"
 msgstr "https://xumm.app/"
 
-#: admin/class-xumm-for-woocommerce-admin.php:193
+#: admin/class-xumm-for-woocommerce-admin.php:194
 msgid "View Xumm For Woocommerce settings"
 msgstr "Exibir configurações do Xumm para Woocommerce"
 
-#: admin/class-xumm-for-woocommerce-admin.php:312
-#: admin/partials/xumm-for-woocommerce-admin-display.php:66
+#: admin/class-xumm-for-woocommerce-admin.php:313
+#: admin/partials/xumm-for-woocommerce-admin-display.php:38
 msgid "Connection API Error to the"
 msgstr "Erro de API de conexão com o"
 
-#: admin/class-xumm-for-woocommerce-admin.php:312
-#: admin/partials/xumm-for-woocommerce-admin-display.php:53
-#: admin/partials/xumm-for-woocommerce-admin-display.php:60
-#: admin/partials/xumm-for-woocommerce-admin-display.php:64
-#: admin/partials/xumm-for-woocommerce-admin-display.php:66
-#: admin/partials/xumm-for-woocommerce-admin-display.php:69
+#: admin/class-xumm-for-woocommerce-admin.php:313
+#: admin/partials/xumm-for-woocommerce-admin-display.php:25
+#: admin/partials/xumm-for-woocommerce-admin-display.php:32
+#: admin/partials/xumm-for-woocommerce-admin-display.php:36
+#: admin/partials/xumm-for-woocommerce-admin-display.php:38
+#: admin/partials/xumm-for-woocommerce-admin-display.php:41
 msgid "XUMM API"
 msgstr "API XUMM"
 
-#: admin/class-xumm-for-woocommerce-admin.php:312
-#: admin/partials/xumm-for-woocommerce-admin-display.php:66
+#: admin/class-xumm-for-woocommerce-admin.php:313
+#: admin/partials/xumm-for-woocommerce-admin-display.php:38
 msgid "Check your API keys."
 msgstr "Verifique suas chaves de API."
 
-#: admin/partials/xumm-for-woocommerce-admin-display.php:28
-msgid "XUMM Payment Gateway for WooCommerce"
-msgstr "Gateway de pagamento XUMM para WooCommerce"
-
-#: admin/partials/xumm-for-woocommerce-admin-display.php:31
-msgid "Welcome to the XUMM Payment Gateway for Woocommerce"
-msgstr "Bem-vindo ao gateway de pagamento XUMM para Woocommerce"
-
-#: admin/partials/xumm-for-woocommerce-admin-display.php:33
-msgid "In order to continue, you need to complete these steps:"
-msgstr "Para continuar, você precisa concluir estas etapas:"
-
-#: admin/partials/xumm-for-woocommerce-admin-display.php:35
-msgid "Go to the"
-msgstr "Vá ao"
-
-#: admin/partials/xumm-for-woocommerce-admin-display.php:35
-msgid "Xumm Developer Console"
-msgstr "Xumm Developer Console"
-
-#: admin/partials/xumm-for-woocommerce-admin-display.php:36
-msgid "Create your app to get your API Credentials"
-msgstr "Crie seu aplicativo para obter suas credenciais de API"
-
-#: admin/partials/xumm-for-woocommerce-admin-display.php:37
-msgid "Define your WebHook URL like this: "
-msgstr "Defina sua URL do WebHook assim: "
-
-#: admin/partials/xumm-for-woocommerce-admin-display.php:38
-msgid "Place your API Credentials"
-msgstr "Coloque suas credenciais de API"
-
-#: admin/partials/xumm-for-woocommerce-admin-display.php:39
-msgid "Signin using your Xumm App"
-msgstr "Entre usando seu aplicativo Xumm"
-
-#: admin/partials/xumm-for-woocommerce-admin-display.php:40
-msgid "Set your Trustlines and go ahead!"
-msgstr "Defina suas TrustLines e vá em frente!"
-
-#: admin/partials/xumm-for-woocommerce-admin-display.php:53
+#: admin/partials/xumm-for-woocommerce-admin-display.php:25
 msgid "Please add XUMM API keys from"
 msgstr "Adicione chaves de API XUMM de"
 
-#: admin/partials/xumm-for-woocommerce-admin-display.php:60
+#: admin/partials/xumm-for-woocommerce-admin-display.php:32
 msgid "Connected to the"
 msgstr "Conectado em"
 
-#: admin/partials/xumm-for-woocommerce-admin-display.php:64
+#: admin/partials/xumm-for-woocommerce-admin-display.php:36
 msgid "WebHook incorrect on"
 msgstr "WebHook incorreto em"
 
-#: admin/partials/xumm-for-woocommerce-admin-display.php:64
+#: admin/partials/xumm-for-woocommerce-admin-display.php:36
 msgid "should be"
 msgstr "deveria ser"
 
-#: admin/partials/xumm-for-woocommerce-admin-display.php:69
+#: admin/partials/xumm-for-woocommerce-admin-display.php:41
 msgid "Connection Error to the"
 msgstr "Erro de conexão para"
 
-#: admin/partials/xumm-for-woocommerce-admin-display.php:72
-#: admin/partials/xumm-for-woocommerce-admin-display.php:75
+#: admin/partials/xumm-for-woocommerce-admin-display.php:44
+#: admin/partials/xumm-for-woocommerce-admin-display.php:47
 msgid "Please change store currency"
 msgstr "Por favor modifique sua moeda"
 
-#: admin/partials/xumm-for-woocommerce-admin-display.php:76
+#: admin/partials/xumm-for-woocommerce-admin-display.php:48
 msgid "Please set the issuer and save changes"
 msgstr "Defina o emissor e salve as alterações"
 
-#: admin/partials/xumm-for-woocommerce-admin-display.php:91
+#: admin/partials/xumm-for-woocommerce-admin-display.php:53
+msgid "XUMM Payment Gateway for WooCommerce"
+msgstr "Gateway de pagamento XUMM para WooCommerce"
+
+#: admin/partials/xumm-for-woocommerce-admin-display.php:56
+msgid "Welcome to the XUMM Payment Gateway for Woocommerce"
+msgstr "Bem-vindo ao gateway de pagamento XUMM para Woocommerce"
+
+#: admin/partials/xumm-for-woocommerce-admin-display.php:58
+msgid "In order to continue, you need to complete these steps:"
+msgstr "Para continuar, você precisa concluir estas etapas:"
+
+#: admin/partials/xumm-for-woocommerce-admin-display.php:60
+msgid "Go to the"
+msgstr "Vá ao"
+
+#: admin/partials/xumm-for-woocommerce-admin-display.php:60
+msgid "Xumm Developer Console"
+msgstr "Xumm Developer Console"
+
+#: admin/partials/xumm-for-woocommerce-admin-display.php:61
+msgid "Create your app to get your API Credentials"
+msgstr "Crie seu aplicativo para obter suas credenciais de API"
+
+#: admin/partials/xumm-for-woocommerce-admin-display.php:62
+msgid "Define your WebHook URL like this: "
+msgstr "Defina sua URL do WebHook assim: "
+
+#: admin/partials/xumm-for-woocommerce-admin-display.php:63
+msgid "Place your API Credentials"
+msgstr "Coloque suas credenciais de API"
+
+#: admin/partials/xumm-for-woocommerce-admin-display.php:64
+msgid "Signin using your Xumm App"
+msgstr "Entre usando seu aplicativo Xumm"
+
+#: admin/partials/xumm-for-woocommerce-admin-display.php:65
+msgid "Set your Trustlines and go ahead!"
+msgstr "Defina suas TrustLines e vá em frente!"
+
+#: admin/partials/xumm-for-woocommerce-admin-display.php:84
 msgid "Add Trustline"
 msgstr "Adicionar Trustline"
 
 #: admin/partials/xumm-for-woocommerce-admin-form-fields.php:18
+msgid "XRPL Network"
+msgstr "Rede do XRPL"
+
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:19
+msgid "Choose the XRPL Network"
+msgstr "Escolha qual a rede do XRPL deseja utilizar"
+
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:29
 msgid "API Key"
 msgstr "Chave de API"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:20
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:31
 msgid "Get the API Key from"
 msgstr "Obter a chave de API de"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:24
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:35
 msgid "API Secret Key"
 msgstr "Chave secreta de API"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:26
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:37
 msgid "Get the API Secret Key from"
 msgstr "Obter a chave de API de"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:34
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:45
 msgid "XRP Destination address"
 msgstr "Endereço de Destino XRP"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:36
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:47
 msgid "This is your XRP r Address"
 msgstr "Este é seu endereço XRP r"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:44
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:55
 msgid "Enable/Disable"
 msgstr "Habilitar/Desabilitar"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:45
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:56
 msgid "Enable XUMM Gateway"
 msgstr "Habilitar XUMM Gateway"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:52
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:63
 msgid "Title"
 msgstr "Título"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:54
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:65
 msgid "This is the title which the user sees during checkout"
 msgstr "Este é o título que o usuário vê durante o checkout"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:55
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:66
 msgid "XRP Payment"
 msgstr "Pagamento com XRP"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:60
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:71
 msgid "Description"
 msgstr "Descrição"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:62
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:73
 msgid "This is the text users will see in the checkout for this payment method"
 msgstr ""
 "Este é o texto que os usuários verão no checkout desta forma de pagamento"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:63
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:74
 msgid "Pay with XRP using the #1 XRPL wallet: XUMM."
 msgstr "Pague com XRP usando a carteira número 1 XRPL: XUMM."
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:68
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:79
 msgid "Transaction Explorer"
 msgstr "Explorador de transações"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:69
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:80
 msgid "Choose the explorer to check the transaction"
 msgstr "Escolha o explorador para checar as transações"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:81
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:92
 msgid "Select your currency"
 msgstr "Escolha a sua moeda"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:82
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:103
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:93
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:114
 msgid "Here you can select how you want to be paid"
 msgstr "Aqui você pode selecionar como você deseja ser pago"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:102
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:113
 msgid "Select your issuer"
 msgstr "Selecione seu emissor (Issuer)"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:109
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:120
 msgid "Issuer"
 msgstr "Emissor"
 
-#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:111
+#: admin/partials/xumm-for-woocommerce-admin-form-fields.php:122
 msgid "This is the issuer that you have been chosen"
 msgstr "Este é o emissor que você escolheu"
 
@@ -235,40 +243,40 @@ msgstr "configurações"
 msgid "to complete the plugin setup"
 msgstr "para completar as definições e começar a usar o plugin"
 
-#: src/Woocommerce/XummPaymentGateway.php:42
+#: src/Woocommerce/XummPaymentGateway.php:44
 msgid "Accept XUMM payments"
 msgstr "Aceitar Pagamentos com XUMM"
 
-#: src/Woocommerce/XummPaymentGateway.php:43
+#: src/Woocommerce/XummPaymentGateway.php:45
 msgid "Receive any supported currency into your XRP account using XUMM"
 msgstr "Receba qualquer moeda suportada em sua conta XRP usando XUMM"
 
-#: src/Woocommerce/XummPaymentGateway.php:99
+#: src/Woocommerce/XummPaymentGateway.php:102
 #: src/XUMM/Request/PaymentRequest.php:82
 msgid "Got an error from XUMM"
 msgstr "Recebi um erro do XUMM"
 
-#: src/Woocommerce/XummPaymentGateway.php:136
+#: src/Woocommerce/XummPaymentGateway.php:139
 msgid "Order Status: Processing"
 msgstr "Status do pedido: Processando"
 
-#: src/Woocommerce/XummPaymentGateway.php:140
+#: src/Woocommerce/XummPaymentGateway.php:143
 msgid "Order Status: Pending"
 msgstr "Status do pedido: Pendente"
 
-#: src/Woocommerce/XummPaymentGateway.php:152
+#: src/Woocommerce/XummPaymentGateway.php:155
 msgid "Your order has been cancelled, please try again."
 msgstr "Seu pedido foi cancelado, tente novamente."
 
-#: src/Woocommerce/XummPaymentGateway.php:156
+#: src/Woocommerce/XummPaymentGateway.php:159
 msgid "Failed payment. Please try again!"
 msgstr "Pagamento falhou. Por favor, tente novamente!"
 
-#: src/Woocommerce/XummPaymentGateway.php:160
+#: src/Woocommerce/XummPaymentGateway.php:163
 msgid "Order has been refunded"
 msgstr "O pedido foi devolvido"
 
-#: src/Woocommerce/XummPaymentGateway.php:164
+#: src/Woocommerce/XummPaymentGateway.php:167
 msgid "There is something wrong with the order, please contact us."
 msgstr "Há algo errado com o pedido, entre em contato conosco."
 
@@ -294,53 +302,56 @@ msgstr "A linha de confiança não pode ser definida, tente novamente mais tarde
 msgid "Connection error getting payload details from the XUMM platform."
 msgstr "Erro de conexão ao obter detalhes de carga útil da plataforma XUMM."
 
-#: src/XUMM/Facade/Transaction.php:50 src/XUMM/Facade/Transaction.php:99
-#: src/XUMM/Facade/Transaction.php:104
-msgid "Payment amount error"
-msgstr "Erro no valor do pagamento"
+#: src/XUMM/Facade/Transaction.php:53
+msgid "Payment amount error, the delivered amount is not a number"
+msgstr "Erro no valor do pagamento, o valor pago não é um número"
 
-#: src/XUMM/Facade/Transaction.php:63 src/XUMM/Facade/Transaction.php:89
+#: src/XUMM/Facade/Transaction.php:61 src/XUMM/Facade/Transaction.php:90
 msgid "No funds received"
 msgstr "Nenhum fundo recebido"
 
-#: src/XUMM/Facade/Transaction.php:67 src/XUMM/Facade/Transaction.php:68
-#: src/XUMM/Facade/Transaction.php:92 src/XUMM/Facade/Transaction.php:93
+#: src/XUMM/Facade/Transaction.php:65 src/XUMM/Facade/Transaction.php:66
+#: src/XUMM/Facade/Transaction.php:93 src/XUMM/Facade/Transaction.php:94
 msgid ""
 "Your order is not paid and is less than order total, Please contact support"
 msgstr ""
 "Seu pedido não foi pago e é menor que o total do pedido, entre em contato "
 "com o suporte"
 
-#: src/XUMM/Facade/Transaction.php:67 src/XUMM/Facade/Transaction.php:76
-#: src/XUMM/Facade/Transaction.php:81 src/XUMM/Facade/Transaction.php:92
-#: src/XUMM/Facade/Transaction.php:93
+#: src/XUMM/Facade/Transaction.php:65 src/XUMM/Facade/Transaction.php:74
+#: src/XUMM/Facade/Transaction.php:80 src/XUMM/Facade/Transaction.php:93
+#: src/XUMM/Facade/Transaction.php:94
 msgid "Paid:"
 msgstr "Pago:"
 
-#: src/XUMM/Facade/Transaction.php:67 src/XUMM/Facade/Transaction.php:92
-#: src/XUMM/Facade/Transaction.php:93
+#: src/XUMM/Facade/Transaction.php:65 src/XUMM/Facade/Transaction.php:93
+#: src/XUMM/Facade/Transaction.php:94
 msgid "Open:"
 msgstr "Aberto:"
 
-#: src/XUMM/Facade/Transaction.php:67 src/XUMM/Facade/Transaction.php:76
-#: src/XUMM/Facade/Transaction.php:81 src/XUMM/Facade/Transaction.php:92
-#: src/XUMM/Facade/Transaction.php:93
+#: src/XUMM/Facade/Transaction.php:65 src/XUMM/Facade/Transaction.php:74
+#: src/XUMM/Facade/Transaction.php:80 src/XUMM/Facade/Transaction.php:93
+#: src/XUMM/Facade/Transaction.php:94
 msgid "Transaction information"
 msgstr "Informações da transação"
 
-#: src/XUMM/Facade/Transaction.php:76 src/XUMM/Facade/Transaction.php:81
+#: src/XUMM/Facade/Transaction.php:74 src/XUMM/Facade/Transaction.php:80
 msgid "Wrong"
 msgstr "Incorreto"
 
-#: src/XUMM/Facade/Transaction.php:77
+#: src/XUMM/Facade/Transaction.php:75
 msgid "The issuer is not the same as the payment, please contact support"
 msgstr "O emissor não é o mesmo do pagamento, entre em contato com o suporte"
 
-#: src/XUMM/Facade/Transaction.php:82
+#: src/XUMM/Facade/Transaction.php:81
 msgid ""
 "The store currency is not the same as the payment, please contact support"
 msgstr ""
 "A moeda da loja não é a mesma do pagamento, entre em contato com o suporte"
+
+#: src/XUMM/Facade/Transaction.php:101 src/XUMM/Facade/Transaction.php:106
+msgid "Payment amount error"
+msgstr "Erro no valor do pagamento"
 
 #: src/XUMM/Facade/URL.php:23 src/XUMM/Facade/URL.php:30
 msgid "Payment failed or cancelled, feel free to try again."
