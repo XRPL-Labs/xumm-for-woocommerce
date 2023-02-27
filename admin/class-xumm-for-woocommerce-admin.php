@@ -347,7 +347,7 @@ class Xumm_For_Woocommerce_Admin
                 $network = $xrpl_network == 'mainnet' ? 'Main net' : 'Test net';
                 $styles = $xrpl_network == 'testnet' ? 'opacity: .20' : '';
 
-                $iconhtml = sprintf( '<span class="ab-icon"><img src="%s" style="height: 16px; %s" /></span> %s', xumm_plugin_url() . 'admin/public/images/xrp-symbol-white.svg', $styles, $network );
+                $iconhtml = sprintf( '<span class="ab-icon"><img src="%s" style="height: 14px; %s" /></span> %s', xumm_plugin_url() . 'admin/public/images/xrp-symbol-white.svg', $styles, $network );
 
                 $admin_bar->add_node([
                     'id'		=> 'xumm-for-woocommerce-indicator',
