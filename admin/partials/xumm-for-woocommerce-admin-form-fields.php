@@ -1,7 +1,7 @@
 <?php
 
 use Xrpl\XummSdkPhp\XummSdk;
-use XummForWoocomerce\Constants\Config;
+use Xrpl\XummForWoocommerce\Constants\Config;
 
 if(!empty($context->api) && !empty($context->api_secret))
 {

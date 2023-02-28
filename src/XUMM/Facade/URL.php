@@ -1,9 +1,9 @@
 <?php
 
-namespace XummForWoocomerce\XUMM\Facade;
+namespace Xrpl\XummForWoocommerce\XUMM\Facade;
 
 use Xrpl\XummSdkPhp\XummSdk;
-use XummForWoocomerce\Woocommerce\XummPaymentGateway;
+use Xrpl\XummForWoocommerce\Woocommerce\XummPaymentGateway;
 
 class URL
 {

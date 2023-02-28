@@ -1,8 +1,8 @@
 <?php
 
-namespace XummForWoocomerce\Constants;
+namespace Xrpl\XummForWoocommerce\Constants;
 
-use XummForWoocomerce\Woocommerce\XummPaymentGateway;
+use Xrpl\XummForWoocommerce\Woocommerce\XummPaymentGateway;
 
 abstract class Config
 {

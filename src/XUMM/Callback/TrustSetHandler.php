@@ -1,8 +1,8 @@
 <?php
 
-namespace XummForWoocomerce\XUMM\Callback;
+namespace Xrpl\XummForWoocommerce\XUMM\Callback;
 
-use XummForWoocomerce\XUMM\Facade\Notice;
+use Xrpl\XummForWoocommerce\XUMM\Facade\Notice;
 
 /**
  * TrustSet Handler Class
@@ -10,7 +10,7 @@ use XummForWoocomerce\XUMM\Facade\Notice;
  * TrustSet Request Handling from XuMM
  *
  * @since      1.0.0
- * @package    XummForWoocomerce
+ * @package    Xrpl\XummForWoocommerce
  * @subpackage XUMM\Callback
  * @author     Andrei R <mdxico@gmail.com>
  */

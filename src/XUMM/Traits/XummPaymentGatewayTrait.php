@@ -1,8 +1,8 @@
 <?php
 
-namespace XummForWoocomerce\XUMM\Traits;
+namespace Xrpl\XummForWoocommerce\XUMM\Traits;
 
-use XummForWoocomerce\Woocommerce\XummPaymentGateway;
+use Xrpl\XummForWoocommerce\Woocommerce\XummPaymentGateway;
 
 trait XummPaymentGatewayTrait
 {

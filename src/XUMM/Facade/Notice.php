@@ -1,6 +1,6 @@
 <?php
 
-namespace XummForWoocomerce\XUMM\Facade;
+namespace Xrpl\XummForWoocommerce\XUMM\Facade;
 
 class Notice
 {

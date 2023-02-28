@@ -1,13 +1,13 @@
 <?php
 
-namespace XummForWoocomerce\XUMM\Request;
+namespace Xrpl\XummForWoocommerce\XUMM\Request;
 
 use Xrpl\XummSdkPhp\Payload\CustomMeta;
 use Xrpl\XummSdkPhp\Payload\Options;
 use Xrpl\XummSdkPhp\Payload\Payload;
 use Xrpl\XummSdkPhp\Payload\ReturnUrl;
 use Xrpl\XummSdkPhp\XummSdk;
-use XummForWoocomerce\XUMM\Traits\XummPaymentGatewayTrait;
+use Xrpl\XummForWoocommerce\XUMM\Traits\XummPaymentGatewayTrait;
 
 class PaymentRequest
 {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7175d2a7a05e4a0ee1af95eb0852b39e",
+    "content-hash": "1c3563dbeea495cce4d4ee337bf33093",
     "packages": [
         {
             "name": "evenement/evenement",
@@ -2539,16 +2539,16 @@
         },
         {
             "name": "xrpl/xumm-sdk-php",
-            "version": "v1.0.0",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/XRPL-Labs/XUMM-SDK-PHP.git",
-                "reference": "76b28a17460ecf87b2aa89d64159f50583f2b51e"
+                "reference": "8d48ef1fc00999125f80290e2ec10acab86a2195"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/XRPL-Labs/XUMM-SDK-PHP/zipball/76b28a17460ecf87b2aa89d64159f50583f2b51e",
-                "reference": "76b28a17460ecf87b2aa89d64159f50583f2b51e",
+                "url": "https://api.github.com/repos/XRPL-Labs/XUMM-SDK-PHP/zipball/8d48ef1fc00999125f80290e2ec10acab86a2195",
+                "reference": "8d48ef1fc00999125f80290e2ec10acab86a2195",
                 "shasum": ""
             },
             "require": {
@@ -2567,6 +2567,7 @@
                 "squizlabs/php_codesniffer": "dev-master",
                 "wyrihaximus/async-test-utilities": "^4.2"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -2594,9 +2595,9 @@
             ],
             "support": {
                 "issues": "https://github.com/XRPL-Labs/XUMM-SDK-PHP/issues",
-                "source": "https://github.com/XRPL-Labs/XUMM-SDK-PHP/tree/v1.0.0"
+                "source": "https://github.com/XRPL-Labs/XUMM-SDK-PHP/tree/main"
             },
-            "time": "2022-04-07T21:11:57+00:00"
+            "time": "2023-02-28T09:57:57+00:00"
         }
     ],
     "packages-dev": [
@@ -4491,7 +4492,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "xrpl/xumm-sdk-php": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

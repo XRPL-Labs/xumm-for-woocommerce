@@ -3,13 +3,23 @@
     "description": "Accept XRP, EUR, USD, BTC & ETH, using a single plugin with the greatest XRP ledger client (wallet): XUMM!",
     "type": "project",
     "require": {
-        "xrpl/xumm-sdk-php": "^1.0"
+        "xrpl/xumm-sdk-php": "dev-main"
     },
     "autoload": {
         "psr-4": {
-            "XummForWoocomerce\\": "src/",
-            "XummForWoocomerceTests\\": "tests/"
+            "Xrpl\\XummForWoocommerce\\": "src/",
+            "Xrpl\\XummForWoocommerce\\Tests\\": "tests/"
         }
+    },
+    "config": {
+      "vendor-dir": "libraries"
+    },
+    "scripts": {
+      "test": "phpunit -c phpunit.xml",
+      "production": "composer install --no-dev --no-scripts --optimize-autoloader",
+      "post-install-cmd": [
+        "[ $COMPOSER_DEV_MODE -eq 0 ] || composer test"
+      ]
     },
     "require-dev": {
         "phpunit/phpunit": "^10.0",

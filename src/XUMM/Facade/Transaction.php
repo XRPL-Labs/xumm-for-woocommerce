@@ -1,8 +1,8 @@
 <?php
 
-namespace XummForWoocomerce\XUMM\Facade;
+namespace Xrpl\XummForWoocommerce\XUMM\Facade;
 
-use XummForWoocomerce\Constants\Config;
+use Xrpl\XummForWoocommerce\Constants\Config;
 
 class Transaction
 {

@@ -1,4 +1,4 @@
-/vendor/
+/libraries/
 .DS_Store
 
 /.phpunit.cache/

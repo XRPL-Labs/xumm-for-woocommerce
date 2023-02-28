@@ -1,6 +1,6 @@
 <?php
 
-namespace XummForWoocomerceTests\Responses\Transaction;
+namespace Xrpl\XummForWoocommerce\Tests\Responses\Transaction;
 
 class USD
 {

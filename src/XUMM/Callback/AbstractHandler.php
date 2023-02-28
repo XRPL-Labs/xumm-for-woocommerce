@@ -1,10 +1,10 @@
 <?php
 
-namespace XummForWoocomerce\XUMM\Callback;
+namespace Xrpl\XummForWoocommerce\XUMM\Callback;
 
 use Xrpl\XummSdkPhp\Response\GetPayload\XummPayload;
-use XummForWoocomerce\XUMM\Traits\XummPaymentGatewayTrait;
-use XummForWoocomerce\Woocommerce\XummPaymentGateway;
+use Xrpl\XummForWoocommerce\XUMM\Traits\XummPaymentGatewayTrait;
+use Xrpl\XummForWoocommerce\Woocommerce\XummPaymentGateway;
 
 /**
  * AbstractHandler Class
@@ -12,13 +12,13 @@ use XummForWoocomerce\Woocommerce\XummPaymentGateway;
  * The default behavior can be implemented inside a base handler class.
  *
  * @since      1.0.0
- * @package    XummForWoocomerce
+ * @package    Xrpl\XummForWoocommerce
  * @subpackage XUMM\Callback
  * @author     Andrei R <mdxico@gmail.com>
  */
 abstract class AbstractHandler implements Handler
 {
-    /** @use \XummForWoocommerce\XUMM\Traits\XummPaymentGatewayTrait */
+    /** @use \Xrpl\XummForWoocommerce\XUMM\Traits\XummPaymentGatewayTrait */
     use XummPaymentGatewayTrait;
 
     /**

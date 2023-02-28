@@ -1,8 +1,8 @@
 <?php
 
-namespace XummForWoocomerce\XUMM\Request;
+namespace Xrpl\XummForWoocommerce\XUMM\Request;
 
-use XummForWoocomerce\XUMM\Traits\XummPaymentGatewayTrait;
+use Xrpl\XummForWoocommerce\XUMM\Traits\XummPaymentGatewayTrait;
 
 class ExchangeRateRequest
 {

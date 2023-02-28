@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
-namespace XummForWoocomerce\Tests\Unit\XUMM\Facade;
+namespace Xrpl\XummForWoocommerce\Tests\Unit\XUMM\Facade;
 
-use XummForWoocomerce\XUMM\Facade\Transaction;
+use Xrpl\XummForWoocommerce\XUMM\Facade\Transaction;
 
 class TransactionTest extends \PHPUnit\Framework\TestCase
 {
@@ -28,7 +28,7 @@ class TransactionTest extends \PHPUnit\Framework\TestCase
             'args' => [
             \WP_Mock\Functions::type('string'), \WP_Mock\Functions::type( 'array' )
         ], 'return' =>
-            \XummForWoocomerceTests\Responses\Transaction\USD::getResponse()
+            \Xrpl\XummForWoocommerce\Tests\Responses\Transaction\USD::getResponse()
         ]);
 
         \WP_Mock::userFunction( 'is_wp_error', [

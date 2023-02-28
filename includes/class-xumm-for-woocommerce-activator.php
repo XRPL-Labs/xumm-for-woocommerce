@@ -10,7 +10,7 @@
  * @subpackage Xumm_For_Woocommerce/includes
  */
 
-use XummForWoocomerce\XUMM\Facade\Notice;
+use Xrpl\XummForWoocommerce\XUMM\Facade\Notice;
 
 /**
  * Fired during plugin activation.

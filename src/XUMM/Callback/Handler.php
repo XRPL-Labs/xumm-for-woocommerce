@@ -1,9 +1,9 @@
 <?php
 
-namespace XummForWoocomerce\XUMM\Callback;
+namespace Xrpl\XummForWoocommerce\XUMM\Callback;
 
 use Xrpl\XummSdkPhp\Response\GetPayload\XummPayload;
-use XummForWoocomerce\Woocommerce\XummPaymentGateway;
+use Xrpl\XummForWoocommerce\Woocommerce\XummPaymentGateway;
 
 /**
  * Handler Class
@@ -12,7 +12,7 @@ use XummForWoocomerce\Woocommerce\XummPaymentGateway;
  * It also declares a method for handle request
  *
  * @since      1.0.0
- * @package    XummForWoocomerce
+ * @package    Xrpl\XummForWoocommerce
  * @subpackage XUMM\Callback
  * @author     Andrei R <mdxico@gmail.com>
  */

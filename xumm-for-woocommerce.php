@@ -73,7 +73,7 @@ register_deactivation_hook( __FILE__, 'deactivate_xumm_for_woocommerce' );
  * admin-specific hooks, and public-facing site hooks.
  */
 
-require plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
+require plugin_dir_path( __FILE__ ) . 'libraries/autoload.php';
 require plugin_dir_path( __FILE__ ) . 'includes/class-xumm-for-woocommerce.php';
 
 /**
