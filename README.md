@@ -39,4 +39,7 @@ $ composer make:tests
 $ composer build
 ```
 
-- Now you can zip folder and get ready into the wordpress installation.
+- Now the zip file will be prepared with the last commit hash like this: 
+```
+xumm-for-woocommerce-COMMIT-HASH.zip
+```
