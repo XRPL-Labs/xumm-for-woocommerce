@@ -68,21 +68,21 @@ Also you can see if the trustline button is enabled this means you need to click
 == Changelog ==
 = 1.0.0 =
 [IMPROVED] New organization proposal for the plugin
-[ADDED] Language files
-[ADDED] .editorconfig
-[ADDED] Composer for version management
-[ADDED] XUMM-SDK-PHP as composer requirements
 [IMPROVED] Admin actions like SignIn & SetTrustline
 [IMPROVED] Admin UI after submitting SignIn & SetTrustline
-[FIX] Currency and Issuers is now working
 [IMPROVED] Admin user flow
-[ADDED] Notice after plugin activation
-[ADDED] PHPUnit
-[ADDED] Pathfinding feature
 [IMPROVED] SignIn & Trustline page speedup
 [IMPROVED] JQuery / Ajax using less resources
-[FIX] Rendering form_fields after save on admin settings page
 [IMPROVED] Now we are using uniqid() instead of md5+microtime+substr
+[ADD] Language files
+[ADD] .editorconfig
+[ADD] Composer for version management
+[ADD] XUMM-SDK-PHP as composer requirements
+[ADD] Notice after plugin activation
+[ADD] PHPUnit
+[ADD] Pathfinding feature
+[FIX] Currency and Issuers is now working
+[FIX] Rendering form_fields after save on admin settings page
 
 = 0.5.1 =
 [FIX] Use the correct Amount key in txjson for using XRP as a currency
