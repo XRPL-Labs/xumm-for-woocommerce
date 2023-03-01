@@ -1,0 +1,7 @@
+/libraries/
+.DS_Store
+
+/.phpunit.cache/
+.phpunit.result.cache
+*:Zone.Identifier
+/*.zip

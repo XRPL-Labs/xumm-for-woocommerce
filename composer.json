@@ -1,0 +1,36 @@
+{
+    "name": "xrpl/xumm-for-woocomerce",
+    "description": "Accept XRP, EUR, USD, BTC & ETH, using a single plugin with the greatest XRP ledger client (wallet): XUMM!",
+    "type": "project",
+    "require": {
+        "xrpl/xumm-sdk-php": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "Xrpl\\XummForWoocommerce\\": "src/",
+            "Xrpl\\XummForWoocommerce\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+      "vendor-dir": "libraries"
+    },
+    "scripts": {
+      "make:tests": "phpunit -c phpunit.xml",
+      "build": [
+        "composer install --no-dev --no-scripts --optimize-autoloader",
+        "git archive --prefix=xumm-for-woocommerce/ --format=zip --output xumm-for-woocommerce-$(git rev-parse HEAD).zip $(git rev-parse --abbrev-ref HEAD)",
+        "mkdir xumm-for-woocommerce",
+        "cp -r libraries xumm-for-woocommerce/.",
+        "zip -r xumm-for-woocommerce-$(git rev-parse HEAD).zip xumm-for-woocommerce/libraries",
+        "rm -rf xumm-for-woocommerce"
+      ],
+      "post-install-cmd": [
+        "[ $COMPOSER_DEV_MODE -eq 0 ] || composer make:tests"
+      ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "10up/wp_mock": "^0.4.2",
+        "brain/monkey": "^2.6"
+    }
+}
