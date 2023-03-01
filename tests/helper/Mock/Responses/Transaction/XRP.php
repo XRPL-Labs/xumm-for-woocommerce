@@ -1,6 +1,6 @@
 <?php
 
-namespace Xrpl\XummForWoocommerce\Tests\Responses\Transaction;
+namespace Xrpl\XummForWoocommerce\Tests\helper\Mock\Responses\Transaction;
 
 class XRP
 {

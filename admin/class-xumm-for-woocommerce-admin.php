@@ -18,6 +18,8 @@ use Xrpl\XummSdkPhp\XummSdk;
 
 use Xrpl\XummForWoocommerce\XUMM\Callback\SignInHandler;
 use Xrpl\XummForWoocommerce\XUMM\Callback\TrustSetHandler;
+use Xrpl\XummForWoocommerce\XUMM\Exception\SignInException;
+use Xrpl\XummForWoocommerce\XUMM\Exception\TrustSetException;
 use Xrpl\XummForWoocommerce\XUMM\Facade\Notice;
 use Xrpl\XummForWoocommerce\XUMM\Traits\XummPaymentGatewayTrait;
 
@@ -213,17 +215,51 @@ class Xumm_For_Woocommerce_Admin
             $sdk = new XummSdk($context->api, $context->api_secret);
             $payload = $sdk->getPayloadByCustomId($xumm_id);
 
-            if (!empty($payload->payload)) {
+            if (!empty($payload->payload))
+            {
+                $type = '';
+                $message = '';
+
                 switch ($payload->payload->txType)
                 {
                     case 'SignIn':
-                        $handler = new SignInHandler($context, $payload);
-                        $handler->handle();
+
+                        try
+                        {
+                            $handler = new SignInHandler($context, $payload);
+                            $handler->handle();
+
+                            $type = 'success';
+                            $message = __('Sign In successfull please check address & test payment', 'xumm-for-woocommerce');
+
+                        } catch (SignInException $e)
+                        {
+                            $type = 'error';
+                            $message = $e->getMessage();
+                        }
+
+                        Notice::add_flash_notice($message, $type);
+
                         break;
 
                     case 'TrustSet':
-                        $handler = new TrustSetHandler($context, $payload);
-                        $handler->handle();
+
+                        try
+                        {
+                            $handler = new TrustSetHandler($context, $payload);
+                            $handler->handle();
+
+                            $type = 'success';
+                            $message = __('Trust Line Set successfull please check address & test payment', 'xumm-for-woocommerce');
+
+                        } catch (TrustSetException $e)
+                        {
+                            $type = 'error';
+                            $message = $e->getMessage();
+                        }
+
+                        Notice::add_flash_notice($message, $type);
+
                         break;
 
                     default:

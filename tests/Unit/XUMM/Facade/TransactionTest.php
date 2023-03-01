@@ -28,7 +28,7 @@ class TransactionTest extends \PHPUnit\Framework\TestCase
             'args' => [
             \WP_Mock\Functions::type('string'), \WP_Mock\Functions::type( 'array' )
         ], 'return' =>
-            \Xrpl\XummForWoocommerce\Tests\Responses\Transaction\USD::getResponse()
+            \Xrpl\XummForWoocommerce\Tests\helper\Mock\Responses\Transaction\USD::getResponse()
         ]);
 
         \WP_Mock::userFunction( 'is_wp_error', [

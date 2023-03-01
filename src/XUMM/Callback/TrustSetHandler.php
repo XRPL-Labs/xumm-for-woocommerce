@@ -2,7 +2,7 @@
 
 namespace Xrpl\XummForWoocommerce\XUMM\Callback;
 
-use Xrpl\XummForWoocommerce\XUMM\Facade\Notice;
+use Xrpl\XummForWoocommerce\XUMM\Exception\TrustSetException;
 
 /**
  * TrustSet Handler Class
@@ -34,10 +34,11 @@ class TrustSetHandler extends AbstractHandler
             $gateway->update_option('currency', $request['LimitAmount']['currency']);
             $gateway->update_option('issuer', $request['LimitAmount']['issuer']);
 
-            Notice::add_flash_notice(__('Trust Line Set successfull please check address & test payment', 'xumm-for-woocommerce'));
+
         } else
         {
-            Notice::add_flash_notice(__('Trust line cannot be set, please try again later', 'xumm-for-woocommerce'), 'error');
+            throw new TrustSetException;
+            // Notice::add_flash_notice(__('Trust line cannot be set, please try again later', 'xumm-for-woocommerce'), 'error');
         }
     }
 }

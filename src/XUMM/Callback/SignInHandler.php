@@ -2,7 +2,7 @@
 
 namespace Xrpl\XummForWoocommerce\XUMM\Callback;
 
-use Xrpl\XummForWoocommerce\XUMM\Facade\Notice;
+use Xrpl\XummForWoocommerce\XUMM\Exception\SignInException;
 
 /**
  * SignIn Handler Class
@@ -32,11 +32,10 @@ class SignInHandler extends AbstractHandler
             $gateway->update_option('destination', $account );
             $gateway->update_option('logged_in', true );
             $gateway->logged_in = true;
-
-            Notice::add_flash_notice(__('Sign In successfull please check address & test payment', 'xumm-for-woocommerce'));
         } else
         {
-            Notice::add_flash_notice(__('Signing cannot be completed, please try again later', 'xumm-for-woocommerce'), 'error');
+            throw new SignInException;
+            //throw new \Exception(__('Signing cannot be completed, please try again later', 'xumm-for-woocommerce'));
         }
     }
 }
