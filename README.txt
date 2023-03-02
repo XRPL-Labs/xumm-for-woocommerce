@@ -1,5 +1,5 @@
 === XUMM for WooCommerce ===
-Contributors: xumm, wietsewind
+Contributors: xumm, wietsewind, mdxico
 Donate link: https://xumm.dev/beta/test
 Tags: xumm, crypto, xrp, ledger, cryptocurrency
 Requires at least: 4.7
