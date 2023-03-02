@@ -3,9 +3,9 @@ Contributors: xumm, wietsewind
 Donate link: https://xumm.dev/beta/test
 Tags: xumm, crypto, xrp, ledger, cryptocurrency
 Requires at least: 4.7
-Tested up to: 5.5.3
+Tested up to: 6.1.1
 Stable tag: trunk
-Requires PHP: 8.2
+Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://xrpl-labs.com/static/documents/XRPL-Labs-Terms-of-Service-V1.pdf
 
@@ -36,7 +36,7 @@ Also you can see if the trustline button is enabled this means you need to click
 
 = Minimum Requirements =
 
-* PHP version 8.2 or greater
+* PHP version 8.1 or greater
 * WordPress 4.7 or greater
 * WooCommerce 2.2.0 or greater
 
