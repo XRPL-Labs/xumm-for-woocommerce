@@ -22,7 +22,7 @@ $context->form_fields = [
             'mainnet' => 'Main net',
             'testnet' => 'Test net',
         ),
-        'default'     => 'testnet',
+        'default'     => 'mainnet',
         'desc_tip'    => true
     ],
     'api' => array(

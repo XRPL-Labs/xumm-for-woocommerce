@@ -65,7 +65,7 @@ class XummPaymentGateway extends \WC_Payment_Gateway
         $this->api_secret = $this->get_option('api_secret');
         $this->currencies = $this->get_option('currencies');
         $this->issuers = $this->get_option('issuers');
-        $this->xrpl_network = $this->get_option('xrpl_network', 'testnet');
+        $this->xrpl_network = $this->get_option('xrpl_network', 'mainnet');
 
         $this->init_form_fields();
 		$this->init_settings();
