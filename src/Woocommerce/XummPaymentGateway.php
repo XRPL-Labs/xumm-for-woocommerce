@@ -47,7 +47,7 @@ class XummPaymentGateway extends \WC_Payment_Gateway
         $this->destination = $this->get_option('destination');
         $this->supports = ['products'];
 
-        $this->logged_in = $this->get_option('logged_in');
+        $this->logged_in = $this->get_option('logged_in', !empty($this->destination) ? true : false);
 
         if (empty($this->destination) && $this->logged_in)
         {

@@ -379,7 +379,7 @@ class Xumm_For_Woocommerce_Admin
         {
             if (current_user_can('activate_plugins') && current_user_can('manage_options'))
             {
-                $xrpl_network = $context->get_option('xrpl_network');
+                $xrpl_network = $context->get_option('xrpl_network', 'mainnet');
                 $network = $xrpl_network == 'mainnet' ? 'Main net' : 'Test net';
                 $styles = $xrpl_network == 'testnet' ? 'opacity: .20' : '';
 
