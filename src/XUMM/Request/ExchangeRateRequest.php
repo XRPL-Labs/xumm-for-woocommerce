@@ -8,8 +8,9 @@ class ExchangeRateRequest
 {
     use XummPaymentGatewayTrait;
 
-    public function getExchangeRates($storeCurrency, $orderTotal)
+    public function getExchangeRates(string $storeCurrency, mixed $orderTotal) : array
     {
+        $xr = null;
         $context = $this->getXummPaymentGateway();
 
         $exchangeRatesUrl = 'https://data.ripple.com/v2/exchange_rates/';
@@ -34,7 +35,7 @@ class ExchangeRateRequest
 
         if (!is_null($apiCall)) {
             $response = \wp_remote_get($apiCall);
-            $body = json_decode( $response['body'], true );
+            $body = (array) json_decode($response['body'], true);
 
             preg_match('@^(?:https://)?([^/]+)@i', $apiCall, $matches);
             $host = $matches[1];

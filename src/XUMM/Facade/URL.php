@@ -7,7 +7,7 @@ use Xrpl\XummForWoocommerce\Woocommerce\XummPaymentGateway;
 
 class URL
 {
-    public static function getReturnURL($custom_identifier, $order, XummPaymentGateway $xummPaymentGateway)
+    public static function getReturnURL(string $custom_identifier, object $order, XummPaymentGateway $xummPaymentGateway) : string
     {
         $explorer = $xummPaymentGateway->explorer;
 

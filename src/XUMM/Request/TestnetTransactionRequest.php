@@ -33,9 +33,10 @@ class TestnetTransactionRequest
             throw new TransactionException;
         }
 
-        $txbody = json_decode($tx['body'], true);
+        $txbody = (array) json_decode($tx['body'], true);
+        $result = (array) $txbody['result'];
 
-        $response = new XrplTransaction($txid, Config::TESTNET_XRPL_WS_ENDPOINT, $txbody['result']);
+        $response = new XrplTransaction($txid, Config::TESTNET_XRPL_WS_ENDPOINT, $result);
 
         return $response;
     }

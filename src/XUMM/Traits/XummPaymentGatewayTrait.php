@@ -15,7 +15,8 @@ trait XummPaymentGatewayTrait
      */
     protected $xummGateway = null;
 
-    public function setXummPaymentGateway(XummPaymentGateway $xummGateway) {
+    public function setXummPaymentGateway(XummPaymentGateway $xummGateway) : void
+    {
         $this->xummGateway = $xummGateway;
     }
 

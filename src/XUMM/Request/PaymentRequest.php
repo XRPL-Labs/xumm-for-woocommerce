@@ -13,7 +13,7 @@ class PaymentRequest
 {
     use XummPaymentGatewayTrait;
 
-    public function processPayment($orderId)
+    public function processPayment(string $orderId) : string
     {
         $context = $this->getXummPaymentGateway();
 
