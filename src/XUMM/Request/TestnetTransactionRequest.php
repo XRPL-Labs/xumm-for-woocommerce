@@ -2,11 +2,13 @@
 
 namespace Xrpl\XummForWoocommerce\XUMM\Request;
 
+use Xrpl\XummForWoocommerce\Constants\Config;
 use Xrpl\XummForWoocommerce\XUMM\Exception\TransactionException;
+use Xrpl\XummSdkPhp\Response\Transaction\XrplTransaction;
 
 class TestnetTransactionRequest
 {
-    public static function doRequest(string $txid) : array
+    public static function doRequest(string $txid) : XrplTransaction
     {
         $json = json_encode([
             'method' => 'tx',
@@ -18,19 +20,23 @@ class TestnetTransactionRequest
             ]
         ]);
 
-        $tx = wp_remote_post('https://s.altnet.rippletest.net:51234', array(
+        $tx = wp_remote_post('https://s.altnet.rippletest.net:51234', [
             'method'    => 'POST',
             'headers'   => array(
                 'Content-Type' => 'application/json',
             ),
             'body' => $json
-        ));
+        ]);
 
         if (is_wp_error( $tx ))
         {
             throw new TransactionException;
         }
 
-        return json_decode($tx['body'], true);
+        $txbody = json_decode($tx['body'], true);
+
+        $response = new XrplTransaction($txid, Config::TESTNET_XRPL_WS_ENDPOINT, $txbody['result']);
+
+        return $response;
     }
 }

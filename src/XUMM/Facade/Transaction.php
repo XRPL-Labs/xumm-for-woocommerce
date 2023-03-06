@@ -3,15 +3,16 @@
 namespace Xrpl\XummForWoocommerce\XUMM\Facade;
 
 use Xrpl\XummForWoocommerce\Constants\Config;
-use Xrpl\XummForWoocommerce\XUMM\Exception\TransactionException;
 use Xrpl\XummForWoocommerce\XUMM\Request\MainnetTransactionRequest;
 use Xrpl\XummForWoocommerce\XUMM\Request\TestnetTransactionRequest;
+use Xrpl\XummSdkPhp\Response\Transaction\XrplTransaction;
 
 class Transaction
 {
-    public static function getTransactionDetails($txid) : array
+    public static function getTransactionDetails($txid) : XrplTransaction
     {
-        if (Config::is_mainnet()) {
+        if (Config::is_mainnet())
+        {
             $response = MainnetTransactionRequest::doRequest($txid);
         } else {
             $response = TestnetTransactionRequest::doRequest($txid);

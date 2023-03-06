@@ -6,7 +6,7 @@
  * Description: Make XRP payments using XUMM
  * Author:      XUMM
  * Author URI:  https://xumm.app/
- * Version:     1.0.1
+ * Version:     1.0.2
  * License:     GPL v2 or later
  * License URI: https://xrpl-labs.com/static/documents/XRPL-Labs-Terms-of-Service-V1.pdf
  */
@@ -27,7 +27,7 @@
  * Plugin Name:       XUMM payments for WooCommerce
  * Plugin URI:        https://github.com/XRPL-Labs/xumm-for-woocommerce
  * Description:       Make XRP payments using XUMM
- * Version:           1.0.1
+ * Version:           1.0.2
  * Author:            XUMM
  * Author URI:        https://xumm.app/
  * License:           GPL v2 or later
@@ -45,7 +45,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
  */
-define( 'XUMM_FOR_WOOCOMMERCE_VERSION', '1.0.1' );
+define( 'XUMM_FOR_WOOCOMMERCE_VERSION', '1.0.2' );
 
 /**
  * The code that runs during plugin activation.
