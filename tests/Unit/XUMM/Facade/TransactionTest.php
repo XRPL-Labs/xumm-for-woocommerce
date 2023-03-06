@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace Xrpl\XummForWoocommerce\Tests\Unit\XUMM\Facade;
 
+use MainnetTransactionRequest;
 use Xrpl\XummForWoocommerce\XUMM\Facade\Transaction;
 
 class TransactionTest extends \PHPUnit\Framework\TestCase
@@ -18,6 +19,14 @@ class TransactionTest extends \PHPUnit\Framework\TestCase
 		\Mockery::close();
 		parent::tearDown();
 	}
+
+    // /**
+    //  * @test
+    //  */
+    // public function getTransactionDetailsMainnet()
+    // {
+
+    // }
 
     /**
      * @test

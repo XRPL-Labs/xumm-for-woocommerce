@@ -30,7 +30,7 @@ class URL
                 throw new \Exception(__('Payment failed or cancelled, feel free to try again.', 'xumm-for-woocommerce'));
             }
 
-            $delivered_amount = $txbody['result']['meta']['delivered_amount'];
+            $delivered_amount = $txbody['transaction']['meta']['delivered_amount'];
 
             Transaction::checkDeliveredAmount($delivered_amount, $order, $xummPaymentGateway->issuers, $txid, $explorer);
 
