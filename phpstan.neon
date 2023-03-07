@@ -1,0 +1,13 @@
+parameters:
+    scanFiles:
+        - %rootDir%/../../php-stubs/wordpress-tests-stubs/wordpress-tests-stubs.php
+        - %rootDir%/../../../xumm-payments-for-woocommerce.php
+    scanDirectories:
+        - %rootDir%/../../../../../../wp-content/plugins/woocommerce/
+        - %rootDir%/../../../../../../wp-includes/
+    bootstrapFiles:
+        - phpstan-bootstrap.php
+    level: 6
+    paths:
+        - src
+        # - tests
