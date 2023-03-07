@@ -19,11 +19,11 @@
       "make:check": "phpstan",
       "build": [
         "composer install --no-dev --no-scripts --optimize-autoloader",
-        "git archive --prefix=xumm-for-woocommerce/ --format=zip --output xumm-for-woocommerce-$(git rev-parse HEAD).zip $(git rev-parse --abbrev-ref HEAD)",
-        "mkdir xumm-for-woocommerce",
-        "cp -r libraries xumm-for-woocommerce/.",
-        "zip -r xumm-for-woocommerce-$(git rev-parse HEAD).zip xumm-for-woocommerce/libraries",
-        "rm -rf xumm-for-woocommerce"
+        "git archive --prefix=xumm-payments-for-woocommerce/ --format=zip --output xumm-payments-for-woocommerce-$(git rev-parse HEAD).zip $(git rev-parse --abbrev-ref HEAD)",
+        "mkdir xumm-payments-for-woocommerce",
+        "cp -r libraries xumm-payments-for-woocommerce/.",
+        "zip -r xumm-payments-for-woocommerce-$(git rev-parse HEAD).zip xumm-payments-for-woocommerce/libraries",
+        "rm -rf xumm-payments-for-woocommerce"
       ],
       "post-install-cmd": [
         "[ $COMPOSER_DEV_MODE -eq 0 ] || composer make:tests"

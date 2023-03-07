@@ -2,9 +2,9 @@
 
 namespace Xrpl\XummForWoocommerce\Woocommerce;
 
-use Xrpl\XummForWoocommerce\XUMM\Facade\Notice;
-use Xrpl\XummForWoocommerce\XUMM\Facade\URL;
-use Xrpl\XummForWoocommerce\XUMM\Request\PaymentRequest;
+use Xrpl\XummForWoocommerce\Xumm\Facade\Notice;
+use Xrpl\XummForWoocommerce\Xumm\Facade\URL;
+use Xrpl\XummForWoocommerce\Xumm\Request\PaymentRequest;
 
 class XummPaymentGateway extends \WC_Payment_Gateway
 {

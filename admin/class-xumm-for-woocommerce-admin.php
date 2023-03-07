@@ -16,12 +16,12 @@ use Xrpl\XummSdkPhp\Payload\Payload;
 use Xrpl\XummSdkPhp\Payload\ReturnUrl;
 use Xrpl\XummSdkPhp\XummSdk;
 
-use Xrpl\XummForWoocommerce\XUMM\Callback\SignInHandler;
-use Xrpl\XummForWoocommerce\XUMM\Callback\TrustSetHandler;
-use Xrpl\XummForWoocommerce\XUMM\Exception\SignInException;
-use Xrpl\XummForWoocommerce\XUMM\Exception\TrustSetException;
-use Xrpl\XummForWoocommerce\XUMM\Facade\Notice;
-use Xrpl\XummForWoocommerce\XUMM\Traits\XummPaymentGatewayTrait;
+use Xrpl\XummForWoocommerce\Xumm\Callback\SignInHandler;
+use Xrpl\XummForWoocommerce\Xumm\Callback\TrustSetHandler;
+use Xrpl\XummForWoocommerce\Xumm\Exception\SignInException;
+use Xrpl\XummForWoocommerce\Xumm\Exception\TrustSetException;
+use Xrpl\XummForWoocommerce\Xumm\Facade\Notice;
+use Xrpl\XummForWoocommerce\Xumm\Traits\XummPaymentGatewayTrait;
 
 /**
  * The admin-specific functionality of the plugin.
