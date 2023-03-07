@@ -38,7 +38,6 @@ class TrustSetHandler extends AbstractHandler
         } else
         {
             throw new TrustSetException;
-            // Notice::add_flash_notice(__('Trust line cannot be set, please try again later', 'xumm-for-woocommerce'), 'error');
         }
     }
 }

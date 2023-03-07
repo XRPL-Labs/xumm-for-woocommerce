@@ -4,7 +4,7 @@ namespace Xrpl\XummForWoocommerce\Tests\helper\Mock;
 
 final class WordpressMock
 {
-    public static function create()
+    public static function create() : void
     {
         \WP_Mock::userFunction( 'get_transient', [
             'return' => []

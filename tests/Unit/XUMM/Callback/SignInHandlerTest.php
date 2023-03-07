@@ -26,7 +26,7 @@ class SignInHandlerTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function handleTest()
+    public function handleTest() : void
     {
         $this->expectException(SignInException::class);
 

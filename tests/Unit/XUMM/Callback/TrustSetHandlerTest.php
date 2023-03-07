@@ -26,7 +26,7 @@ class TrustSetHandlerTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function handleTest()
+    public function handleTest() : void
     {
         $this->expectException(TrustSetException::class);
 

@@ -20,7 +20,7 @@ class PaymentRequest
     {
         $context = $this->getXummPaymentGateway();
 
-        $order = wc_get_order( $orderId );
+        $order = wc_get_order($orderId);
         $storeCurrency = get_woocommerce_currency();
 
         $identifier = strtoupper(uniqid($orderId . '-'));
