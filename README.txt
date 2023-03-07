@@ -67,7 +67,9 @@ Also you can see if the trustline button is enabled this means you need to click
 
 == Changelog ==
 = 1.0.2 =
-[FIX] Fixed payload check after payment
+[IMPROVED] Code cleanup
+[FIX] Plugin compatibility with wordpress store
+[FIX] Payload check after successful payment
 
 = 1.0.1 =
 [FIX] Fixed upgrade issues from older versions
