@@ -4,7 +4,7 @@ namespace Xrpl\XummForWoocommerce\Tests\helper\Mock\Responses\Transaction;
 
 class XRP
 {
-    public static function getResponse() : object
+    public static function getResponse() : array
     {
         $object = new \stdClass();
         $object->body = '{
