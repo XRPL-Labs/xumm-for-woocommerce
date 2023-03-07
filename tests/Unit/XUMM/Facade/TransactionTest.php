@@ -41,7 +41,7 @@ class TransactionTest extends \PHPUnit\Framework\TestCase
 
         $response = Transaction::getTransactionDetails($txid);
 
-        $this->assertEquals($response['result']['status'], 'success');
+        $this->assertEquals($response->transaction['meta']['TransactionResult'], 'tesSUCCESS');
     }
 
     /**

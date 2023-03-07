@@ -3,34 +3,22 @@
 namespace Xrpl\XummForWoocommerce\XUMM\Facade;
 
 use Xrpl\XummForWoocommerce\Constants\Config;
+use Xrpl\XummForWoocommerce\XUMM\Request\MainnetTransactionRequest;
+use Xrpl\XummForWoocommerce\XUMM\Request\TestnetTransactionRequest;
+use Xrpl\XummSdkPhp\Response\Transaction\XrplTransaction;
 
 class Transaction
 {
-    public static function getTransactionDetails($txid)
+    public static function getTransactionDetails($txid) : XrplTransaction
     {
-        $json = json_encode([
-            'method' => 'tx',
-            'params' => [
-                [
-                    'transaction' => $txid,
-                    'binary' => false
-                ]
-            ]
-        ]);
-
-        $tx = \wp_remote_post(Config::get_xrpl_http_addr(), array(
-            'method'    => 'POST',
-            'headers'   => array(
-                'Content-Type' => 'application/json',
-            ),
-            'body' => $json
-        ));
-
-        if(\is_wp_error( $tx )) {
-            throw new \Exception(__('Connection error getting payload details from the XUMM platform.', 'xumm-for-woocommerce'));
+        if (Config::is_mainnet())
+        {
+            $response = MainnetTransactionRequest::doRequest($txid);
+        } else {
+            $response = TestnetTransactionRequest::doRequest($txid);
         }
 
-        return json_decode( $tx['body'], true );
+        return $response;
     }
 
     public static function checkDeliveredAmount($delivered_amount, $order, $issuers, $txid, $explorer)
