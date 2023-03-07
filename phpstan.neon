@@ -1,7 +1,7 @@
 parameters:
     scanFiles:
         - %rootDir%/../../php-stubs/wordpress-tests-stubs/wordpress-tests-stubs.php
-        - %rootDir%/../../../xumm-for-woocommerce.php
+        - %rootDir%/../../../xumm-payments-for-woocommerce.php
     scanDirectories:
         - %rootDir%/../../../../../../wp-content/plugins/woocommerce/
         - %rootDir%/../../../../../../wp-includes/
