@@ -2,13 +2,18 @@
 
 namespace Xrpl\XummForWoocommerce\XUMM\Request;
 
+use Xrpl\XummForWoocommerce\XUMM\Response\ExchangeRateResponse;
 use Xrpl\XummForWoocommerce\XUMM\Traits\XummPaymentGatewayTrait;
 
 class ExchangeRateRequest
 {
     use XummPaymentGatewayTrait;
 
-    public function getExchangeRates(string $storeCurrency, mixed $orderTotal) : array
+    /**
+     * @param string $storeCurrency
+     * @param mixed $orderTotal
+     */
+    public function getExchangeRates(string $storeCurrency, mixed $orderTotal) : ExchangeRateResponse
     {
         $xr = null;
         $context = $this->getXummPaymentGateway();
@@ -34,7 +39,7 @@ class ExchangeRateRequest
         }
 
         if (!is_null($apiCall)) {
-            $response = \wp_remote_get($apiCall);
+            $response = wp_remote_get($apiCall);
             $body = (array) json_decode($response['body'], true);
 
             preg_match('@^(?:https://)?([^/]+)@i', $apiCall, $matches);
@@ -57,6 +62,6 @@ class ExchangeRateRequest
             $totalSum = $orderTotal;
         }
 
-        return ['totalSum' => $totalSum, 'xr' => $xr];
+        return new ExchangeRateResponse($totalSum, $xr);
     }
 }

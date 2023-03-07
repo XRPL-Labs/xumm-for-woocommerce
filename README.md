@@ -32,6 +32,11 @@ $ composer install
 $ composer make:tests
 ```
 
+- You can use phpstan to find bugs
+```sh
+$ composer make:check
+```
+
 ### Building package for production
 
 - Use this command to prepare the package:

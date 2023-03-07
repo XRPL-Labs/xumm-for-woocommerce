@@ -21,7 +21,14 @@ class Transaction
         return $response;
     }
 
-    public static function checkDeliveredAmount(mixed $delivered_amount, \WC_Order $order, string $issuers, string $txid, string $explorer) : void
+    /**
+     * @param mixed $delivered_amount
+     * @param bool|\WC_Order|\WC_Order_Refund $order
+     * @param string $issuers
+     * @param string $txid
+     * @param string $explorer
+     */
+    public static function checkDeliveredAmount(mixed $delivered_amount, mixed $order, string $issuers, string $txid, string $explorer) : void
     {
         $total = (double) $order->get_total();
 

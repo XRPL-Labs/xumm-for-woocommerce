@@ -13,7 +13,10 @@ class PaymentRequest
 {
     use XummPaymentGatewayTrait;
 
-    public function processPayment(string $orderId) : string
+    /**
+     * @param mixed $orderId
+     */
+    public function processPayment(mixed $orderId) : string
     {
         $context = $this->getXummPaymentGateway();
 
@@ -26,8 +29,8 @@ class PaymentRequest
         $exchangeRateRequest->setXummPaymentGateway($context);
         $exchangeRates = $exchangeRateRequest->getExchangeRates($storeCurrency, $order->get_total());
 
-        $totalSum = round($exchangeRates['totalSum'], 6);
-        $xr = $exchangeRates['xr'];
+        $totalSum = round($exchangeRates->totalSum, 6);
+        $xr = $exchangeRates->xr;
 
         $query = [
             'wc-api' => 'XUMM',

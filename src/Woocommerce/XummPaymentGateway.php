@@ -8,34 +8,69 @@ use Xrpl\XummForWoocommerce\XUMM\Request\PaymentRequest;
 
 class XummPaymentGateway extends \WC_Payment_Gateway
 {
-    private static $instance = null;
+    /**
+     * @var self|null $instance
+     */
+    protected static self|null $instance = null;
 
-    public $endpoint = 'https://xumm.app/api/v1/platform/';
-
-    public $availableCurrencies = [
+    /**
+     * @var array<string, string> $availableCurrencies
+     */
+    public array $availableCurrencies = [
         'XRP' => 'XRP',
         'USD' => 'USD',
         'EUR' => 'EUR'
     ];
 
-    public $currencies;
-    public $enabled;
-    public $id;
-    public $has_fields;
-    public $method_title;
-    public $method_description;
-    public $supports;
-    public $title;
-    public $description;
-    public $destination;
-    public $issuer;
-    public $explorer;
-    public $api;
-    public $api_secret;
-    public $issuers;
-    public $logged_in;
-    public $currency;
-    public $xrpl_network;
+    /**
+     * @var string $currencies
+     */
+    public string $currencies;
+
+    /**
+     * @var string $destination
+     */
+    public string $destination;
+
+    /**
+     * @var string $issuer
+     */
+    public string $issuer;
+
+    /**
+     * @var string $explorer
+     */
+    public string $explorer;
+
+    /**
+     * @var string $api
+     */
+    public string $api;
+
+    /**
+     * @var string $api_secret
+     */
+    public string $api_secret;
+
+    /**
+     * @var string $issuers
+     */
+    public string $issuers;
+
+    /**
+     * @var bool $logged_in
+     */
+    public bool $logged_in;
+
+    /**
+     * @var string $currency
+     */
+    public string $currency;
+
+    /**
+     * @var string $xrpl_network
+     */
+    public string $xrpl_network;
 
     public function __construct()
     {
@@ -47,7 +82,7 @@ class XummPaymentGateway extends \WC_Payment_Gateway
         $this->destination = $this->get_option('destination');
         $this->supports = ['products'];
 
-        $this->logged_in = $this->get_option('logged_in', !empty($this->destination) ? true : false);
+        $this->logged_in = (bool) $this->get_option('logged_in', !empty($this->destination) ? true : false);
 
         if (empty($this->destination) && $this->logged_in)
         {
@@ -55,7 +90,7 @@ class XummPaymentGateway extends \WC_Payment_Gateway
             $this->update_option('logged_in', false);
         }
 
-        $this->enabled = empty($this->logged_in) ? false : $this->get_option('enabled');
+        $this->enabled = empty($this->logged_in) ? 'false' : $this->get_option('enabled');
         $this->title = $this->get_option('title');
         $this->description = $this->get_option('description');
         $this->currency = $this->get_option('currency');
@@ -77,22 +112,25 @@ class XummPaymentGateway extends \WC_Payment_Gateway
         add_action( 'woocommerce_xumm_deactivate', [$this, 'deactivate']);
     }
 
-    public function deactivate()
+    public function deactivate() : void
     {
         delete_option('woocommerce_xumm_settings');
     }
 
-    public function init_form_fields()
+    public function init_form_fields() : void
     {
         apply_filters('xumm_init_form_fields', $this);
     }
 
-    public function admin_options()
+    public function admin_options() : void
     {
         apply_filters('xumm_display_plugin_options', $this);
     }
 
-    public function process_payment($order_id)
+    /**
+     * @return array<string, string>
+     */
+    public function process_payment(mixed $order_id) : array
     {
         $paymentRequest = new PaymentRequest();
         $paymentRequest->setXummPaymentGateway($this);
@@ -113,11 +151,11 @@ class XummPaymentGateway extends \WC_Payment_Gateway
         } catch (\Exception $e)
         {
             \wc_add_notice($e->getMessage(), 'error');
-            return;
+            return [];
         }
     }
 
-    public function callback_handler()
+    public function callback_handler() : void
     {
         global $wp_query;
 
@@ -131,7 +169,7 @@ class XummPaymentGateway extends \WC_Payment_Gateway
             {
                 $wp_query->set_404();
                 status_header( 404 );
-                get_template_part( 404 );
+                get_template_part('404');
                 exit();
             }
 
@@ -179,17 +217,17 @@ class XummPaymentGateway extends \WC_Payment_Gateway
         }
     }
 
-    public static function get_instance()
+    public static function get_instance() : self
     {
         if (self::$instance == null)
         {
-            self::$instance = new XummPaymentGateway();
+            self::$instance = new XummPaymentGateway;
         }
 
         return self::$instance;
     }
 
-    public function settings_saved()
+    public function settings_saved() : void
     {
         Notice::add_flash_notice(__('Your settings have been saved.', 'woocommerce'));
         wp_safe_redirect(admin_url('admin.php?page=wc-settings&tab=checkout&section=xumm'));

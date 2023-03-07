@@ -16,6 +16,7 @@
     },
     "scripts": {
       "make:tests": "phpunit -c phpunit.xml",
+      "make:check": "phpstan",
       "build": [
         "composer install --no-dev --no-scripts --optimize-autoloader",
         "git archive --prefix=xumm-for-woocommerce/ --format=zip --output xumm-for-woocommerce-$(git rev-parse HEAD).zip $(git rev-parse --abbrev-ref HEAD)",
