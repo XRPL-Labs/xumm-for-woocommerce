@@ -1,8 +1,9 @@
 {
-    "name": "xrpl/xumm-for-woocomerce",
+    "name": "xrpl/xumm-payments-for-woocommerce",
     "description": "Accept XRP, EUR, USD, BTC & ETH, using a single plugin with the greatest XRP ledger client (wallet): XUMM!",
     "type": "project",
     "require": {
+        "php": "^8.1.0",
         "xrpl/xumm-sdk-php": "dev-main"
     },
     "autoload": {
@@ -11,6 +12,19 @@
             "Xrpl\\XummForWoocommerce\\Tests\\": "tests/"
         }
     },
+    "authors": [
+        {
+            "name": "Andrei Rosseti",
+            "email": "mdxico@gmail.com"
+        },
+        {
+          "name": "Koen Paas",
+          "email": "koen@xrpl-labs.com"
+        }
+    ],
+    "keywords": ["xrp","ripple","xrpl","xumm"],
+    "homepage": "https://xumm.readme.io/",
+    "license": "MIT",
     "config": {
       "vendor-dir": "libraries"
     },
