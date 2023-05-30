@@ -20,6 +20,10 @@
         {
           "name": "Koen Paas",
           "email": "koen@xrpl-labs.com"
+        },
+        {
+          "name": "Wietse Wind",
+          "email": "w@xrpl-labs.com"
         }
     ],
     "keywords": ["xrp","ripple","xrpl","xumm"],
