@@ -176,6 +176,8 @@ class Xumm_For_Woocommerce {
         $this->loader->add_action( 'admin_notices', $plugin_admin, 'admin_notices', 12, 1);
         $this->loader->add_action( 'admin_bar_menu', $plugin_admin, 'show_indicator_toolbar', 500, 1);
 
+        $this->loader->add_action( 'admin_menu', $plugin_admin, 'add_woocommerce_menu_link', 55, 1);
+
         $this->loader->add_filter( 'plugin_action_links_xumm-payments-for-woocommerce/xumm-payments-for-woocommerce.php', $plugin_admin, 'settings_link', 10, 1);
 
         $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
