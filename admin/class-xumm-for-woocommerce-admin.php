@@ -397,4 +397,17 @@ class Xumm_For_Woocommerce_Admin
             }
         }
 	}
+
+    /**
+	 * Add submenu link to Woocommerce admin menu
+	 */
+    public function add_woocommerce_menu_link() {
+        add_submenu_page(
+            'woocommerce',
+            __('XUMM', 'woocommerce-xumm'),
+            __('XUMM', 'woocommerce-xumm'),
+            'manage_woocommerce',
+            admin_url('admin.php?page=wc-settings&tab=checkout&section=xumm'),
+            null );
+    }
 }
