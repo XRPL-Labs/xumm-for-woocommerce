@@ -35,6 +35,7 @@ final class SignInPayloadMock
                 true,
                 false,
                 false,
+                false
             ),
             new Application(
                 'cool app',

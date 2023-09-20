@@ -22,6 +22,7 @@ use Xrpl\XummForWoocommerce\Xumm\Exception\SignInException;
 use Xrpl\XummForWoocommerce\Xumm\Exception\TrustSetException;
 use Xrpl\XummForWoocommerce\Xumm\Facade\Notice;
 use Xrpl\XummForWoocommerce\Xumm\Traits\XummPaymentGatewayTrait;
+use Xrpl\XummForWoocommerce\Woocommerce\XummPaymentGateway;
 
 /**
  * The admin-specific functionality of the plugin.
@@ -409,5 +410,13 @@ class Xumm_For_Woocommerce_Admin
             'manage_woocommerce',
             admin_url('admin.php?page=wc-settings&tab=checkout&section=xumm'),
             null );
+    }
+
+    public function load_plugin_admin()
+    {
+        if (class_exists('WooCommerce')) {
+            $this->setXummPaymentGateway(XummPaymentGateway::get_instance());
+            add_filter('admin_init', [$this, 'xumm_callback'], 10, 1);
+        }
     }
 }

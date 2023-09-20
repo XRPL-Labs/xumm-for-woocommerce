@@ -105,10 +105,9 @@ class XummPaymentGateway extends \WC_Payment_Gateway
         $this->init_form_fields();
 		$this->init_settings();
 
-        add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, [ $this, 'process_admin_options' ]);
-        add_action( 'woocommerce_settings_saved', [ $this, 'settings_saved' ]);
+        add_action( 'woocommerce_update_options_payment_gateways_xumm', [ $this, 'process_admin_options' ]);
 
-        add_action( 'woocommerce_api_'. $this->id, array( $this, 'callback_handler' ));
+        add_action( 'woocommerce_api_xumm', [$this, 'callback_handler']);
         add_action( 'woocommerce_xumm_deactivate', [$this, 'deactivate']);
     }
 
@@ -225,12 +224,5 @@ class XummPaymentGateway extends \WC_Payment_Gateway
         }
 
         return self::$instance;
-    }
-
-    public function settings_saved() : void
-    {
-        Notice::add_flash_notice(__('Your settings have been saved.', 'woocommerce'));
-        wp_safe_redirect(admin_url('admin.php?page=wc-settings&tab=checkout&section=xumm'));
-        exit;
     }
 }

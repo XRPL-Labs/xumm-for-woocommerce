@@ -35,6 +35,7 @@ final class TrustSetPayloadMock
                 true,
                 false,
                 false,
+                false
             ),
             new Application(
                 'cool app',
