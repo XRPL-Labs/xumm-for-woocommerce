@@ -22,6 +22,8 @@ class TestnetTransactionRequest
 
         $tx = wp_remote_post('https://s.altnet.rippletest.net:51234', [
             'method'    => 'POST',
+            'sslverify' => false,
+            'timeout'   => 60,
             'headers'   => array(
                 'Content-Type' => 'application/json',
             ),

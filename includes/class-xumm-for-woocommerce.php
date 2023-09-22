@@ -167,11 +167,8 @@ class Xumm_For_Woocommerce {
     {
         $plugin_admin = new Xumm_For_Woocommerce_Admin( $this->get_plugin_name(), $this->get_version() );
 
-        if ($this->getXummPaymentGateway())
-        {
-            $plugin_admin->setXummPaymentGateway($this->getXummPaymentGateway());
-            $this->loader->add_filter('admin_init', $plugin_admin, 'xumm_callback', 10, 1);
-        }
+
+	$this->loader->add_action('plugins_loaded', $plugin_admin, 'load_plugin_admin');
 
         $this->loader->add_action( 'admin_notices', $plugin_admin, 'admin_notices', 12, 1);
         $this->loader->add_action( 'admin_bar_menu', $plugin_admin, 'show_indicator_toolbar', 500, 1);
