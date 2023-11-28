@@ -36,7 +36,7 @@ Also you can see if the trustline button is enabled this means you need to click
 
 = Minimum Requirements =
 
-* PHP version 8.1 or greater
+* PHP version 8.2 or greater
 * WordPress 4.7 or greater
 * WooCommerce 2.2.0 or greater
 
