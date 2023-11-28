@@ -3,9 +3,9 @@ Contributors: xumm, wietsewind, andreirosseti
 Donate link: https://xumm.dev/beta/test
 Tags: xumm, crypto, xrp, ledger, cryptocurrency
 Requires at least: 4.7
-Tested up to: 6.1.1
+Tested up to: 6.4.1
 Stable tag: trunk
-Requires PHP: 8.1
+Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://xrpl-labs.com/static/documents/XRPL-Labs-Terms-of-Service-V1.pdf
 
