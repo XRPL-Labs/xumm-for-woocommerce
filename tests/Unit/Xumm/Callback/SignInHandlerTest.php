@@ -1,5 +1,5 @@
 <?php
-// declare(strict_types=1);
+
 namespace Xrpl\XummForWoocommerce\Tests\Unit\Xumm\Callback;
 
 use Xrpl\XummForWoocommerce\Tests\Helper\Mock\SignInPayloadMock;
@@ -13,16 +13,16 @@ final class SignInHandlerTest extends TestCase
 {
     public function setUp() : void
     {
-		parent::setUp();
-		\WP_Mock::setUp();
-	}
+        parent::setUp();
+        \WP_Mock::setUp();
+    }
 
-	public function tearDown() : void
+    public function tearDown() : void
     {
-		\WP_Mock::tearDown();
-		\Mockery::close();
-		parent::tearDown();
-	}
+        \WP_Mock::tearDown();
+        \Mockery::close();
+        parent::tearDown();
+    }
 
     /**
      * @test

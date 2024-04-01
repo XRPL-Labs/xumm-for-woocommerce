@@ -35,7 +35,6 @@ class SignInHandler extends AbstractHandler
         } else
         {
             throw new SignInException;
-            //throw new \Exception(__('Signing cannot be completed, please try again later', 'xumm-for-woocommerce'));
         }
     }
 }

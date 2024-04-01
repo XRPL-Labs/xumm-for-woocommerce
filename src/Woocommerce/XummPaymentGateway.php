@@ -2,6 +2,7 @@
 
 namespace Xrpl\XummForWoocommerce\Woocommerce;
 
+use Xrpl\XummForWoocommerce\Xumm\Exception\XummErrorException;
 use Xrpl\XummForWoocommerce\Xumm\Facade\Notice;
 use Xrpl\XummForWoocommerce\Xumm\Facade\URL;
 use Xrpl\XummForWoocommerce\Xumm\Request\PaymentRequest;
@@ -78,7 +79,8 @@ class XummPaymentGateway extends \WC_Payment_Gateway
         $this->icon = \xumm_plugin_url() . 'admin/public/images/label.svg';
         $this->has_fields = false;
         $this->method_title = __("Accept XUMM payments", "xumm-for-woocommerce");
-        $this->method_description = __("Receive any supported currency into your XRP account using XUMM", "xumm-for-woocommerce");
+        $this->method_description = __("Receive any supported currency into your XRP' .
+        ' account using XUMM", "xumm-for-woocommerce");
         $this->destination = $this->get_option('destination');
         $this->supports = ['products'];
 
@@ -103,7 +105,7 @@ class XummPaymentGateway extends \WC_Payment_Gateway
         $this->xrpl_network = $this->get_option('xrpl_network', 'mainnet');
 
         $this->init_form_fields();
-		$this->init_settings();
+        $this->init_settings();
 
         add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, [ $this, 'process_admin_options' ]);
         add_action( 'woocommerce_settings_saved', [ $this, 'settings_saved' ]);
@@ -141,7 +143,7 @@ class XummPaymentGateway extends \WC_Payment_Gateway
 
             if (empty($result))
             {
-                throw new \Exception(__('Got an error from XUMM', 'xumm-for-woocommerce'));
+                throw new XummErrorException(__('Got an error from XUMM', 'xumm-for-woocommerce'));
             }
 
             return [
@@ -194,7 +196,10 @@ class XummPaymentGateway extends \WC_Payment_Gateway
                     $redirect_url = $this->get_return_url( $order );
                     break;
                 case 'cancelled':
-                    wc_add_notice(__('Your order has been cancelled, please try again.', 'xumm-for-woocommerce'), 'error' );
+                    wc_add_notice(
+                        __('Your order has been cancelled, please try again.', 'xumm-for-woocommerce'),
+                        'error'
+                    );
                     $redirect_url = $order->get_checkout_payment_url(false);
                     break;
                 case 'failed':
@@ -206,7 +211,10 @@ class XummPaymentGateway extends \WC_Payment_Gateway
                     $redirect_url = $this->get_return_url( $order );
                     break;
                 default:
-                    wc_add_notice(__('There is something wrong with the order, please contact us.', 'xumm-for-woocommerce'), 'error' );
+                    wc_add_notice(
+                        __('There is something wrong with the order, please contact us.', 'xumm-for-woocommerce'),
+                        'error'
+                    );
                     $redirect_url = $order->get_checkout_payment_url(false);
                     break;
             }

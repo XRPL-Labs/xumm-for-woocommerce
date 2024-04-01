@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+
 namespace Xrpl\XummForWoocommerce\Tests\Unit\Xumm\Facade;
 
 use Xrpl\XummForWoocommerce\Xumm\Facade\Transaction;
@@ -9,16 +9,16 @@ final class TransactionTest extends TestCase
 {
     public function setUp() : void
     {
-		parent::setUp();
-		\WP_Mock::setUp();
-	}
+        parent::setUp();
+        \WP_Mock::setUp();
+    }
 
-	public function tearDown() : void
+    public function tearDown() : void
     {
-		\WP_Mock::tearDown();
-		\Mockery::close();
-		parent::tearDown();
-	}
+        \WP_Mock::tearDown();
+        \Mockery::close();
+        parent::tearDown();
+    }
 
     /**
      * @test
@@ -42,7 +42,7 @@ final class TransactionTest extends TestCase
 
         $response = Transaction::getTransactionDetails($txid);
 
-        $this->assertEquals($response->transaction['meta']['TransactionResult'], 'tesSUCCESS');
+        $this->assertEquals('tesSUCCESS', $response->transaction['meta']['TransactionResult']);
     }
 
     /**
@@ -52,7 +52,7 @@ final class TransactionTest extends TestCase
     public function checkDeliveredAmountUSD() : void
     {
         $order = \Mockery::mock('\WC_Order');
-	    $order->shouldReceive('get_total')
+        $order->shouldReceive('get_total')
             ->with()
             ->andReturn('0.000001');
 
@@ -79,7 +79,10 @@ final class TransactionTest extends TestCase
         } catch (\Exception $e)
         {
             $this->assertSame(
-                'Your order is not paid and is less than order total, Please contact support<br>Paid: USD 5.0E-7<br>Open: USD 5.0E-7<br><a href="https://bithomp.com/explorer/876619C5488EE0335D1B50E0348EB4397E1B6954CAB5AE083381776D29929A4B">Transaction information</a>',
+                'Your order is not paid and is less than order total, ' .
+                'Please contact support<br>Paid: USD 5.0E-7<br>Open: USD 5.0E-7<br>' .
+                '<a href="https://bithomp.com/explorer/876619C5488EE0335D1B50E0348EB43' .
+                '97E1B6954CAB5AE083381776D29929A4B">Transaction information</a>',
                 $e->getMessage()
             );
         }
@@ -92,7 +95,7 @@ final class TransactionTest extends TestCase
     public function checkDeliveredAmountXRP() : void
     {
         $order = \Mockery::mock('\WC_Order');
-	    $order->shouldReceive('get_total')
+        $order->shouldReceive('get_total')
             ->with()
             ->andReturn(1610.547979);
 

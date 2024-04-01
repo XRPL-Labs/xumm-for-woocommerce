@@ -20,6 +20,7 @@ use Xrpl\XummForWoocommerce\Xumm\Callback\SignInHandler;
 use Xrpl\XummForWoocommerce\Xumm\Callback\TrustSetHandler;
 use Xrpl\XummForWoocommerce\Xumm\Exception\SignInException;
 use Xrpl\XummForWoocommerce\Xumm\Exception\TrustSetException;
+use Xrpl\XummForWoocommerce\Xumm\Exception\XummErrorException;
 use Xrpl\XummForWoocommerce\Xumm\Facade\Notice;
 use Xrpl\XummForWoocommerce\Xumm\Traits\XummPaymentGatewayTrait;
 
@@ -193,10 +194,10 @@ class Xumm_For_Woocommerce_Admin
     public function settings_link($links)
     {
         $action_links = array(
-			'settings' => '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=checkout&section=xumm' ) . '" aria-label="' . esc_attr__( 'View Xumm For Woocommerce settings', 'xumm-for-woocommerce' ) . '">' . esc_html__( 'Settings', 'woocommerce' ) . '</a>',
-		);
+            'settings' => '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=checkout&section=xumm' ) . '" aria-label="' . esc_attr__( 'View Xumm For Woocommerce settings', 'xumm-for-woocommerce' ) . '">' . esc_html__( 'Settings', 'woocommerce' ) . '</a>',
+        );
 
-		return array_merge( $action_links, $links );
+        return array_merge( $action_links, $links );
     }
 
     /**
@@ -346,7 +347,11 @@ class Xumm_For_Woocommerce_Admin
 
             if (empty($redirect))
             {
-                throw new \Exception(__('Connection API Error to the', 'xumm-for-woocommerce').' <a href="https://apps.xumm.dev/">'. __('XUMM API', 'xumm-for-woocommerce') .'</a>. '. __('Check your API keys.', 'xumm-for-woocommerce'));
+                throw new XummErrorException(__('Connection API Error to the',
+                    'xumm-for-woocommerce') .
+                    ' <a href="https://apps.xumm.dev/">'.
+                    __('XUMM API', 'xumm-for-woocommerce') .
+                    '</a>. '. __('Check your API keys.', 'xumm-for-woocommerce'));
             }
 
             return wp_send_json([
@@ -368,10 +373,10 @@ class Xumm_For_Woocommerce_Admin
     }
 
     /**
-	 * Toolbar indicator of XRPL Network
-	 * @param WP_Admin_Bar $admin_bar
-	 */
-	public function show_indicator_toolbar($admin_bar)
+     * Toolbar indicator of XRPL Network
+     * @param WP_Admin_Bar $admin_bar
+     */
+    public function show_indicator_toolbar($admin_bar)
     {
         $context = $this->getXummPaymentGateway();
 
@@ -383,24 +388,27 @@ class Xumm_For_Woocommerce_Admin
                 $network = $xrpl_network == 'mainnet' ? 'Main net' : 'Test net';
                 $styles = $xrpl_network == 'testnet' ? 'opacity: .20' : '';
 
-                $iconhtml = sprintf( '<span class="ab-icon"><img src="%s" style="height: 14px; %s" /></span> %s', xumm_plugin_url() . 'admin/public/images/xrp-symbol-white.svg', $styles, $network );
+                $iconhtml = sprintf( '<span class="ab-icon"><img src="%s" style="height: 14px; %s" /></span> %s',
+                    xumm_plugin_url() .
+                    'admin/public/images/xrp-symbol-white.svg', $styles, $network
+                );
 
                 $admin_bar->add_node([
-                    'id'		=> 'xumm-for-woocommerce-indicator',
+                    'id'        => 'xumm-for-woocommerce-indicator',
                     'title'     => $iconhtml,
-                    'href'		=> admin_url('admin.php?page=wc-settings&tab=checkout&section=xumm'),
+                    'href'        => admin_url('admin.php?page=wc-settings&tab=checkout&section=xumm'),
                     'menu_icon' => 'data:image/svg+xml;base64,' . base64_encode($iconSVG),
-                    'meta'		=> [
+                    'meta'        => [
                         'title' => $network
                     ],
                 ]);
             }
         }
-	}
+    }
 
     /**
-	 * Add submenu link to Woocommerce admin menu
-	 */
+     * Add submenu link to Woocommerce admin menu
+     */
     public function add_woocommerce_menu_link() {
         add_submenu_page(
             'woocommerce',
