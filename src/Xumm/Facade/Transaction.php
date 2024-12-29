@@ -27,8 +27,9 @@ class Transaction
      * @param string $issuers
      * @param string $txid
      * @param string $explorer
+     * @param float $xr
      */
-    public static function checkDeliveredAmount(mixed $delivered_amount, mixed $order, string $issuers, string $txid, string $explorer) : void
+    public static function checkDeliveredAmount(mixed $delivered_amount, mixed $order, string $issuers, string $txid, string $explorer, float $xr) : void
     {
         $total = (double) $order->get_total();
 
@@ -49,6 +50,8 @@ class Transaction
                     }
 
                     $delivered_amount = $delivered_amount/1000000;
+
+                    $total = $total * $xr;
 
                     if ($delivered_amount < ($total-0.000001)) {
                         if ($delivered_amount == 0)

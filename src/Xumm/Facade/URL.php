@@ -25,9 +25,11 @@ class URL
 
             $transaction = Transaction::getTransactionDetails($txid);
 
+            $xr = $payload->customMeta->blob['xr'];
+
             $delivered_amount = $transaction->transaction['meta']['delivered_amount'];
 
-            Transaction::checkDeliveredAmount($delivered_amount, $order, $xummPaymentGateway->issuers, $txid, $explorer);
+            Transaction::checkDeliveredAmount($delivered_amount, $order, $xummPaymentGateway->issuers, $txid, $explorer, $xr);
 
             $order->payment_complete();
             wc_reduce_stock_levels( $order->get_id() );
