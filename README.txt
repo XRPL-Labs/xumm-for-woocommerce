@@ -1,7 +1,7 @@
-=== XUMM for WooCommerce ===
-Contributors: xumm, wietsewind, andreirosseti
-Donate link: https://xumm.dev/beta/test
-Tags: xumm, crypto, xrp, ledger, cryptocurrency
+=== Xaman for WooCommerce ===
+Contributors: xaman, wietsewind, andreirosseti
+Donate link: https://xaman.app
+Tags: xaman, xumm, crypto, xrp, ledger, cryptocurrency
 Requires at least: 4.7
 Tested up to: 6.1.1
 Stable tag: trunk
@@ -9,7 +9,7 @@ Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://xrpl-labs.com/static/documents/XRPL-Labs-Terms-of-Service-V1.pdf
 
-Accept XRP, EUR, USD, BTC & ETH, using a single plugin with the greatest XRP ledger client (wallet): XUMM!
+Accept XRP, EUR, USD, BTC & ETH, using a single plugin with the greatest XRP ledger client (wallet): Xaman (formerly Xumm)!
 
 == Description ==
 
@@ -42,14 +42,14 @@ Also you can see if the trustline button is enabled this means you need to click
 
 = Automatic installation =
 
-1. Search for XUMM for WooCommerce plugin, at the plugin section in your admin panel.
+1. Search for Xaman (formerly Xumm) for WooCommerce plugin, at the plugin section in your admin panel.
 2. Activate the plugin.
 3. Before proceding make sure the store currency in WooCommerce -> settings -> General is set to either: XRP, Euro, US Dollar, Bitcoin, Ethereum.
 3. Go to WooCommerce -> settings -> Payments & enable the GateWay to manage the plugin settings.
-4. Get the API keys from the XUMM API console and insert the correct webhook.
-5. You can now signin with your XRP account using XUMM, to use that as the destination address.
+4. Get the API keys from the Xaman API console and insert the correct webhook
+5. You can now signin with your XRP account using Xaman, to use that as the destination address.
 6. Finally you can configure the currency and issuer, this controls what you will receive inside your XRP account.
-7. If the Add trustline button is enabled please click the button and set the trustline using XUMM.
+7. If the Add trustline button is enabled please click the button and set the trustline using Xaman.
 8. All should be ok by now, please check with a test transaction.
 
 = Manual installation =
@@ -63,7 +63,7 @@ Also you can see if the trustline button is enabled this means you need to click
 1. Setup screen for payments.
 2. This is the standard setup to receive XRP. It shows a connected message and no errors.
 3. What the user will see when submitting the payment.
-4. The setup page in the admin panel on the XUMM api.
+4. The setup page in the admin panel on the Xaman api.
 
 == Changelog ==
 
@@ -100,16 +100,16 @@ Also you can see if the trustline button is enabled this means you need to click
 [FIX] Use the correct Amount key in txjson for using XRP as a currency
 
 = 0.5 =
-[IMPROVED] Improved UI in the WooCommerce XUMM admin options
+[IMPROVED] Improved UI in the WooCommerce Xaman admin options
 [FIX] Admin Page options disabled if API keys are missing or wrong
-[FIX] XUMM API ping on a fail
+[FIX] Xaman API ping on a fail
 [FIX] Show no error when issuer is not set on a XRP store Currency
 
 = 0.4 =
 [FIX] Javascript file path fixed.
 
 = 0.3.1 =
-[FIX] Filter hidden issuers from the XUMM API on the backend.
+[FIX] Filter hidden issuers from the Xaman API on the backend.
 
 = 0.3 =
 [ADD] Disable payment gateway when API keys are missing or the currency is not supported.
