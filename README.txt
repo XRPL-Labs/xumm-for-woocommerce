@@ -66,6 +66,10 @@ Also you can see if the trustline button is enabled this means you need to click
 4. The setup page in the admin panel on the XUMM api.
 
 == Changelog ==
+
+= 1.1 =
+[FIX] Fixes an exchange rate conversion issue in XRP-non-XRP (e.g. XRP-USD) transactions
+
 = 1.0.2 =
 [IMPROVED] Code cleanup
 [FIX] Plugin compatibility with wordpress store
